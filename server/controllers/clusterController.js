@@ -28,7 +28,7 @@ clusterController.getPodsByNamespace = (req, res, next) => {
         .then(data => {
             const output = [];
             for (const element of data.body.items) {
-                output.push(element.metadata.ownerReferences[0].name);
+                output.push(element.metadata.name);
             }
             res.locals.pods = output;
             return next();
