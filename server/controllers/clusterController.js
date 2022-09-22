@@ -16,7 +16,7 @@ clusterController.getNamespaces = (req, res, next) => {
             return next();
         })
         .catch(err => next({
-            log: 'error in get namespaces middleware',
+            log: 'Error in clusterController.getNamespaces middleware',
             status: 500,
             message: { err: 'An error occurred' },
         })) 
@@ -34,7 +34,7 @@ clusterController.getPodsByNamespace = (req, res, next) => {
             return next();
         })
         .catch(err => next({
-            log: 'error in get pods by namespace middleware',
+            log: 'Error in clusterController.getPodsByNamespace middleware',
             status: 500,
             message: { err: 'An error occurred' },
         }))      
@@ -52,7 +52,7 @@ clusterController.getNodesByNamespace = (req, res, next) => {
         return next();
       }) 
       .catch(err => next({
-        log: 'error in get nodes by namespace middleware',
+        log: 'Error in clusterController.getNodesByNamespace middleware',
         status: 500,
         message: { err: 'An error occurred' },
       }))     

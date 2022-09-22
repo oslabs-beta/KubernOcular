@@ -3,8 +3,12 @@ const dashboardRouter = express.Router();
 const dashboardController = require('../controllers/dashboardController');
 
 
-app.get('/mem', dashboardController.getTotalMemory, (req, res) => {
-    return res.status(200).send(res.locals.totalMemory);
+dashboardRouter.get('/mem', dashboardController.getTotalMem, (req, res) => {
+    return res.status(200).send(res.locals.totalMem);
+})
+
+dashboardRouter.get('/cpu', dashboardController.getTotalCpu, (req, res) => {
+    return res.status(200).send(res.locals.totalCpu);
 })
 
 
@@ -12,11 +16,4 @@ app.get('/mem', dashboardController.getTotalMemory, (req, res) => {
 
 
 
-
-
-
-
-
-
-
-module.exports = metricsRouter;
+module.exports = dashboardRouter;

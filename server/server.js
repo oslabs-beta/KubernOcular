@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 const dashboardRouter = require('./routers/dashboardRouter');
 const clusterRouter = require('./routers/clusterRouter');
+const podRouter = require('./routers/podRouter');
+// const nodeRouter = require('./routers/nodeRouter');
 
 
 
@@ -12,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/cluster', clusterRouter);
+app.use('/api/pod', podRouter);
+// app.use('/api/node', nodeRouter);
 
 
 
@@ -28,4 +32,4 @@ app.use((err, req, res, next) => {
     return res.status(errorObj.status).json(errorObj.message);
   });
 
-app.listen(3000, () => console.log('listening on port 3000'));
+app.listen(4000, () => console.log('listening on port 4000'));

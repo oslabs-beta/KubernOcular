@@ -94,7 +94,7 @@ app.get('/cpubypod', (req, res) => {
 })
 
 app.get('/mem', (req, res) => {
-    fetch(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_memory_working_set_bytes[2h]))&start=${start}&end=${end}&step=2h`)
+    fetch(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_working_set_bytes)&start=${start}&end=${end}&step=2h`)
     .then(response => response.json())
     .then(data => {
         console.log('mem sum', data);
@@ -126,4 +126,4 @@ app.get('/membynode', (req, res) => {
 // k8sApi.listNamespacedService('default')
 // .then(data => console.log(data))
 
-// app.listen(3000, () => console.log('listening on port 3000'));
+app.listen(3000, () => console.log('listening on port 3000'));
