@@ -22,7 +22,7 @@ podController.getCpuUsage = (req, res, next) => {
 
 podController.getMemUsage = (req, res, next) => {
   const { pod } = req.query;
-  fetch(`http://localhost:9090/api/v1/query_range?query=container_memory_working_set_bytes{pod=${pod}}&start=${start}&end=${end}&step=2h`)
+  fetch(`http://localhost:9090/api/v1/query_range?query=container_memory_usage_bytes{pod=${pod}}&start=${start}&end=${end}&step=2h`)
   .then(response => response.json())
   .then(data => {
       console.log('cpu usage for', pod, ':', data);

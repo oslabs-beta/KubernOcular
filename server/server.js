@@ -11,7 +11,6 @@ const podRouter = require('./routers/podRouter');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/cluster', clusterRouter);
 app.use('/api/pod', podRouter);
@@ -32,4 +31,4 @@ app.use((err, req, res, next) => {
     return res.status(errorObj.status).json(errorObj.message);
   });
 
-app.listen(4000, () => console.log('listening on port 4000'));
+app.listen(3000, () => console.log('listening on port 3000'));
