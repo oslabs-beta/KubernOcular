@@ -4,7 +4,7 @@ const start = new Date(Date.now() - (1440 * 60000)).toISOString();
 const end = new Date(Date.now()).toISOString();
 
 dashboardController.getTotalMem = (req, res, next) => {
-    fetch(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_working_set_bytes)&start=${start}&end=${end}&step=2h`)
+    fetch(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_usage_bytes)&start=${start}&end=${end}&step=2h`)
     .then(response => response.json())
     .then(data => {
         res.locals.totalMem = data;
