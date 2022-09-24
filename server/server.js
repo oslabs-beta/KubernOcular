@@ -11,7 +11,6 @@ const podRouter = require('./routers/podRouter');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/cluster', clusterRouter);
 app.use('/api/pod', podRouter);

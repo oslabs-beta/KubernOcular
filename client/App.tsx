@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.css';
 
-function App() {
+const App = () => {
   return (
     <div>Hello World</div>
   )
