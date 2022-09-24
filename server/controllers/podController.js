@@ -1,4 +1,5 @@
 const podController = {};
+const axios = require('axios');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const start = new Date(Date.now() - (1440 * 60000)).toISOString();
 const end = new Date(Date.now()).toISOString();
@@ -34,6 +35,27 @@ podController.getMemUsage = (req, res, next) => {
     status: 500,
     message: { err: 'An error occurred' },
   })) 
+}
+
+podController.getInstantMetrics = async (req, res, next) => {
+  const { namespace } = req.query;
+  try{
+    const responseMem = await axios.get(`http://localhost:9090/api/v1/query?query=container_memory_usage_bytes{namespace='${namespace}'}`);
+    // console.log(responseMem.data.data.result);
+    const responseCpu = await axios.get(`http://localhost:9090/api/v1/query?query=rate(container_cpu_usage_seconds_total{namespace='${namespace}'}[2h])`);
+    // console.log(responseCpu.data.data.result);
+    res.locals.data = {
+      mem: responseMem.data.data.result,
+      cpu: responseCpu.data.data.result
+    };
+    return next();
+  } catch(err) {
+    return next({
+      log: 'Error in podController.getInstantMetrics middleware',
+      status: 500,
+      message: { err: 'An error occurred' },
+    })
+  }
 }
 
 
