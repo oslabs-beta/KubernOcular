@@ -1,7 +1,7 @@
 import React from "react";
 import { FC } from 'react';
 import { Line } from 'react-chartjs-2';
-import { CoreData } from './ClusterDummyData';
+import { CoreData } from "../../types";
 import {
   Chart as ChartJS,
   CategoryScale,

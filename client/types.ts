@@ -9,3 +9,16 @@ export type CoreData = {
     pointRadius?: number,
   }[]
 };
+
+export type ConfigBlock = {
+  responsive: boolean,
+  plugins: {
+    legend: {
+      position: string
+    }, 
+    title: {
+      display: boolean,
+      text: string,
+    }
+  }
+}

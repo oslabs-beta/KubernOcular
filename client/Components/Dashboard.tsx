@@ -28,7 +28,7 @@ const Dashboard: FC = () => {
       < Nav />
       <div id="dashboard-container">
         <MemoryUsage />
-        <CpuUsage DummyData={dummyData}/> 
+        {/* <CpuUsage DummyData={dummyData}/>  */}
         {/* <Network /> 
         <GarbageCollection /> */}
       </div>
