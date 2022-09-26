@@ -12,7 +12,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import Chart from 'chart.js/auto';
+// import Chart from 'chart.js/auto';
 ChartJS.register(
   CategoryScale,
   LinearScale,
