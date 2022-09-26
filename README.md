@@ -46,10 +46,26 @@
 
         helm uninstall prometheus
 
-## Contributers
+## Technologies
+
+* [React](https://reactjs.org/)
+* [Webpack](https://webpack.js.org/)
+* [React Router](https://reactrouter.com/en/main)
+* [TypeScript](https://www.typescriptlang.org/)
+* [Node](https://nodejs.org/en/)
+* [Express](https://expressjs.com/)
+* [Kubernetes-Client](https://www.npmjs.com/package/kubernetes-client)
+* [Prometheus/PromQL](https://prometheus.io/)
+* [Chart.js](https://www.chartjs.org/)
+* [Material UI](https://mui.com/)
+* [Jest](https://jestjs.io/)
+* [Puppeteer](https://pptr.dev/)
+* [Supertest](https://www.npmjs.com/package/supertest)
+
+## The KubernOcular Team
 
 * Adam Selph: [Github](https://github.com/ARSelph) | [LinkedIn](https://www.linkedin.com/in/adam-selph-93231324a/)
 * Shirley Luu: [Github](https://github.com/shirley-luu) | [LinkedIn](https://www.linkedin.com/in/luu-shirley/)
-* Brian Preston: [Github](https://github.com/BrianJPreston) | [LinkedIn]()
+* Brian Preston: [Github](https://github.com/BrianJPreston) | [LinkedIn](https://www.linkedin.com/in/brian-preston-33444430/)
 * Evan Emenegger: [Github](https://github.com/emenegger) | [LinkedIn](https://www.linkedin.com/in/evan-emenegger/)
 * Michael Mezhiritskiy: [Github](https://github.com/MichaelMezhiritskiy) | [LinkedIn](https://www.linkedin.com/in/michael-mezhiritskiy-41a0aa1b4/)

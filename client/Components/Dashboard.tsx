@@ -25,7 +25,6 @@ const Dashboard: FC = () => {
   
   return (
     <div>
-      < Nav />
       <div id="dashboard-container">
         <MemoryUsage />
         {/* <CpuUsage DummyData={dummyData}/>  */}
