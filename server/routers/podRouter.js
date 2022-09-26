@@ -10,4 +10,9 @@ podRouter.get('/mem', podController.getMemUsage, (req, res) => {
   return res.status(200).json(res.locals.memUsage);
 });
 
+podRouter.get('/instant', podController.getInstantMetrics, (req, res) => {
+  console.log('returned instant data');
+  return res.status(200).json(res.locals.data);
+})
+
 module.exports = podRouter;
