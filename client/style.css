@@ -23,10 +23,17 @@ body {
   /* font-family:Verdana, Geneva, Tahoma, sans-serif; */
 }
 
-.graph {
+.graph, .loading {
   padding: 1vw;
   width: 48%;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   /* min-width: 400px;
   min-height: 500px; */
+}
+
+.loading {
+  display: flex;
+  min-height: 300px;
+  justify-content: center;
+  align-items: center;
 }

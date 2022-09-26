@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { FC, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,6 +16,7 @@ import {
   ChartData
 } from 'chart.js';
 import { time } from "console";
+import { setConstantValue } from "typescript";
 
 ChartJS.register(
   CategoryScale,
@@ -37,9 +40,8 @@ const initialData: ChartData<'line'> = {
 }
 
 
-const ClusterMetrics: FC<MetricProps> = (props) => {
+const LineGraph: FC<MetricProps> = (props) => {
   const [chartLoaded, setChartLoaded] = useState(false);
-  // const [options, setOptions] = useState(null);
   const [data, setData] = useState(initialData);
   const options: ChartOptions = {
     responsive: true,
@@ -96,10 +98,15 @@ const ClusterMetrics: FC<MetricProps> = (props) => {
     .catch(err => console.log(err));
   }, [])
 
+  // demos 1 sec load, comment out lines 102, 103, and or statement in 105 to remove
+  const [oneSecPassed, setOneSecPassed] = useState(false);
+  setTimeout(() => setOneSecPassed(true), 1000);
   
-  if (!chartLoaded) {
+  if (!chartLoaded || !oneSecPassed) {
     return (
-      <p>Loading Chart</p>
+      <div className="loading">
+        < CircularProgress />
+      </div>
     )
   } else {  
     return (
@@ -110,7 +117,7 @@ const ClusterMetrics: FC<MetricProps> = (props) => {
   }
 }
 
-export default ClusterMetrics;
+export default LineGraph;
 
 
 

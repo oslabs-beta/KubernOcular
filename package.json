@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/oslabs-beta/KubernOcular#readme",
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@kubernetes/client-node": "^0.17.1",
+    "@mui/material": "^5.10.6",
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "express": "^4.18.1",
