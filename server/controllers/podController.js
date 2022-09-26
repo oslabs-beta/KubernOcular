@@ -7,7 +7,7 @@ const end = new Date(Date.now()).toISOString();
 podController.getCpuUsage = (req, res, next) => {
   const { pod } = req.query;
   console.log('pod name: ', pod);
-    fetch(`http://localhost:9090/api/v1/query_range?query=rate(container_cpu_usage_seconds_total[2h]{pod=${pod}})&start=${start}&end=${end}&step=2h`)
+    fetch(`http://localhost:9090/api/v1/query_range?query=rate(container_cpu_usage_seconds_total{pod='${pod}'}[10m])&start=${start}&end=${end}&step=10m`)
     .then(response => response.json())
     .then(data => {
         console.log('cpu usage for', pod, ':', data);
@@ -23,11 +23,11 @@ podController.getCpuUsage = (req, res, next) => {
 
 podController.getMemUsage = (req, res, next) => {
   const { pod } = req.query;
-  fetch(`http://localhost:9090/api/v1/query_range?query=container_memory_usage_bytes{pod=${pod}}&start=${start}&end=${end}&step=2h`)
+  fetch(`http://localhost:9090/api/v1/query_range?query=container_memory_usage_bytes{pod='${pod}'}&start=${start}&end=${end}&step=10m`)
   .then(response => response.json())
   .then(data => {
       console.log('cpu usage for', pod, ':', data);
-      res.locals.cpuUsage = data;
+      res.locals.memUsage = data;
       return next();
   })
   .catch(err => next({

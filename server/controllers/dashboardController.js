@@ -4,9 +4,11 @@ const start = new Date(Date.now() - (1440 * 60000)).toISOString();
 const end = new Date(Date.now()).toISOString();
 
 dashboardController.getTotalMem = (req, res, next) => {
-    fetch(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_usage_bytes)&start=${start}&end=${end}&step=2h`)
+    console.log('memory queried');
+    fetch(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_usage_bytes)&start=${start}&end=${end}&step=10m`)
     .then(response => response.json())
     .then(data => {
+        console.log('successful memory query');
         res.locals.totalMem = data;
         return next();
     })
@@ -18,11 +20,11 @@ dashboardController.getTotalMem = (req, res, next) => {
 }
 
 dashboardController.getTotalCpu = (req, res, next) => {
-    console.log('we are in the get total cpu');
-    fetch(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total[2h]))&start=${start}&end=${end}&step=2h`)
+    console.log('cpu queried');
+    fetch(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total[10m]))&start=${start}&end=${end}&step=10m`)
       .then(response => response.json())
       .then(data => {
-          console.log('inside get total cpu query: ', data);
+          console.log('successful cpu query');
           // console.log((new Date(data.data.result[0].values[0][0] * 1000)));
           // when sending to frontend, multiply all x valus by 1000
           res.locals.totalCpu = data;
