@@ -8,6 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -42,11 +43,17 @@ module.exports = {
   devServer: {
     static: {
       directory: path.join(__dirname, './dist'),
+      publicPath: '/',
     },
     proxy: {
       '/api': 'http://localhost:3000',
       secure: false
-    }
+    },
+    compress: false,
+    host: 'localhost',
+    port: 8080,
+    hot: true,
+    historyApiFallback:true,
   },
 
 }

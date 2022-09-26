@@ -31,7 +31,7 @@ export const allChartData = {
   Options
 }
 
-const dummyCpuUsage = {
+export const dummyCpuUsage = {
   "status": "success",
   "data": {
     "resultType": "matrix",
