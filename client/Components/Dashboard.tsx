@@ -6,7 +6,9 @@ import MemoryUsage from "./ClusterGraphs/MemoryUsage";
 import CpuUsage from "./ClusterGraphs/CpuUsage";
 import Network from "./ClusterGraphs/Network";
 import GarbageCollection from "./ClusterGraphs/GarbageCollection";
-import {DummyData, CoreData, Options, ConfigBlock} from './ClusterGraphs/ClusterDummyData';
+import {DummyData, Options} from './ClusterGraphs/ClusterDummyData';
+import { CoreData, ConfigBlock } from "../types";
+
 // import { allChartData, ConfigBlock, CoreData } from "./ClusterGraphs/ClusterDummyData";
 
 const Dashboard: FC = () => {
@@ -27,7 +29,6 @@ const Dashboard: FC = () => {
       <div id="dashboard-container">
         <MemoryUsage />
         <CpuUsage DummyData={dummyData}/> 
-        {/* <CpuUsage allChartData={allChartData}/>  */}
         {/* <Network /> 
         <GarbageCollection /> */}
       </div>

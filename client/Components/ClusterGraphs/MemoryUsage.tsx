@@ -23,6 +23,7 @@ ChartJS.register(
   Legend
 );
 
+// this creating dummy data
 let labels: number[] = []
 let randomData: number[] = [];
 const push: any = () => { 
@@ -34,6 +35,7 @@ const push: any = () => {
 push();
 console.log('labels', labels)
 
+// 
 const data = {
   labels,
   datasets: [{

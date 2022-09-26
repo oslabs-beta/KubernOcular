@@ -1,7 +1,7 @@
 import React from "react";
 import { FC } from 'react';
 import { Line } from 'react-chartjs-2';
-import { CoreData } from './ClusterDummyData';
+import { ConfigBlock, CoreData } from "../../types";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,6 +11,8 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
+  ChartData
 } from 'chart.js';
 
 ChartJS.register(
@@ -25,7 +27,7 @@ ChartJS.register(
 
 
 
-const data = {
+const data: ChartData<'line'> = {
   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
   datasets: [{
     label: '# of Votes',
@@ -37,7 +39,7 @@ const data = {
   }]
 }
 
-const options = {
+const options: ChartOptions = {
   responsive: true,
   plugins: {
     legend: {
