@@ -1,4 +1,9 @@
 import * as React from 'react';
+import { useState } from 'react';
+import { Routes, Route, useNavigate, redirect } from 'react-router-dom'
+import Nav from './Nav';
+import NodeDisplay from './NodeDisplay';
+import axios from "axios";
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -20,52 +25,59 @@ import { visuallyHidden } from '@mui/utils';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import axios from "axios";
-import { useState } from 'react';
+import { red } from '@mui/material/colors';
 
 function NamespaceDropDown(props: {setRows: Function}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [namespaces, setNamespaces] = React.useState<JSX.Element[]>([]);
-  const [selectedNamespace, setSelectedNamespace] = React.useState<string>('default');
+  const [selectedNamespace, setSelectedNamespace] = React.useState<string>('');
 
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = (event: React.MouseEvent<unknown>, namespace: string): void => {
     console.log(event);
     setAnchorEl(null);
-    setSelectedNamespace(namespace);
+    if (namespace !== 'backdropClick') setSelectedNamespace(namespace);
   };
-  console.log('selected NS: ', namespaces);
 
+  // retrieve namespaces on load to render in namespace dropdown
   React.useEffect((): void => {
+    const namespaceArr: string[] = [];
     const fetchNamespaces = async () => {
         const allNamespaces = await axios.get('../api/cluster/namespaces');
         const tempArray: JSX.Element[] = [];
         for (const namespace of allNamespaces.data) {
+          namespaceArr.push(namespace);
           tempArray.push(
             <MenuItem onClick={(event) => handleClose(event, namespace)}>{namespace}</MenuItem>
           )
         }
         setNamespaces(tempArray);
     };
-    fetchNamespaces();
+    fetchNamespaces()
+    .then(() => setSelectedNamespace(namespaceArr[0]));
   }, [])
 
+  console.log('selected NS: ', namespaces);
+
+  // retrieve nodes but no instant metrics yet
   React.useEffect((): void => {
     const fetchNodes = async () => {
       const allNodes = await axios.get(`/api/cluster/nodes`);
       console.log('all nodes: ', allNodes.data);
-      const newRows = [];
+      const newRows: any = {};
       for (let i = 0; i < allNodes.data.length; i++) {
-        newRows.push(createData(allNodes.data[i], 0, 0));
+        const nodeName = allNodes.data[i];
+        if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, 0, 0);
       }
-      props.setRows(newRows);
+      props.setRows(Object.values(newRows));
     };
     fetchNodes();
-  
-  }, [selectedNamespace])
+  }, [])
 
   return (
     <div>
@@ -110,14 +122,6 @@ function createData(
     mem,
   };
 }
-
-// let rows: Data[] = [
-//   createData('[empty]', 0, 0),
-// ];
-// const fetchDefault = async (): void => {
-// const defaultData = await axios.get(`/api/pod/instant?namespace=default`);
-// }
-
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -292,8 +296,8 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rows, setRows] = useState([createData('[empty]', 0 , 0)]);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState([createData('[empty]', 0 , 0)]);
 
 
   const handleRequestSort = (
@@ -314,24 +318,31 @@ export default function EnhancedTable() {
     setSelected([]);
   };
 
+  // put in our redirect to node display
+  const navigate = useNavigate();
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
+    console.log(name);
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
+    // route to '/poddisplay/{name}
+    navigate(`../nodedisplay/`);
 
-    setSelected(newSelected);
+    // const selectedIndex = selected.indexOf(name);
+    // let newSelected: readonly string[] = [];
+
+    // if (selectedIndex === -1) {
+    //   newSelected = newSelected.concat(selected, name);
+    // } else if (selectedIndex === 0) {
+    //   newSelected = newSelected.concat(selected.slice(1));
+    // } else if (selectedIndex === selected.length - 1) {
+    //   newSelected = newSelected.concat(selected.slice(0, -1));
+    // } else if (selectedIndex > 0) {
+    //   newSelected = newSelected.concat(
+    //     selected.slice(0, selectedIndex),
+    //     selected.slice(selectedIndex + 1),
+    //   );
+    // }
+
+    // setSelected(newSelected);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -354,85 +365,86 @@ export default function EnhancedTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <div style={{display: 'flex', justifyContent: 'right'}}><NamespaceDropDown setRows={setRows}/></div>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-      {/* <Paper sx={{ width: '100%', mb: 2 , backgroundColor: 'rgb(25, 25, 25)'}}> */}
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-              rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+    <div>
+      <Box sx={{ width: '100%' }}>
+        <div style={{display: 'flex', justifyContent: 'right'}}><NamespaceDropDown setRows={setRows}/></div>
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          <EnhancedTableToolbar numSelected={selected.length} />
+          <TableContainer>
+            <Table
+              sx={{ minWidth: 750 }}
+              aria-labelledby="tableTitle"
+              size={dense ? 'small' : 'medium'}
+            >
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+                rows.slice().sort(getComparator(order, orderBy)) */}
+                {stableSort(rows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(row.name);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row.name)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.name}
+                        selected={isItemSelected}
                       >
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">{row.cpu}</TableCell>
-                      <TableCell align="right">{row.mem}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+                        <TableCell padding="checkbox">
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">{row.cpu}</TableCell>
+                        <TableCell align="right">{row.mem}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow
+                    style={{
+                      height: (dense ? 33 : 53) * emptyRows,
+                    }}
+                  >
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
         />
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-    </Box>
+      </Box>
+    </div>
   );
 }

@@ -1,9 +1,8 @@
+const clusterController = {};
 const k8s = require('@kubernetes/client-node');
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-
-const clusterController = {};
 
 clusterController.getNamespaces = (req, res, next) => {
     k8sApi.listNamespace()
@@ -58,6 +57,5 @@ clusterController.getNodes = (req, res, next) => {
         message: { err: 'An error occurred' },
       }))     
 };
-
 
 module.exports = clusterController;

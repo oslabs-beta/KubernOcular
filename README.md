@@ -48,7 +48,7 @@
         kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090
 
 6. Run this command in a separate terminal in the KubernOcular directory and visit http://localhost:8080 to begin your KubernOcular experience
-        
+
         npm run dev
 
 7. When you are finished using KubernOcular, uninstall the prometheus monitoring stack - this should also delete the prometheus running cluster

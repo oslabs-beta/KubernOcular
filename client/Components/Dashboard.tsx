@@ -4,7 +4,6 @@ import { FC } from 'react';
 import Nav from './Nav';
 import LineGraph from "./LineGraph";
 import PodDisplay from "./PodDisplay";
-
 // import { allChartData, ConfigBlock, CoreData } from "./ClusterGraphs/ClusterDummyData";
 
 const Dashboard: FC = () => {

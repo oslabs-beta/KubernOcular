@@ -39,7 +39,6 @@ const initialData: ChartData<'line'> = {
   datasets: [],
 }
 
-
 const LineGraph: FC<MetricProps> = (props) => {
   const [chartLoaded, setChartLoaded] = useState(false);
   const [data, setData] = useState(initialData);
@@ -55,6 +54,7 @@ const LineGraph: FC<MetricProps> = (props) => {
       },
     },
   }
+
   useEffect(() => {
     fetch(props.query)
     .then(res => res.json())
@@ -118,6 +118,3 @@ const LineGraph: FC<MetricProps> = (props) => {
 }
 
 export default LineGraph;
-
-
-
