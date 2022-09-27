@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require('cors');
 const dashboardRouter = require('./routers/dashboardRouter');
 const clusterRouter = require('./routers/clusterRouter');
 const podRouter = require('./routers/podRouter');
 // const nodeRouter = require('./routers/nodeRouter');
 
 
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

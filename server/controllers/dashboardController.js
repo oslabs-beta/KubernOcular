@@ -1,7 +1,7 @@
 const dashboardController = {};
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const start = new Date(Date.now() - (1440 * 60000)).toISOString();
 const end = new Date(Date.now()).toISOString();
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 dashboardController.getTotalMem = (req, res, next) => {
     console.log('memory queried');
