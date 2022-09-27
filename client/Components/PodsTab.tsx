@@ -297,8 +297,8 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = useState([createData('[empty', 0 , 0)]);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rows, setRows] = useState([createData('[empty]', 0 , 0)]);
 
 
   const handleRequestSort = (
@@ -362,6 +362,7 @@ export default function EnhancedTable() {
     <Box sx={{ width: '100%' }}>
       <div style={{display: 'flex', justifyContent: 'right'}}><NamespaceDropDown setRows={setRows}/></div>
       <Paper sx={{ width: '100%', mb: 2 }}>
+      {/* <Paper sx={{ width: '100%', mb: 2 , backgroundColor: 'rgb(25, 25, 25)'}}> */}
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
