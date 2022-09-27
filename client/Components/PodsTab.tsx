@@ -297,8 +297,8 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = useState([createData('[empty', 0 , 0)]);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rows, setRows] = useState([createData('[empty]', 0 , 0)]);
 
 
   const handleRequestSort = (
@@ -366,43 +366,51 @@ export default function EnhancedTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <div>
-      <Box sx={{ width: '100%' }}>
-        <div style={{display: 'flex', justifyContent: 'right'}}><NamespaceDropDown setRows={setRows}/></div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} />
-          <TableContainer>
-            <Table
-              sx={{ minWidth: 750 }}
-              aria-labelledby="tableTitle"
-              size={dense ? 'small' : 'medium'}
-            >
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
-              <TableBody>
-                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                rows.slice().sort(getComparator(order, orderBy)) */}
-                {stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+    <Box sx={{ width: '100%' }}>
+      <div style={{display: 'flex', justifyContent: 'right'}}><NamespaceDropDown setRows={setRows}/></div>
+      <Paper sx={{ width: '100%', mb: 2 }}>
+      {/* <Paper sx={{ width: '100%', mb: 2 , backgroundColor: 'rgb(25, 25, 25)'}}> */}
+        <EnhancedTableToolbar numSelected={selected.length} />
+        <TableContainer>
+          <Table
+            sx={{ minWidth: 750 }}
+            aria-labelledby="tableTitle"
+            size={dense ? 'small' : 'medium'}
+          >
+            <EnhancedTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+            />
+            <TableBody>
+              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+              rows.slice().sort(getComparator(order, orderBy)) */}
+              {stableSort(rows, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const isItemSelected = isSelected(row.name);
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        onClick={(event) => handleClick(event, row.name)}
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.name}
-                        selected={isItemSelected}
+                  return (
+                    <TableRow
+                      hover
+                      onClick={(event) => handleClick(event, row.name)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.name}
+                      selected={isItemSelected}
+                    >
+                      <TableCell padding="checkbox">
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
                       >
                         <TableCell padding="checkbox">
                         </TableCell>

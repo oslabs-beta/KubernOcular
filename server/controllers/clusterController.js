@@ -40,9 +40,10 @@ clusterController.getPodsByNamespace = (req, res, next) => {
         }))      
 };
 
-clusterController.getNodesByNamespace = (req, res, next) => {
-    const { namespace } = req.query;
-    k8sApi.listNode(namespace)
+clusterController.getNodes = (req, res, next) => {
+    // const { namespace } = req.query;
+    // k8sApi.listNode(namespace)
+    k8sApi.listNode()
       .then(data => {
         const output = [];
         for (const element of data.body.items) {
@@ -52,7 +53,7 @@ clusterController.getNodesByNamespace = (req, res, next) => {
         return next();
       }) 
       .catch(err => next({
-        log: 'Error in clusterController.getNodesByNamespace middleware',
+        log: 'Error in clusterController.getNodes middleware',
         status: 500,
         message: { err: 'An error occurred' },
       }))     

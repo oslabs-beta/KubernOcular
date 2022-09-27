@@ -11,7 +11,7 @@ clusterRouter.get('/pods', clusterController.getPodsByNamespace, (req, res) => {
   return res.status(200).json(res.locals.pods);
 })
 
-clusterRouter.get('/nodes', clusterController.getNodesByNamespace, (req, res) => {
+clusterRouter.get('/nodes', clusterController.getNodes, (req, res) => {
   return res.status(200).json(res.locals.nodes);
 })
 
