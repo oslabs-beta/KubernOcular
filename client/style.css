@@ -31,6 +31,21 @@ body {
   min-height: 500px; */
 }
 
+#logo {
+  max-height: 40px;
+  padding-right: 1vw;
+}
+
+nav {
+  max-height: 30px;
+  display: flex;
+}
+
+#kubernocular-logo {
+  max-height: 50px;
+  object-fit: contain;
+}
+
 .loading {
   display: flex;
   min-height: 300px;

@@ -38,12 +38,14 @@ podController.getMemUsage = (req, res, next) => {
 }
 
 podController.getInstantMetrics = async (req, res, next) => {
+  // console.log('query data: ', req.query);
   const { namespace } = req.query;
   try{
     const responseMem = await axios.get(`http://localhost:9090/api/v1/query?query=container_memory_usage_bytes{namespace='${namespace}'}`);
     // console.log(responseMem.data.data.result);
     const responseCpu = await axios.get(`http://localhost:9090/api/v1/query?query=rate(container_cpu_usage_seconds_total{namespace='${namespace}'}[2h])`);
     // console.log(responseCpu.data.data.result);
+    console.log(res.locals.data);
     res.locals.data = {
       mem: responseMem.data.data.result,
       cpu: responseCpu.data.data.result
