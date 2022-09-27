@@ -8,6 +8,7 @@ import { Routes, Route } from 'react-router-dom';
 import PodDisplay from './Components/PodDisplay';
 import NodeDisplay from './Components/NodeDisplay';
 
+
 const App = () => {
   return (
     <div id="main-container">
@@ -18,6 +19,7 @@ const App = () => {
       <Route path='/nodes' element={<NodesTab />} />
       <Route path='/poddisplay' element={<PodDisplay />} />
       <Route path='/nodedisplay' element={<NodeDisplay />} />
+
     </Routes>
     </div>
   )

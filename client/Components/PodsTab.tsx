@@ -25,6 +25,12 @@ import { visuallyHidden } from '@mui/utils';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import axios from "axios";
+import { useState } from 'react';
+import { useNavigate, redirect } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom';
+import Nav from './Nav';
+import PodDisplay from './PodDisplay';
 import { red } from '@mui/material/colors';
 
 function NamespaceDropDown(props: {setRows: Function}) {
@@ -43,6 +49,9 @@ function NamespaceDropDown(props: {setRows: Function}) {
     setAnchorEl(null);
     if (namespace !== 'backdropClick') setSelectedNamespace(namespace);
   };
+
+  console.log('selected NS: ', selectedNamespace);
+
 
   // retrieve namespaces on load to render in namespace dropdown
   React.useEffect((): void => {
