@@ -2,6 +2,13 @@
 
 ## Set Up
 
+0. Prerequisites:
+        - Have docker desktop installed on your machine with kubernetes enabled: https://www.docker.com/products/docker-desktop/
+        - Have kubectl installed on your machine
+                - For MacOS: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/
+                - For Windows: https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
+                - For Linux: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+
 1. Clone this repository onto your local machine
         
         git clone https://github.com/oslabs-beta/KubernOcular.git
@@ -40,7 +47,9 @@
 
         kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090
 
-6. Visit http://localhost:8080 to begin your KubernOcular experience
+6. Run this command in a separate terminal in the KubernOcular directory and visit http://localhost:8080 to begin your KubernOcular experience
+        
+        npm run dev
 
 7. When you are finished using KubernOcular, uninstall the prometheus monitoring stack - this should also delete the prometheus running cluster
 
