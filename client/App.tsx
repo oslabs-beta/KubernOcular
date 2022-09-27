@@ -5,6 +5,7 @@ import Dashboard from "./Components/Dashboard";
 import PodsTab from "./Components/PodsTab";
 import NodesTab from "./Components/NodesTab";
 import { Routes, Route } from 'react-router-dom';
+import PodDisplay from './Components/PodDisplay';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Route path='/' element={<Dashboard/>} />
       <Route path='/pods' element={<PodsTab />} />
       <Route path='/nodes' element={<NodesTab />} />
+      <Route path='/poddisplay' element={<PodDisplay />} />
     </Routes>
     </div>
   )
