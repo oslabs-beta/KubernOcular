@@ -1,9 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { Routes, Route, useNavigate, redirect } from 'react-router-dom'
-import Nav from './Nav';
-import PodDisplay from './PodDisplay';
-import axios from "axios";
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
