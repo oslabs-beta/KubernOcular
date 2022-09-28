@@ -450,8 +450,10 @@ export default function EnhancedTable() {
           />
         </Paper>
         <FormControlLabel
-          control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Dense padding"
+          control={<Switch checked={dense}
+          onChange={handleChangeDense} />}
+          label="compact display"
+          sx={{ ml: 3 }}
         />
       </Box>
     </div>
