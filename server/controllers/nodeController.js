@@ -1,9 +1,7 @@
 const nodeController = {};
-
 const start = new Date(Date.now() - (1440 * 60000)).toISOString();
 const end = new Date(Date.now()).toISOString();
 
-//instant metrics
 nodeController.getInstantNetworkTransmitBytes = (req, res, next) => {
     const { node } = req.query;
     //node_network_transmit_bytes_total

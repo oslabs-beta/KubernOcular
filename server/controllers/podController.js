@@ -1,8 +1,8 @@
 const podController = {};
 const axios = require('axios');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const start = new Date(Date.now() - (1440 * 60000)).toISOString();
 const end = new Date(Date.now()).toISOString();
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 podController.getCpuUsage = (req, res, next) => {
   const { pod } = req.query;
@@ -59,6 +59,5 @@ podController.getInstantMetrics = async (req, res, next) => {
     })
   }
 }
-
 
 module.exports = podController;

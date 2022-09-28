@@ -1,9 +1,8 @@
+const clusterController = {};
 const k8s = require('@kubernetes/client-node');
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-
-const clusterController = {};
 
 clusterController.getNamespaces = (req, res, next) => {
     k8sApi.listNamespace()
@@ -40,9 +39,10 @@ clusterController.getPodsByNamespace = (req, res, next) => {
         }))      
 };
 
-clusterController.getNodesByNamespace = (req, res, next) => {
-    const { namespace } = req.query;
-    k8sApi.listNode(namespace)
+clusterController.getNodes = (req, res, next) => {
+    // const { namespace } = req.query;
+    // k8sApi.listNode(namespace)
+    k8sApi.listNode()
       .then(data => {
         const output = [];
         for (const element of data.body.items) {
@@ -52,11 +52,10 @@ clusterController.getNodesByNamespace = (req, res, next) => {
         return next();
       }) 
       .catch(err => next({
-        log: 'Error in clusterController.getNodesByNamespace middleware',
+        log: 'Error in clusterController.getNodes middleware',
         status: 500,
         message: { err: 'An error occurred' },
       }))     
 };
-
 
 module.exports = clusterController;
