@@ -4,6 +4,7 @@ import { FC } from 'react';
 import Nav from './Nav';
 import LineGraph from "./LineGraph";
 import { useNavigate, useSearchParams } from 'react-router-dom'
+
 // import { allChartData, ConfigBlock, CoreData } from "./ClusterGraphs/ClusterDummyData";
 
 // type PodDisplayProps = {pod: string}
