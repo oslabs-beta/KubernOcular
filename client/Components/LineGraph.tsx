@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { FC, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,8 +14,6 @@ import {
   ChartOptions,
   ChartData
 } from 'chart.js';
-import { time } from "console";
-import { setConstantValue } from "typescript";
 
 ChartJS.register(
   CategoryScale,
