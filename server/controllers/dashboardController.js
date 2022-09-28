@@ -21,7 +21,7 @@ dashboardController.getTotalMem = (req, res, next) => {
 
 dashboardController.getTotalCpu = (req, res, next) => {
     console.log('cpu queried');
-    fetch(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total[10m]))&start=${start}&end=${end}&step=10m`)
+    fetch(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total[10m]))*100&start=${start}&end=${end}&step=10m`)
       .then(response => response.json())
       .then(data => {
           console.log('successful cpu query');
