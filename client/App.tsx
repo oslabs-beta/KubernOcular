@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
 import './style.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Nav from './Components/Nav';
+import Sidebar from './Components/Sidebar';
 import Dashboard from "./Components/Dashboard";
 import PodsTab from "./Components/PodsTab";
 import NodesTab from "./Components/NodesTab";
@@ -18,10 +19,11 @@ const darkTheme = createTheme({
 
 const App = () => {
   return (
+
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <div id="main-container">
-        <Nav />
+        <Sidebar />
         <Routes>
           <Route path='/' element={<Dashboard/>} />
           <Route path='/pods' element={<PodsTab />} />
@@ -31,6 +33,7 @@ const App = () => {
         </Routes>
       </div>
     </ThemeProvider>
+
   )
 }
 
