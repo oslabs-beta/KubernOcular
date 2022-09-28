@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom'
+import Nav from './Nav';
+import PodDisplay from './PodDisplay';
+import axios from "axios";
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -20,12 +24,6 @@ import { visuallyHidden } from '@mui/utils';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import axios from "axios";
-import { useState } from 'react';
-import { useNavigate, redirect } from 'react-router-dom'
-import { Routes, Route } from 'react-router-dom';
-import Nav from './Nav';
-import PodDisplay from './PodDisplay';
 import { red } from '@mui/material/colors';
 
 function NamespaceDropDown(props: {setRows: Function}) {
@@ -96,7 +94,7 @@ function NamespaceDropDown(props: {setRows: Function}) {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        Select Namespace: {selectedNamespace}
+        Namespace: {selectedNamespace}
       </Button>
       <Menu
         id="basic-menu"
@@ -198,16 +196,17 @@ const headCells: readonly HeadCell[] = [
 ];
 
 interface EnhancedTableProps {
-  numSelected: number;
+  // numSelected: number;
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  // onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
   rowCount: number;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+  // const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+  const { order, orderBy, onRequestSort } =
     props;
   const createSortHandler =
     (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -246,25 +245,26 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-interface EnhancedTableToolbarProps {
-  numSelected: number;
-}
+// interface EnhancedTableToolbarProps {
+//   numSelected: number;
+// }
 
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected } = props;
+// const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
+const EnhancedTableToolbar = () => {
+  // const { numSelected } = props;
 
   return (
     <Toolbar
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
+        // ...(numSelected > 0 && {
+        //   bgcolor: (theme) =>
+        //     alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+        // }),
       }}
     >
-      {numSelected > 0 ? (
+      {/* {numSelected > 0 ? (
         <Typography
           sx={{ flex: '1 1 100%' }}
           color="inherit"
@@ -273,7 +273,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         >
           {numSelected} selected
         </Typography>
-      ) : (
+      ) : ( */}
         <Typography
           sx={{ flex: '1 1 100%' }}
           variant="h6"
@@ -282,7 +282,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         >
           Pods
         </Typography>
-      )}
+      {/* )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
@@ -293,7 +293,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           <IconButton>
           </IconButton>
         </Tooltip>
-      )}
+      )} */}
     </Toolbar>
   );
 };
@@ -301,10 +301,10 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data>('cpu');
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
+  // const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([createData('[empty]', 0 , 0)]);
 
 
@@ -317,21 +317,19 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
+  // const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.checked) {
+  //     const newSelected = rows.map((n) => n.name);
+  //     setSelected(newSelected);
+  //     return;
+  //   }
+  //   setSelected([]);
+  // };
 
   // put in our redirect to pod display
   const navigate = useNavigate();
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     console.log(name);
-
-    // route to '/poddisplay/{name}
     navigate(`../poddisplay/?podname=${name}`);
 
     // const selectedIndex = selected.indexOf(name);
@@ -366,7 +364,7 @@ export default function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  // const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -376,8 +374,11 @@ export default function EnhancedTable() {
     <div>
       <Box sx={{ width: '100%' }}>
         <div style={{display: 'flex', justifyContent: 'right'}}><NamespaceDropDown setRows={setRows}/></div>
-        <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} />
+        <Paper
+        sx={{ width: '100%', mb: 2 }}
+        >
+          {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
+          <EnhancedTableToolbar />
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -385,10 +386,10 @@ export default function EnhancedTable() {
               size={dense ? 'small' : 'medium'}
             >
               <EnhancedTableHead
-                numSelected={selected.length}
+                // numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
+                // onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
               />
@@ -398,7 +399,7 @@ export default function EnhancedTable() {
                 {stableSort(rows, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
+                    // const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
@@ -406,10 +407,10 @@ export default function EnhancedTable() {
                         hover
                         onClick={(event) => handleClick(event, row.name)}
                         role="checkbox"
-                        aria-checked={isItemSelected}
+                        // aria-checked={isItemSelected}
                         tabIndex={-1}
                         key={row.name}
-                        selected={isItemSelected}
+                        // selected={isItemSelected}
                       >
                         <TableCell padding="checkbox">
                         </TableCell>
