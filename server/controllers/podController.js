@@ -7,7 +7,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 podController.getCpuUsage = (req, res, next) => {
   const { pod } = req.query;
   console.log('pod name: ', pod);
-    fetch(`http://localhost:9090/api/v1/query_range?query=rate(container_cpu_usage_seconds_total{pod='${pod}'}[10m])&start=${start}&end=${end}&step=10m`)
+    fetch(`http://localhost:9090/api/v1/query_range?query=rate(container_cpu_usage_seconds_total{pod='${pod}'}[10m])*100&start=${start}&end=${end}&step=10m`)
     .then(response => response.json())
     .then(data => {
         console.log('cpu usage for', pod, ':', data);
