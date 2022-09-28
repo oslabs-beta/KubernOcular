@@ -1,23 +1,22 @@
-import React from 'react'
+import React from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Drawer from './Components/Drawer'
 import './style.css';
-import Nav from './Components/Nav';
-import Dashboard from "./Components/Dashboard";
-import PodsTab from "./Components/PodsTab";
-import NodesTab from "./Components/NodesTab";
-import { Routes, Route } from 'react-router-dom';
-import PodDisplay from './Components/PodDisplay';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 const App = () => {
   return (
-    <div id="main-container">
-    <Nav />
-
-    <Routes>
-      <Route path='/' element={<Dashboard/>} />
-      <Route path='/pods' element={<PodsTab />} />
-      <Route path='/nodes' element={<NodesTab />} />
-      <Route path='/poddisplay' element={<PodDisplay />} />
-    </Routes>
+    <div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Drawer />
+    </ThemeProvider>
     </div>
   )
 }

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { FC, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -19,9 +18,12 @@ import {
   CoreScaleOptions,
   Filler,
 } from 'chart.js';
+<<<<<<< HEAD
 import { time } from "console";
 import { setConstantValue } from "typescript";
 import { linearBuckets } from "prom-client";
+=======
+>>>>>>> dev
 
 ChartJS.register(
   CategoryScale,
@@ -46,7 +48,6 @@ type MetricProps = {
 const initialData: ChartData<'line'> = {
   datasets: [],
 }
-
 
 const LineGraph: FC<MetricProps> = (props) => {
   const [chartLoaded, setChartLoaded] = useState(false);
@@ -108,8 +109,11 @@ const LineGraph: FC<MetricProps> = (props) => {
     }
   }
 
+<<<<<<< HEAD
 
   
+=======
+>>>>>>> dev
   useEffect(() => {
     fetch(props.query)
     .then(res => res.json())
@@ -192,6 +196,3 @@ const LineGraph: FC<MetricProps> = (props) => {
 }
 
 export default LineGraph;
-
-
-
