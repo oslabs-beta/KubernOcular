@@ -1,15 +1,8 @@
 import React from 'react';
-import './style.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Nav from './Components/Nav';
-import Sidebar from './Components/Sidebar';
-import Dashboard from "./Components/Dashboard";
-import PodsTab from "./Components/PodsTab";
-import NodesTab from "./Components/NodesTab";
-import { Routes, Route } from 'react-router-dom';
-import PodDisplay from './Components/PodDisplay';
-import NodeDisplay from './Components/NodeDisplay';
+import Drawer from './Components/Drawer'
+import './style.css';
 
 const darkTheme = createTheme({
   palette: {
@@ -19,21 +12,12 @@ const darkTheme = createTheme({
 
 const App = () => {
   return (
-
+    <div>
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <div id="main-container">
-        <Sidebar />
-        <Routes>
-          <Route path='/' element={<Dashboard/>} />
-          <Route path='/pods' element={<PodsTab />} />
-          <Route path='/nodes' element={<NodesTab />} />
-          <Route path='/poddisplay' element={<PodDisplay />} />
-          <Route path='/nodedisplay' element={<NodeDisplay />} />
-        </Routes>
-      </div>
+      <Drawer />
     </ThemeProvider>
-
+    </div>
   )
 }
 

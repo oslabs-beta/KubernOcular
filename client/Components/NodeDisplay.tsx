@@ -1,10 +1,6 @@
 import React from "react";
-import { useState } from "react";
 import { FC } from 'react';
-import Nav from './Nav';
-import LineGraph from "./LineGraph";
-import { useNavigate, useSearchParams } from 'react-router-dom'
-// import { allChartData, ConfigBlock, CoreData } from "./ClusterGraphs/ClusterDummyData";
+import { useNavigate } from 'react-router-dom'
 
 const NodeDisplay: FC = () => {
   const navigate = useNavigate();
