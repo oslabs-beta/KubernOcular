@@ -43,6 +43,9 @@ function NamespaceDropDown(props: {setRows: Function}) {
     if (namespace !== 'backdropClick') setSelectedNamespace(namespace);
   };
 
+  console.log('selected NS: ', selectedNamespace);
+
+
   // retrieve namespaces on load to render in namespace dropdown
   React.useEffect((): void => {
     const namespaceArr: string[] = [];
