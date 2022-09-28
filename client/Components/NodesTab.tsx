@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom'
-import Nav from './Nav';
-import NodeDisplay from './NodeDisplay';
 import axios from "axios";
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -24,7 +21,6 @@ import { visuallyHidden } from '@mui/utils';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { red } from '@mui/material/colors';
 
 function NamespaceDropDown(props: {setRows: Function}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
