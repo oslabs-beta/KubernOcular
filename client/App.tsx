@@ -1,6 +1,7 @@
 import React from 'react'
 import './style.css';
 import Nav from './Components/Nav';
+import Sidebar from './Components/Sidebar'
 import Dashboard from "./Components/Dashboard";
 import PodsTab from "./Components/PodsTab";
 import NodesTab from "./Components/NodesTab";
@@ -10,7 +11,7 @@ import PodDisplay from './Components/PodDisplay';
 const App = () => {
   return (
     <div id="main-container">
-    <Nav />
+    <Sidebar />
 
     <Routes>
       <Route path='/' element={<Dashboard/>} />
