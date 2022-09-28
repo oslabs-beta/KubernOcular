@@ -18,12 +18,9 @@ import {
   CoreScaleOptions,
   Filler,
 } from 'chart.js';
-<<<<<<< HEAD
 import { time } from "console";
 import { setConstantValue } from "typescript";
 import { linearBuckets } from "prom-client";
-=======
->>>>>>> dev
 
 ChartJS.register(
   CategoryScale,
@@ -109,11 +106,7 @@ const LineGraph: FC<MetricProps> = (props) => {
     }
   }
 
-<<<<<<< HEAD
 
-  
-=======
->>>>>>> dev
   useEffect(() => {
     fetch(props.query)
     .then(res => res.json())
