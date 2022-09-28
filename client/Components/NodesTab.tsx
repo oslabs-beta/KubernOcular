@@ -371,6 +371,7 @@ export default function EnhancedTable() {
         sx={{ width: '100%', mb: 2 }}
         >
           {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
+          <EnhancedTableToolbar />
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -442,8 +443,10 @@ export default function EnhancedTable() {
           />
         </Paper>
         <FormControlLabel
-          control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Dense padding"
+          control={<Switch checked={dense}
+          onChange={handleChangeDense} />}
+          label="compact display"
+          sx={{ ml: 3 }}
         />
       </Box>
     </div>
