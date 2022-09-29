@@ -78,6 +78,9 @@ function NamespaceDropDown(props: {setRows: Function}) {
     <div>
       <Button
         id="basic-button"
+        color="secondary"
+        variant="outlined"
+        sx={{ mb: 2.5 }}
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
@@ -319,7 +322,9 @@ export default function EnhancedTable() {
   const navigate = useNavigate();
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     console.log(name);
-    navigate(`../nodedisplay/`);
+    
+    // change this later as you dont search node using pod name
+    navigate(`../nodedisplay/?podname=${name}`);
 
     // const selectedIndex = selected.indexOf(name);
     // let newSelected: readonly string[] = [];
@@ -439,7 +444,8 @@ export default function EnhancedTable() {
           />
         </Paper>
         <FormControlLabel
-          control={<Switch checked={dense}
+          control={<Switch color="secondary"
+          checked={dense}
           onChange={handleChangeDense} />}
           label="compact display"
           sx={{ ml: 3 }}
