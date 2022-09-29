@@ -28,10 +28,6 @@ p {
   text-align: left;
 }
 
-button:hover {
-  color: rgb(112, 239, 217);
-}
-
 .graph, .loading {
   /* display: flex; */
   padding: 1vw;
