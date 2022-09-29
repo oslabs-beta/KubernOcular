@@ -112,7 +112,7 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} style={{ backgroundColor: 'black' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -140,7 +140,7 @@ export default function MiniDrawer() {
         <Divider />
         <List>
         <ListItem key='Cluster' disablePadding sx={{ display: 'block' }}>
-              <Link to='/'><ListItemButton
+              <Link to='/' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -160,7 +160,7 @@ export default function MiniDrawer() {
               </ListItemButton></Link>
             </ListItem>
             <ListItem key='Nodes' disablePadding sx={{ display: 'block' }}>
-            <Link to='/nodes'><ListItemButton
+            <Link to='/nodes' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -180,7 +180,7 @@ export default function MiniDrawer() {
               </ListItemButton></Link>
             </ListItem>
             <ListItem key='Pods' disablePadding sx={{ display: 'block' }}>
-              <Link to='/pods'><ListItemButton
+              <Link to='/pods' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
