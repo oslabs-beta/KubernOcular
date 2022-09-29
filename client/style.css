@@ -39,8 +39,13 @@ p {
   min-height: 500px; */
 }
 
+#logo-icon {
+  max-height: 30px;
+  margin-left: -10px;
+}
+
 #logo {
-  max-height: 60px;
+  max-height: 40px;
   /* padding-right: 1vw; */
   /* margin-bottom: 25px; */
   /* object-fit: contain; */
