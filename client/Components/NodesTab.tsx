@@ -22,86 +22,86 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-function NamespaceDropDown(props: {setRows: Function}) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [namespaces, setNamespaces] = React.useState<JSX.Element[]>([]);
-  const [selectedNamespace, setSelectedNamespace] = React.useState<string>('');
+// function NamespaceDropDown(props: {setRows: Function}) {
+//   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+//   const [namespaces, setNamespaces] = React.useState<JSX.Element[]>([]);
+//   const [selectedNamespace, setSelectedNamespace] = React.useState<string>('');
 
-  const open = Boolean(anchorEl);
+//   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+//   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+//     setAnchorEl(event.currentTarget);
+//   };
 
-  const handleClose = (event: React.MouseEvent<unknown>, namespace: string): void => {
-    console.log(event);
-    setAnchorEl(null);
-    if (namespace !== 'backdropClick') setSelectedNamespace(namespace);
-  };
+//   const handleClose = (event: React.MouseEvent<unknown>, namespace: string): void => {
+//     console.log(event);
+//     setAnchorEl(null);
+//     if (namespace !== 'backdropClick') setSelectedNamespace(namespace);
+//   };
 
-  // retrieve namespaces on load to render in namespace dropdown
-  React.useEffect((): void => {
-    const namespaceArr: string[] = [];
-    const fetchNamespaces = async () => {
-        const allNamespaces = await axios.get('../api/cluster/namespaces');
-        const tempArray: JSX.Element[] = [];
-        for (const namespace of allNamespaces.data) {
-          namespaceArr.push(namespace);
-          tempArray.push(
-            <MenuItem onClick={(event) => handleClose(event, namespace)}>{namespace}</MenuItem>
-          )
-        }
-        setNamespaces(tempArray);
-    };
-    fetchNamespaces()
-    .then(() => setSelectedNamespace(namespaceArr[0]));
-  }, [])
+//   // retrieve namespaces on load to render in namespace dropdown
+//   React.useEffect((): void => {
+//     const namespaceArr: string[] = [];
+//     const fetchNamespaces = async () => {
+//         const allNamespaces = await axios.get('../api/cluster/namespaces');
+//         const tempArray: JSX.Element[] = [];
+//         for (const namespace of allNamespaces.data) {
+//           namespaceArr.push(namespace);
+//           tempArray.push(
+//             <MenuItem onClick={(event) => handleClose(event, namespace)}>{namespace}</MenuItem>
+//           )
+//         }
+//         setNamespaces(tempArray);
+//     };
+//     fetchNamespaces()
+//     .then(() => setSelectedNamespace(namespaceArr[0]));
+//   }, [])
 
-  console.log('selected NS: ', namespaces);
+//   console.log('selected NS: ', namespaces);
 
-  // retrieve nodes but no instant metrics yet
-  React.useEffect((): void => {
-    const fetchNodes = async () => {
-      const allNodes = await axios.get(`/api/cluster/nodes`);
-      console.log('all nodes: ', allNodes.data);
-      const newRows: any = {};
-      for (let i = 0; i < allNodes.data.length; i++) {
-        const nodeName = allNodes.data[i];
-        if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, 0, 0);
-      }
-      props.setRows(Object.values(newRows));
-    };
-    fetchNodes();
-  }, [])
+//   // retrieve nodes but no instant metrics yet
+//   // React.useEffect((): void => {
+//   //   const fetchNodes = async () => {
+//   //     const allNodes = await axios.get(`/api/cluster/nodes`);
+//   //     console.log('all nodes: ', allNodes.data);
+//   //     const newRows: any = {};
+//   //     for (let i = 0; i < allNodes.data.length; i++) {
+//   //       const nodeName = allNodes.data[i];
+//   //       if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, 0, 0);
+//   //     }
+//   //     props.setRows(Object.values(newRows));
+//   //   };
+//   //   fetchNodes();
+//   // }, [])
 
-  return (
-    <div>
-      <Button
-        id="basic-button"
-        color="secondary"
-        variant="outlined"
-        sx={{ mb: 2.5 }}
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        Namespace: {selectedNamespace}
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        {namespaces}
-      </Menu>
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <Button
+//         id="basic-button"
+//         color="secondary"
+//         variant="outlined"
+//         sx={{ mb: 2.5 }}
+//         aria-controls={open ? 'basic-menu' : undefined}
+//         aria-haspopup="true"
+//         aria-expanded={open ? 'true' : undefined}
+//         onClick={handleClick}
+//       >
+//         Namespace: {selectedNamespace}
+//       </Button>
+//       <Menu
+//         id="basic-menu"
+//         anchorEl={anchorEl}
+//         open={open}
+//         onClose={handleClose}
+//         MenuListProps={{
+//           'aria-labelledby': 'basic-button',
+//         }}
+//       >
+//         {namespaces}
+//       </Menu>
+//     </div>
+//   );
+// }
 
 interface Data {
   cpu: number;
@@ -267,7 +267,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         </Typography>
       ) : ( */}
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: '1 1 100%', ml: 1, }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -299,6 +299,20 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([createData('[empty]', 0 , 0)]);
 
+  // retrieve nodes but no instant metrics yet
+  React.useEffect((): void => {
+    const fetchNodes = async () => {
+      const allNodes = await axios.get(`/api/cluster/nodes`);
+      console.log('all nodes: ', allNodes.data);
+      const newRows: any = {};
+      for (let i = 0; i < allNodes.data.length; i++) {
+        const nodeName = allNodes.data[i];
+        if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, 0, 0);
+      }
+      setRows(Object.values(newRows));
+    };
+    fetchNodes();
+  }, [])
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -322,7 +336,7 @@ export default function EnhancedTable() {
   const navigate = useNavigate();
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     console.log(name);
-    
+
     // change this later as you dont search node using pod name
     navigate(`../nodedisplay/?podname=${name}`);
 
@@ -367,12 +381,12 @@ export default function EnhancedTable() {
   return (
     <div>
       <Box sx={{ width: '100%' }}>
-        <div style={{display: 'flex', justifyContent: 'right'}}><NamespaceDropDown setRows={setRows}/></div>
         <Paper
         sx={{ width: '100%', mb: 2 }}
         >
           {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
           <EnhancedTableToolbar />
+          {/* <div style={{display: 'flex', justifyContent: 'right', marginTop: -50, marginRight: 15 }}><NamespaceDropDown setRows={setRows}/></div> */}
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -444,7 +458,8 @@ export default function EnhancedTable() {
           />
         </Paper>
         <FormControlLabel
-          control={<Switch color="secondary"
+          control={<Switch
+          color="secondary"
           checked={dense}
           onChange={handleChangeDense} />}
           label="compact display"

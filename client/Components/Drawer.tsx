@@ -126,9 +126,16 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-          KubernOcular
-          </Typography>
+          {/* <img id='logo-icon' src='https://hmp.me/dydh' /> */}
+          {/* <img id='logo-icon' src='https://hmp.me/dydi' /> */}
+          <img id='logo-icon' src='https://hmp.me/dydj' />
+          {/* <img id='logo-icon' src='https://hmp.me/dydm' /> */}
+          <img id='logo' src='https://hmp.me/dydf' />
+          {/* <img id='logo' src='https://hmp.me/dydk' /> */}
+          {/* <img id='logo' src='https://hmp.me/dydl' /> */}
+          {/* <Typography variant="h6" noWrap component="div">
+            KubernOcular
+          </Typography> */}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
