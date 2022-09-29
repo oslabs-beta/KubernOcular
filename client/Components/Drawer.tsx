@@ -22,7 +22,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
+import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 
 const drawerWidth = 240;
 
@@ -152,7 +154,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <InboxIcon />
+                  <AccountTreeIcon />
                 </ListItemIcon>
                 <ListItemText primary='Cluster' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>
@@ -172,7 +174,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <InboxIcon />
+                  <DeveloperBoardIcon />
                 </ListItemIcon>
                 <ListItemText primary='Nodes' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>
@@ -192,7 +194,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <InboxIcon />
+                  <AutoAwesomeMotionIcon />
                 </ListItemIcon>
                 <ListItemText primary='Pods' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>
