@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import NodesTab from '../../client/Components/NodesTab';
+import Drawer from '../../client/Components/Drawer';
 import userEvent from '@testing-library/user-event';
 
 describe('Drawer', () => {
     beforeEach(() => {
-      render(<NodesTab />);
+      render(<Drawer />);
     });
 
     

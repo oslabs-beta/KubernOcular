@@ -1,6 +1,6 @@
-const express = require('express');
+import { ErrObject, express } from '../types';
+import { Request, Response, NextFunction }  from 'express';
 const app = express();
-const path = require('path');
 const cors = require('cors');
 const dashboardRouter = require('./routers/dashboardRouter');
 const clusterRouter = require('./routers/clusterRouter');
@@ -17,11 +17,9 @@ app.use('/api/cluster', clusterRouter);
 app.use('/api/pod', podRouter);
 // app.use('/api/node', nodeRouter);
 
+app.use('*', (req: Request, res: Response) => res.status(404).send('404 Page Not Found'));
 
-
-app.use('*', (req, res) => res.status(404).send('404 Page Not Found'));
-
-app.use((err, req, res, next) => {
+app.use((err: ErrObject, req: Request, res: Response, next: NextFunction) => {
     const defaultErr = {
       log: 'Express error handler caught unknown middleware error',
       status: 500,
