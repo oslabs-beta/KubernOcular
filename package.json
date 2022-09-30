@@ -2,11 +2,11 @@
   "name": "kubernocular",
   "version": "1.0.0",
   "description": "## readme in construction",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server/server.js",
-    "dev": "webpack-dev-server & nodemon server/server.js"
+    "dev": "webpack-dev-server & nodemon server/server.ts"
   },
   "repository": {
     "type": "git",
