@@ -22,7 +22,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
+import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 
 const drawerWidth = 240;
 
@@ -110,7 +112,7 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} style={{ backgroundColor: 'black' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -124,9 +126,16 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-          KubernOcular
-          </Typography>
+          {/* <img id='logo-icon' src='https://hmp.me/dydh' /> */}
+          {/* <img id='logo-icon' src='https://hmp.me/dydi' /> */}
+          <img id='logo-icon' src='https://hmp.me/dydj' />
+          {/* <img id='logo-icon' src='https://hmp.me/dydm' /> */}
+          <img id='logo' src='https://hmp.me/dydf' />
+          {/* <img id='logo' src='https://hmp.me/dydk' /> */}
+          {/* <img id='logo' src='https://hmp.me/dydl' /> */}
+          {/* <Typography variant="h6" noWrap component="div">
+            KubernOcular
+          </Typography> */}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -138,7 +147,7 @@ export default function MiniDrawer() {
         <Divider />
         <List>
         <ListItem key='Cluster' disablePadding sx={{ display: 'block' }}>
-              <Link to='/'><ListItemButton
+              <Link to='/' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -152,13 +161,13 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <InboxIcon />
+                  <AccountTreeIcon />
                 </ListItemIcon>
                 <ListItemText primary='Cluster' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>
             </ListItem>
             <ListItem key='Nodes' disablePadding sx={{ display: 'block' }}>
-            <Link to='/nodes'><ListItemButton
+            <Link to='/nodes' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -172,13 +181,13 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <InboxIcon />
+                  <DeveloperBoardIcon />
                 </ListItemIcon>
                 <ListItemText primary='Nodes' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>
             </ListItem>
             <ListItem key='Pods' disablePadding sx={{ display: 'block' }}>
-              <Link to='/pods'><ListItemButton
+              <Link to='/pods' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -192,7 +201,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <InboxIcon />
+                  <AutoAwesomeMotionIcon />
                 </ListItemIcon>
                 <ListItemText primary='Pods' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>

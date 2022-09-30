@@ -85,6 +85,9 @@ function NamespaceDropDown(props: {setRows: Function}) {
     <div>
       <Button
         id="basic-button"
+        color="secondary"
+        variant="outlined"
+        sx={{ mb: 2.5 }}
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
@@ -271,7 +274,7 @@ const EnhancedTableToolbar = () => {
         </Typography>
       ) : ( */}
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: '1 1 100%', ml: 1, }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -302,7 +305,6 @@ export default function EnhancedTable() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([createData('[empty]', 0 , 0)]);
-
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -369,12 +371,13 @@ export default function EnhancedTable() {
   return (
     <div>
       <Box sx={{ width: '100%' }}>
-        <div style={{display: 'flex', justifyContent: 'right'}}><NamespaceDropDown setRows={setRows}/></div>
+        
         <Paper
         sx={{ width: '100%', mb: 2 }}
         >
           {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
           <EnhancedTableToolbar />
+          <div style={{display: 'flex', justifyContent: 'right', marginTop: -50, marginRight: 15 }}><NamespaceDropDown setRows={setRows}/></div>
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -446,7 +449,9 @@ export default function EnhancedTable() {
           />
         </Paper>
         <FormControlLabel
-          control={<Switch checked={dense}
+          control={<Switch
+          color="secondary"
+          checked={dense}
           onChange={handleChangeDense} />}
           label="compact display"
           sx={{ ml: 3 }}

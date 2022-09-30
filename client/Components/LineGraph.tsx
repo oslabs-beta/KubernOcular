@@ -32,8 +32,6 @@ ChartJS.register(
   Legend,
 );
 
-
-
 type MetricProps = {
   query: string,
   label: string,
@@ -49,9 +47,6 @@ const initialData: ChartData<'line'> = {
 const LineGraph: FC<MetricProps> = (props) => {
   const [chartLoaded, setChartLoaded] = useState(false);
   const [data, setData] = useState(initialData);
-
-
- 
 
   const options: ChartOptions<'line'> = {
     animation: {
@@ -106,7 +101,6 @@ const LineGraph: FC<MetricProps> = (props) => {
     }
   }
 
-
   useEffect(() => {
     fetch(props.query)
     .then(res => res.json())
@@ -146,6 +140,7 @@ const LineGraph: FC<MetricProps> = (props) => {
       }
 
       console.log('yAxisValues', yAxisValues);
+      
       const newData: ChartData<'line'> = {
         labels: xAxisLabels,
         datasets: [{
