@@ -48,7 +48,23 @@ const clusterController: ClusterController = {
         .then((data: any) => {
             const output = [];
             for (const element of data.body.items) {
-                output.push(element.metadata.name);
+                console.log(element.status.addresses);
+                type Names = {
+                    name: string,
+                    ip: string
+                }
+                const names: Names = {
+                    name: '',
+                    ip: ''
+                };
+                for (const el of element.status.addresses) {
+                    if (el.type === 'Hostname') {
+                        names.name = el.address;
+                    } else if (el.type === 'InternalIP') {
+                        names.ip = el.address;
+                    }
+                };
+                output.push(names);
             }
             res.locals.nodes = output;
             return next();

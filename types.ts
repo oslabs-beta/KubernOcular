@@ -8,7 +8,9 @@ export const end = new Date(Date.now()).toISOString();
 export const fetch = (url: RequestInfo, init?: RequestInit) => import('node-fetch').then(({ default: fetch }) => fetch(url, init));
 export type NodeController = {
     getInstantNetworkTransmitBytes: RequestHandler,
-    getInstantNetworkRecievedBytes: RequestHandler,
+    getInstantNetworkReceiveBytes: RequestHandler,
+    getNetworkTransmitBytes: RequestHandler,
+    getNetworkReceiveBytes: RequestHandler
 }
 export type ClusterController = {
     getNamespaces: RequestHandler,

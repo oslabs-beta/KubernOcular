@@ -5,7 +5,7 @@ const cors = require('cors');
 const dashboardRouter = require('./routers/dashboardRouter');
 const clusterRouter = require('./routers/clusterRouter');
 const podRouter = require('./routers/podRouter');
-// const nodeRouter = require('./routers/nodeRouter');
+const nodeRouter = require('./routers/nodeRouter');
 
 
 app.use(cors());
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/cluster', clusterRouter);
 app.use('/api/pod', podRouter);
-// app.use('/api/node', nodeRouter);
+app.use('/api/node', nodeRouter);
 
 app.use('*', (req: Request, res: Response) => res.status(404).send('404 Page Not Found'));
 
