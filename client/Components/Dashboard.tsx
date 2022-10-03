@@ -24,15 +24,15 @@ const Dashboard: FC = () => {
         const tempArray: JSX.Element[] = [];
         for (const element in allNumInfo.data) {
           tempArray.push(
-            <Grid>
+            <Grid xs={2}>
               <Item>
                 <Box
                   id={element}
-                  sx={{ fontSize: '12px', textTransform: 'uppercase' }}
+                  sx={{ fontSize: '15px', textTransform: 'uppercase' }}
                 >
                   {element}
                 </Box>
-                <Box component="ul" aria-labelledby={element} sx={{ pl: 0, fontSize: '20px' }}>
+                <Box component="ul" aria-labelledby={element} sx={{ pl: 0, fontSize: '30px' }}>
                   {allNumInfo.data[element]}
                 </Box>
               </Item>
@@ -46,7 +46,7 @@ const Dashboard: FC = () => {
 
   return (
     <div>
-      <div id="box-container">
+      <div>
         <Box sx={{ flexGrow: 1, padding: '0px' }}>
           <Grid container id='num-info' spacing={2}>
             {numInfo}

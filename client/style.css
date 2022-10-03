@@ -5,9 +5,14 @@ body {
 
 #num-info {
   display: flex;
+  /* justify-content: space-between; */
   justify-content: center;
   align-items: center;
-  flex-wrap: nowrap;
+  margin-bottom: 10px;
+  /* width: 82vw; */
+  /* padding-left: 24px;
+  padding-right: 24px; */
+  /* flex-wrap: nowrap; */
 }
 
 #cpu-mem-graphs {
@@ -69,3 +74,7 @@ p {
   justify-content: center;
   align-items: center;
 }
+/* 
+.css-eacx88-MuiPaper-root {
+  width: 140px;
+} */
