@@ -3,7 +3,14 @@ body {
   color: white;
 }
 
-#dashboard-container {
+#num-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+#cpu-mem-graphs {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
