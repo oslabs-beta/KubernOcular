@@ -74,7 +74,10 @@ p {
   justify-content: center;
   align-items: center;
 }
-/* 
-.css-eacx88-MuiPaper-root {
-  width: 140px;
-} */
+
+
+
+.MuiTableBody-root {
+  cursor: pointer;
+}
+

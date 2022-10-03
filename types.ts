@@ -6,8 +6,9 @@ export const k8s = require('@kubernetes/client-node');
 export const start = new Date(Date.now() - (1440 * 60000)).toISOString();
 export const end = new Date(Date.now()).toISOString();
 export type NodeController = {
-    getInstantNetworkTransmitBytes: RequestHandler,
-    getInstantNetworkRecievedBytes: RequestHandler,
+    getInstantMetrics: RequestHandler,
+    getNetworkTransmitBytes: RequestHandler,
+    getNetworkReceiveBytes: RequestHandler
 }
 export type ClusterController = {
     getNamespaces: RequestHandler,
@@ -19,6 +20,8 @@ export type DashboardController = {
     getGeneralClusterInfo: RequestHandler,
     getTotalMem: RequestHandler,
     getTotalCpu: RequestHandler
+    getTotalTransmit: RequestHandler,
+    getTotalReceive: RequestHandler
 }
 export type NumOfData = {
     nodes: number,
