@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom'
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,103 +21,21 @@ import { visuallyHidden } from '@mui/utils';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
-// function NamespaceDropDown(props: {setRows: Function}) {
-//   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-//   const [namespaces, setNamespaces] = React.useState<JSX.Element[]>([]);
-//   const [selectedNamespace, setSelectedNamespace] = React.useState<string>('');
-
-//   const open = Boolean(anchorEl);
-
-//   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-//     setAnchorEl(event.currentTarget);
-//   };
-
-//   const handleClose = (event: React.MouseEvent<unknown>, namespace: string): void => {
-//     console.log(event);
-//     setAnchorEl(null);
-//     if (namespace !== 'backdropClick') setSelectedNamespace(namespace);
-//   };
-
-//   // retrieve namespaces on load to render in namespace dropdown
-//   React.useEffect((): void => {
-//     const namespaceArr: string[] = [];
-//     const fetchNamespaces = async () => {
-//         const allNamespaces = await axios.get('../api/cluster/namespaces');
-//         const tempArray: JSX.Element[] = [];
-//         for (const namespace of allNamespaces.data) {
-//           namespaceArr.push(namespace);
-//           tempArray.push(
-//             <MenuItem onClick={(event) => handleClose(event, namespace)}>{namespace}</MenuItem>
-//           )
-//         }
-//         setNamespaces(tempArray);
-//     };
-//     fetchNamespaces()
-//     .then(() => setSelectedNamespace(namespaceArr[0]));
-//   }, [])
-
-//   console.log('selected NS: ', namespaces);
-
-//   // retrieve nodes but no instant metrics yet
-//   // React.useEffect((): void => {
-//   //   const fetchNodes = async () => {
-//   //     const allNodes = await axios.get(`/api/cluster/nodes`);
-//   //     console.log('all nodes: ', allNodes.data);
-//   //     const newRows: any = {};
-//   //     for (let i = 0; i < allNodes.data.length; i++) {
-//   //       const nodeName = allNodes.data[i];
-//   //       if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, 0, 0);
-//   //     }
-//   //     props.setRows(Object.values(newRows));
-//   //   };
-//   //   fetchNodes();
-//   // }, [])
-
-//   return (
-//     <div>
-//       <Button
-//         id="basic-button"
-//         color="secondary"
-//         variant="outlined"
-//         sx={{ mb: 2.5 }}
-//         aria-controls={open ? 'basic-menu' : undefined}
-//         aria-haspopup="true"
-//         aria-expanded={open ? 'true' : undefined}
-//         onClick={handleClick}
-//       >
-//         Namespace: {selectedNamespace}
-//       </Button>
-//       <Menu
-//         id="basic-menu"
-//         anchorEl={anchorEl}
-//         open={open}
-//         onClose={handleClose}
-//         MenuListProps={{
-//           'aria-labelledby': 'basic-button',
-//         }}
-//       >
-//         {namespaces}
-//       </Menu>
-//     </div>
-//   );
-// }
-
 interface Data {
-  cpu: number;
-  mem: number;
   name: string;
+  transmit: number;
+  receive: number;
 }
 
 function createData(
   name: string,
-  cpu: number,
-  mem: number,
+  transmit: number,
+  receive: number,
 ): Data {
   return {
     name,
-    cpu,
-    mem,
+    transmit,
+    receive,
   };
 }
 
@@ -174,16 +92,16 @@ const headCells: readonly HeadCell[] = [
     label: 'Node Name',
   },
   {
-    id: 'cpu',
+    id: 'transmit',
     numeric: true,
     disablePadding: false,
-    label: 'CPU Usage',
+    label: 'Transmit Bytes',
   },
   {
-    id: 'mem',
+    id: 'receive',
     numeric: true,
     disablePadding: false,
-    label: 'Memory Usage',
+    label: 'Receive Bytes',
   }
 ];
 
@@ -292,16 +210,16 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('cpu');
+  const [orderBy, setOrderBy] = React.useState<keyof Data>('name');
   // const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([createData('[empty]', 0 , 0)]);
-  const defaultNameToIP: NameToIP = {};
+  const defaultNameToIP: StringMap = {};
   const [nameToIP, setNameToIP] = React.useState(defaultNameToIP)
 
-  type NameToIP = {
+  type StringMap = {
     [index: string]: string;
   }
 
@@ -309,15 +227,17 @@ export default function EnhancedTable() {
   // retrieve nodes but no instant metrics yet
   React.useEffect((): void => {
     const fetchNodes = async () => {
-      const allNodes = await axios.get(`/api/cluster/nodes`);
-      console.log('all nodes: ', allNodes.data);
+      const allNodes = await axios.get('/api/cluster/nodes');
+      const instantMetrics = await axios.get('/api/node/instant');
+      // console.log('all nodes: ', allNodes.data);
       const newRows: any = {};
-      const newNameToIP: NameToIP = {...nameToIP};
+      const newNameToIP: StringMap = {...nameToIP};
       for (let i = 0; i < allNodes.data.length; i++) {
         const nodeName: string = allNodes.data[i].name;
         const nodeIP: string = allNodes.data[i].ip;
         newNameToIP[nodeName] = nodeIP;
-        if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, 0, 0);
+        console.log(instantMetrics.data);
+        if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, Math.round(Number(instantMetrics.data[nodeIP].transmit)), Math.round(Number(instantMetrics.data[nodeIP].receive)));
       }
       setRows(Object.values(newRows));
       setNameToIP(newNameToIP);
@@ -442,8 +362,8 @@ export default function EnhancedTable() {
                         >
                           {row.name}
                         </TableCell>
-                        <TableCell align="right">{row.cpu}</TableCell>
-                        <TableCell align="right">{row.mem}</TableCell>
+                        <TableCell align="right">{row.transmit}</TableCell>
+                        <TableCell align="right">{row.receive}</TableCell>
                       </TableRow>
                     );
                   })}

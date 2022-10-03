@@ -92,6 +92,34 @@ const dashboardController: DashboardController = {
         message: { err: 'Error occured while retrieving dashboard cpu data' },
       });
     }
+  },
+
+  getTotalTransmit: async (req, res, next) => {
+    try {
+      const data = await axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(node_network_transmit_bytes_total[10m]))&start=${start}&end=${end}&step=10m`)
+      res.locals.totalTransmit = data;
+      return next();
+    } catch (err) {
+      return next({
+        log: `Error in dashboardController.getTotalTransmit: ${err}`,
+        status: 500,
+        message: { err: 'Error occured while retrieving dashboard bytes transmit data' },
+      });
+    }
+  },
+
+  getTotalReceive: async (req, res, next) => {
+    try {
+      const data = await axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(node_network_receive_bytes_total[10m]))&start=${start}&end=${end}&step=10m`)
+      res.locals.totalReceive = data;
+      return next();
+    } catch (err) {
+      return next({
+        log: `Error in dashboardController.getTotalReceive: ${err}`,
+        status: 500,
+        message: { err: 'Error occured while retrieving dashboard bytes receive data' },
+      });
+    }
   }
 
 }

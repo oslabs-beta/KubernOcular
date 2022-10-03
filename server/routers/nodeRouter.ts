@@ -11,4 +11,8 @@ nodeRouter.get('/transmit', nodeController.getNetworkTransmitBytes, (req: Reques
   return res.status(200).json(res.locals.transmitBytes.data);
 })
 
+nodeRouter.get('/instant', nodeController.getInstantMetrics, (req: Request, res: Response) => {
+  return res.status(200).json(res.locals.data);
+})
+
 module.exports = nodeRouter;
