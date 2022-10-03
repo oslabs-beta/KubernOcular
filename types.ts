@@ -1,11 +1,10 @@
 import { RequestHandler } from "express-serve-static-core";
-import { RequestInfo, RequestInit } from 'node-fetch';
+export const client = require('prom-client');
 export const express = require('express');
 export const axios = require('axios');
 export const k8s = require('@kubernetes/client-node');
 export const start = new Date(Date.now() - (1440 * 60000)).toISOString();
 export const end = new Date(Date.now()).toISOString();
-export const fetch = (url: RequestInfo, init?: RequestInit) => import('node-fetch').then(({ default: fetch }) => fetch(url, init));
 export type NodeController = {
     getInstantNetworkTransmitBytes: RequestHandler,
     getInstantNetworkRecievedBytes: RequestHandler,
@@ -16,8 +15,31 @@ export type ClusterController = {
     getNodes: RequestHandler
 }
 export type DashboardController = {
+    getNumberOf: RequestHandler,
+    getGeneralClusterInfo: RequestHandler,
     getTotalMem: RequestHandler,
     getTotalCpu: RequestHandler
+}
+export type NumOfData = {
+    nodes: number,
+    pods: number,
+    namespaces: number,
+    deployments: number,
+    ingresses: number,
+    services: number
+}
+export type GeneralData = {
+    totalUserCpu: number,
+    totalSystemCpu: number,
+    totalUserSystemCpu: number,
+    residentMemBytes: number,
+    eventLoopLag: number,
+    totalActiveResources: number,
+    totalActiveHandles: number,
+    totalActiveRequests: number,
+    heapSizeBytes: number,
+    heapSizeUsed: number,
+    //nodeDuration: number
 }
 export type PodController = {
     getCpuUsage: RequestHandler,
@@ -29,3 +51,4 @@ export type ErrObject = {
     status: number,
     message: { err: string }
 };
+
