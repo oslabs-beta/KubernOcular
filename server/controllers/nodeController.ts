@@ -3,18 +3,27 @@ import { start, end, NodeController, axios } from '../../types';
 
 const nodeController: NodeController = {
 
-    getInstantNetworkTransmitBytes: (req, res, next) => {
-        const { node } = req.query;
-        //node_network_transmit_bytes_total
-        // fetch(`http://localhost:9090/api/v1/query`)
-        return next();
-    },
-
-    getInstantNetworkReceiveBytes: (req, res, next) => {
-        const { node } = req.query;
-        //node_network_receive_bytes_total
-        // fetch(`http://localhost:9090/api/v1/query`)
-        return next();
+    getInstantMetrics: async (req, res, next) => {
+        try{
+            const responseTransmit = await axios.get(`http://localhost:9090/api/v1/query?query=sum(rate(node_network_transmit_bytes_total[10m]))by(instance)`);
+            const responseReceive = await axios.get(`http://localhost:9090/api/v1/query?query=sum(rate(node_network_receive_bytes_total[10m]))by(instance)`);
+            res.locals.data = {};
+            for (let i = 0; i < responseTransmit.data.data.result.length; i++) {
+                res.locals.data[responseTransmit.data.data.result[i].metric.instance.slice(0, -5)] = {
+                    transmit: responseTransmit.data.data.result[i].value[1],
+                    receive: responseReceive.data.data.result[i].value[1]
+                }
+            }
+            console.log(res.locals.data);
+            return next();
+        } catch(err) {
+            console.log(err);
+            return next({
+              log: 'Error in nodeController.getInstantMetrics middleware',
+              status: 500,
+              message: { err: 'An error occurred' },
+            })
+        }
     },
 
     getNetworkTransmitBytes: async (req, res, next) => {

@@ -47,7 +47,7 @@ const clusterController: ClusterController = {
         .then((data: any) => {
             const output = [];
             for (const element of data.body.items) {
-                console.log(element.status.addresses);
+                // console.log(element.status.addresses);
                 type Names = {
                     name: string,
                     ip: string

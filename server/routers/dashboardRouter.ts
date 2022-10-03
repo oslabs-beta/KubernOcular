@@ -19,4 +19,12 @@ dashboardRouter.get('/cpu', dashboardController.getTotalCpu, (req: Request, res:
     return res.status(200).send(res.locals.totalCpu.data);
 });
 
+dashboardRouter.get('/transmit', dashboardController.getTotalTransmit, (req: Request, res: Response) => {
+    return res.status(200).send(res.locals.totalTransmit.data);
+});
+
+dashboardRouter.get('/receive', dashboardController.getTotalReceive, (req: Request, res: Response) => {
+    return res.status(200).send(res.locals.totalReceive.data);
+});
+
 module.exports = dashboardRouter;
