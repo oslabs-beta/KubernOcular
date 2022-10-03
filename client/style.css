@@ -69,3 +69,7 @@ p {
   justify-content: center;
   align-items: center;
 }
+
+.MuiTableBody-root {
+  cursor: pointer;
+}
