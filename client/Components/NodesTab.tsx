@@ -298,6 +298,13 @@ export default function EnhancedTable() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([createData('[empty]', 0 , 0)]);
+  const defaultNameToIP: NameToIP = {};
+  const [nameToIP, setNameToIP] = React.useState(defaultNameToIP)
+
+  type NameToIP = {
+    [index: string]: string;
+  }
+
 
   // retrieve nodes but no instant metrics yet
   React.useEffect((): void => {
@@ -305,11 +312,15 @@ export default function EnhancedTable() {
       const allNodes = await axios.get(`/api/cluster/nodes`);
       console.log('all nodes: ', allNodes.data);
       const newRows: any = {};
+      const newNameToIP: NameToIP = {...nameToIP};
       for (let i = 0; i < allNodes.data.length; i++) {
-        const nodeName = allNodes.data[i];
+        const nodeName: string = allNodes.data[i].name;
+        const nodeIP: string = allNodes.data[i].ip;
+        newNameToIP[nodeName] = nodeIP;
         if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, 0, 0);
       }
       setRows(Object.values(newRows));
+      setNameToIP(newNameToIP);
     };
     fetchNodes();
   }, [])
@@ -336,9 +347,10 @@ export default function EnhancedTable() {
   const navigate = useNavigate();
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     console.log(name);
+    console.log(nameToIP);
 
     // change this later as you dont search node using pod name
-    navigate(`../nodedisplay/?podname=${name}`);
+    navigate(`../nodedisplay/?nodeip=${nameToIP[name]}&name=${name}`);
 
     // const selectedIndex = selected.indexOf(name);
     // let newSelected: readonly string[] = [];

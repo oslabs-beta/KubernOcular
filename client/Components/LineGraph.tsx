@@ -74,7 +74,6 @@ const LineGraph: FC<MetricProps> = (props) => {
     scales: { // <-- ScaleChartOptions
       y: {  // <-- ScaleOptionsByType
         display: true, // <-- any options within CartesianScaleTypeRegistry
-        // labels: ['hello', 'world'],
         axis: 'y',
         title: {
           display: true,
@@ -125,7 +124,7 @@ const LineGraph: FC<MetricProps> = (props) => {
         // displayDate = false;
         return timeString;
       });
-      console.log('xAxisLabels:', xAxisLabels)
+      console.log('xAxisLabels:', xAxisLabels);
       console.log('Useful data:', usefulData);
       console.log(props.yAxisType)
       let yAxisValues: number[] = []       
@@ -133,8 +132,8 @@ const LineGraph: FC<MetricProps> = (props) => {
         case 'gigabytes': 
           yAxisValues = usefulData.map((value: [number, string]) => Number(value[1]) / 1000000000)
           break;
-        // case 'percent':
-        //   yAxisValues = usefulData.map((value: [number, string]) => Number(value[1]))
+        case 'kilobytes':
+          yAxisValues = usefulData.map((value: [number, string]) => Number(value[1]) / 1000000)
         default:
           yAxisValues = usefulData.map((value: [number, string]) => Number(value[1]))
       }

@@ -7,7 +7,9 @@ export const start = new Date(Date.now() - (1440 * 60000)).toISOString();
 export const end = new Date(Date.now()).toISOString();
 export type NodeController = {
     getInstantNetworkTransmitBytes: RequestHandler,
-    getInstantNetworkRecievedBytes: RequestHandler,
+    getInstantNetworkReceiveBytes: RequestHandler,
+    getNetworkTransmitBytes: RequestHandler,
+    getNetworkReceiveBytes: RequestHandler
 }
 export type ClusterController = {
     getNamespaces: RequestHandler,

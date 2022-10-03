@@ -7,7 +7,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const NodeDisplay: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const pod = searchParams.get("podname")
+  const nodeIP = searchParams.get("nodeip");
+  const nodeName = searchParams.get("name");
   const navigate = useNavigate();
   return (
     <div>
@@ -23,8 +24,8 @@ const NodeDisplay: FC = () => {
       </Button>
     </div>
     <div id="dashboard-container">
-      <LineGraph label={`CPU Usage: ${pod}`} query={`/api/pod/cpu?pod=${pod}`} backgroundColor="rgba(54, 162, 235, 0.2)" borderColor="rgba(54, 162, 235, 1)" yAxisType="percent"/>
-      <LineGraph label={`Memory Usage: ${pod}`} query={`/api/pod/mem?pod=${pod}`} backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="gigabytes"/>
+      <LineGraph label={`Network Received Bytes Total for ${nodeName}`} query={`/api/node/receive?nodeIP=${nodeIP}`} backgroundColor="rgba(54, 162, 235, 0.2)" borderColor="rgba(54, 162, 235, 1)" yAxisType="kilobytes"/>
+      <LineGraph label={`Network Transmit Bytes Total for ${nodeName}`} query={`/api/node/transmit?nodeIP=${nodeIP}`} backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="kilobytes"/>
     </div>
   </div>
   )
