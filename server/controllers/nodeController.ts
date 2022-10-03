@@ -1,4 +1,4 @@
-import { start, end, NodeController, fetch, axios } from '../../types';
+import { start, end, NodeController, axios } from '../../types';
 
 
 const nodeController: NodeController = {
@@ -7,13 +7,17 @@ const nodeController: NodeController = {
         const { node } = req.query;
         //node_network_transmit_bytes_total
         // fetch(`http://localhost:9090/api/v1/query`)
+<<<<<<< HEAD
         return next();
+=======
+>>>>>>> dev
     },
 
     getInstantNetworkReceiveBytes: (req, res, next) => {
         const { node } = req.query;
         //node_network_receive_bytes_total
         // fetch(`http://localhost:9090/api/v1/query`)
+<<<<<<< HEAD
         return next();
     },
 
@@ -47,6 +51,8 @@ const nodeController: NodeController = {
                 message: {err: 'Error occured while retrieving node recieve bytes data'},
             });
         }
+=======
+>>>>>>> dev
     }
 
 }

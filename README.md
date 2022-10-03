@@ -2,18 +2,21 @@
 
 ## Set Up
 
-0. Prerequisites:
-        - Have docker desktop installed on your machine with kubernetes enabled: https://www.docker.com/products/docker-desktop/
-        - Have kubectl installed on your machine
-                - For MacOS: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/
-                - For Windows: https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
-                - For Linux: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+### Prerequisites:
+- Install Docker Desktop on your machine: https://www.docker.com/products/docker-desktop/
+- Enable Kubernetes in Docker Desktop settings
+- Install kubectl on your machine:  
+  - For MacOS: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/   
+  - For Windows: https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/  
+  - For Linux: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+  
 
+### Terminal Commands:
 1. Clone this repository onto your local machine
         
         git clone https://github.com/oslabs-beta/KubernOcular.git
         
-2. Install helm using the appropriate terminal commands
+2. Install Helm using the appropriate terminal commands
 
     For MacOS/Homebrew:
         
@@ -35,7 +38,7 @@
 
         sudo apt-get install helm
 
-3. Once helm is properly installed, add the helm-charts repository
+3. Once Helm is properly installed, add the helm-charts repository
 
         helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
@@ -43,7 +46,7 @@
 
         helm install --set prometheus-node-exporter.hostRootFsMount.enabled=false prometheus prometheus-community/kube-prometheus-stack
 
-5. Port-forward the prometheus api to http://localhost:9090
+5. Port-forward the Prometheus API to http://localhost:9090
 
         kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090
 
@@ -51,25 +54,25 @@
 
         npm run dev
 
-7. When you are finished using KubernOcular, uninstall the prometheus monitoring stack - this should also delete the prometheus running cluster
+7. When you are finished using KubernOcular, uninstall the prometheus monitoring stack — this should also delete the prometheus running cluster
 
         helm uninstall prometheus
 
 ## Technologies
 
 * [React](https://reactjs.org/)
-* [Webpack](https://webpack.js.org/)
 * [React Router](https://reactrouter.com/en/main)
 * [TypeScript](https://www.typescriptlang.org/)
+* [Material UI](https://mui.com/)
+* [Chart.js](https://www.chartjs.org/)
 * [Node](https://nodejs.org/en/)
 * [Express](https://expressjs.com/)
 * [Kubernetes-Client](https://www.npmjs.com/package/kubernetes-client)
 * [Prometheus/PromQL](https://prometheus.io/)
-* [Chart.js](https://www.chartjs.org/)
-* [Material UI](https://mui.com/)
 * [Jest](https://jestjs.io/)
 * [Puppeteer](https://pptr.dev/)
 * [Supertest](https://www.npmjs.com/package/supertest)
+* [Webpack](https://webpack.js.org/)
 
 ## The KubernOcular Team
 

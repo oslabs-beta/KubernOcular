@@ -1,10 +1,9 @@
-import { start, end, PodController, fetch, axios } from '../../types';
+import { start, end, PodController, axios } from '../../types';
 
 const podController: PodController = {
 
   getCpuUsage: async (req, res, next) => {
     const { pod } = req.query;
-    // console.log('pod name: ', pod);
     try {
       const data = await axios.get(`http://localhost:9090/api/v1/query_range?query=rate(container_cpu_usage_seconds_total{pod='${pod}'}[10m])*100&start=${start}&end=${end}&step=10m`)
       res.locals.cpuUsage = data;
@@ -51,6 +50,7 @@ const podController: PodController = {
       })
     }
   }
+  
 }
 
 module.exports = podController;

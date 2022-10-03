@@ -11,12 +11,22 @@ const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 
 const client = require('prom-client');
 client.collectDefaultMetrics();
-// console.log(client.register._metrics);
+
 client.register.getMetricsAsJSON()
-.then(data => console.log(data));
-// const register = new Registry();
-// register.clusterMetrics()
-// .then(data => console.log(data));
+.then(data => console.log(data[26].values));
+;
+
+// total user CPU time = data[0].values[0].value
+// total system CPU time = data[1].values[0].value
+// total user&system CPU = data[2].values[0].value
+// resident memory size in bytes = data[4].values[0].value
+// lag of event loop in seoncds = data[5].values[0].value
+// total number of active resources = data[14].values[0].value
+// total number of active handles = data[16].values[0].value
+// total number of active requests = data[18].values[0].value
+// process heap size from Node = data[19].values[0].value
+// process heap size used from Node = data[20].values[0].value
+// node duration seconds = data[26].values[0].value
 
 
 
@@ -27,9 +37,9 @@ k8sApi.listNamespacedPod('default')
 .then(data => {
     const output = [];
     for (const element of data.body.items) {
-        output.push(element.metadata.ownerReferences[0].name);
+        output.push(element.metadata.name);
     }
-    console.log(output);
+    // console.log(output);
 })
 
 k8sApi.listNamespace()
@@ -39,18 +49,20 @@ k8sApi.listNamespace()
     for (const element of data.body.items) {
         output.push(element.metadata.name);
     }
-    console.log(output);
+    // console.log(output);
 })
 
-k8sApi.listNode('default')
+k8sApi.listNode()
 .then(data => {
     const output = [];
     for (const element of data.body.items) {
         output.push(element.metadata.name);
     }
-    console.log(output);
+    // console.log(output);
 }) 
 
+
+k8sApi.list
 
 
 
