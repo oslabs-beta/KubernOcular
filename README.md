@@ -3,11 +3,12 @@
 ## Set Up
 
 ### Prerequisites:
-- Have Docker Desktop installed on your machine with Kubernetes enabled: https://www.docker.com/products/docker-desktop/
-- Have kubectl installed on your machine:  
-        - For MacOS: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/   
-        - For Windows: https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/  
-        - For Linux: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+- Install Docker Desktop on your machine: https://www.docker.com/products/docker-desktop/
+- Enable Kubernetes in Docker Desktop settings
+- Install kubectl on your machine:  
+  - For MacOS: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/   
+  - For Windows: https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/  
+  - For Linux: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
   
 
 ### Terminal Commands:
