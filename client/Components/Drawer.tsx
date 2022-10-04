@@ -12,7 +12,6 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -26,7 +25,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 
-const drawerWidth = 240;
+const drawerWidth = 175;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
