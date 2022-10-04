@@ -5,17 +5,12 @@ body {
 
 #num-info {
   display: flex;
-  /* justify-content: space-between; */
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  /* width: 82vw; */
-  /* padding-left: 24px;
-  padding-right: 24px; */
-  /* flex-wrap: nowrap; */
 }
 
-#cpu-mem-graphs {
+#metric-graphs {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -41,14 +36,11 @@ p {
 }
 
 .graph, .loading {
-  /* display: flex; */
   padding: 1vw;
   margin: 10px;
   width: 40vw;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 10px;
-  /* min-width: 400px;
-  min-height: 500px; */
 }
 
 #logo-icon {
@@ -58,9 +50,6 @@ p {
 
 #logo {
   max-height: 40px;
-  /* padding-right: 1vw; */
-  /* margin-bottom: 25px; */
-  /* object-fit: contain; */
 }
 
 #kubernocular-logo {
@@ -75,9 +64,6 @@ p {
   align-items: center;
 }
 
-
-
 .MuiTableBody-root {
   cursor: pointer;
 }
-
