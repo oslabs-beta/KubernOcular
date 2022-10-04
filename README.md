@@ -1,4 +1,4 @@
-# KubernOcular
+# ![KubernOcular Logo](https://hmp.me/dyf9)
 
 ## Set Up
 

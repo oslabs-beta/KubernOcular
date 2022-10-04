@@ -25,7 +25,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 
-const drawerWidth = 240;
+const drawerWidth = 175;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
