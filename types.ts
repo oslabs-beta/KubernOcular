@@ -79,7 +79,8 @@ export type Elements = {
         id?: string,
         label?: string,
         source?: string,
-        target?: string
+        target?: string,
+        type?: string
     },
     position?: {
         x: number,
