@@ -9,30 +9,23 @@ client.collectDefaultMetrics();
 const dashboardController: DashboardController = {
 
   getNumberOf: async (req, res, next) => {
+    const [ nodeList, podList, namespaceList, deploymentList, ingressList, serviceList ] = [ 
+      k8sApi.listNode(), k8sApi.listPodForAllNamespaces(), k8sApi.listNamespace(), k8sApi1.listDeploymentForAllNamespaces(), 
+      k8sApi3.listIngressForAllNamespaces(), k8sApi.listServiceForAllNamespaces()];
+    
+    const data = await Promise.all([ nodeList, podList, namespaceList, deploymentList, ingressList, serviceList ])
     const numOfData: NumOfData = {
-      nodes: 0,
-      pods: 0,
-      namespaces: 0,
-      deployments: 0,
-      ingresses: 0,
-      services: 0
+      nodes: data[0].body.items.length,
+      pods: data[1].body.items.length,
+      namespaces: data[2].body.items.length,
+      deployments: data[3].body.items.length,
+      ingresses: data[4].body.items.length,
+      services: data[5].body.items.length
     };
-    k8sApi.listNode()
-    .then((data: any) => numOfData.nodes = data.body.items.length);
-    k8sApi.listPodForAllNamespaces()
-    .then((data: any) => numOfData.pods = data.body.items.length);
-    k8sApi.listNamespace()
-    .then((data: any) => numOfData.namespaces = data.body.items.length);
-    k8sApi1.listDeploymentForAllNamespaces()
-    .then((data: any) => numOfData.deployments = data.body.items.length);
-    k8sApi3.listIngressForAllNamespaces()
-    .then((data: any) => numOfData.ingresses = data.body.items.length);
-    k8sApi.listServiceForAllNamespaces()
-    .then((data: any) => {
-      numOfData.services = data.body.items.length;
-      res.locals.data = numOfData;
-      return next();
-    })
+
+    console.log(numOfData);
+    res.locals.data = numOfData;
+    return next();
   },
 
   getGeneralClusterInfo: async (req, res, next) => {
