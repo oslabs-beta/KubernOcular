@@ -1,8 +1,11 @@
-import { start, end, CustomController, axios } from '../../types';
+import cluster from 'cluster';
+import { start, end, CustomController, axios, CustomQuery } from '../../types';
 
 const customController: CustomController = {
 
-  customQueries: [],
+  customClusterQueries: [],
+  customNodeQueries: [],
+  customPodQueries: [],
 
   testCustomRoute: async (req, res, next) => {
     const { query } = req.body;
@@ -27,9 +30,13 @@ const customController: CustomController = {
   addCustomRoute: async (req, res, next) => {
     try {
       if (res.locals.valid) {
-        const { query, name, applyToPods, applyToNodes } = req.body;
-        customController.customQueries.push({query, name, applyToPods, applyToNodes});
-        console.log('new custom queries:', customController.customQueries);
+        const { query, name, scope } = req.body;
+        let scopedQueries: CustomQuery[] = [];
+        if (scope === 'cluster') scopedQueries = customController.customClusterQueries;
+        else if (scope === 'node') scopedQueries = customController.customNodeQueries;
+        else if (scope === 'pod') scopedQueries = customController.customPodQueries;
+        else throw 'Scope parameter must be defined as cluster, node, or pod';
+        scopedQueries.push({ query, name })
         res.locals.addedRoute = true;
       } else {
         res.locals.addedRoute = false;
@@ -40,6 +47,24 @@ const customController: CustomController = {
         log: `Error in customController.addCustomRoute: ${err}`,
         status: 500,
         message: {err: 'Error occured while adding custom query route'},
+      });
+    }
+  },
+
+  getCustomRoutes: async (req, res, next) => {
+    try {
+      const { scope } = req.query;
+      let scopedQueries: CustomQuery[] = [];
+      if (scope === 'cluster') scopedQueries = customController.customClusterQueries;
+      else if (scope === 'node') scopedQueries = customController.customNodeQueries;
+      else if (scope === 'pod') scopedQueries = customController.customPodQueries;
+      else throw 'Scope parameter must be defined as cluster, node, or pod';
+      // resolve custom queries here
+    } catch(err) {
+      return next({
+        log: `Error in customController.getCustomRoutes: ${err}`,
+        status: 500,
+        message: {err: 'Error occured while getting custom queries'},
       });
     }
   }
