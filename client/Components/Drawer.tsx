@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
-import Dashboard from "./Dashboard";
-import PodsTab from "./PodsTab";
-import NodesTab from "./NodesTab";
+import Dashboard from './Dashboard';
+import PodsTab from './PodsTab';
+import NodesTab from './NodesTab';
+import VisualizerTab from './VisualizerTab'
 import PodDisplay from './PodDisplay';
 import NodeDisplay from './NodeDisplay';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
@@ -205,6 +206,26 @@ export default function MiniDrawer() {
                 <ListItemText primary='Pods' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>
             </ListItem>
+            <ListItem key='Visualizer' disablePadding sx={{ display: 'block' }}>
+              <Link to='/visual' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <AutoAwesomeMotionIcon />
+                </ListItemIcon>
+                <ListItemText primary='Visualizer' sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton></Link>
+            </ListItem>
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
@@ -213,6 +234,7 @@ export default function MiniDrawer() {
           <Route path='/' element={<Dashboard/>} />
           <Route path='/pods' element={<PodsTab />} />
           <Route path='/nodes' element={<NodesTab />} />
+          <Route path='/visual' element={<VisualizerTab />} />
           <Route path='/poddisplay' element={<PodDisplay />} />
           <Route path='/nodedisplay' element={<NodeDisplay />} />
         </Routes>

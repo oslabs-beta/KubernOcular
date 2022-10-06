@@ -59,9 +59,26 @@ export type PodController = {
     getMemUsage: RequestHandler,
     getInstantMetrics: RequestHandler
 }
+
+export type HierarchyController = {
+    getElements: RequestHandler
+}
+
 export type ErrObject = {
     log: string,
     status: number,
     message: { err: string }
 };
 
+export type Elements = {
+    data: {
+        id?: string,
+        label?: string,
+        source?: string,
+        target?: string
+    },
+    position?: {
+        x: number,
+        y: number
+    }
+}
