@@ -23,15 +23,17 @@ export type DashboardController = {
     getTotalTransmit: RequestHandler,
     getTotalReceive: RequestHandler
 }
+export type CustomQuery = {
+    query: string,
+    name: string
+}
 export type CustomController = {
-    customQueries: {
-        query: string,
-        name: string,
-        applyToPods: boolean,
-        applyToNodes: boolean
-    }[];
+    customClusterQueries: CustomQuery[],
+    customNodeQueries: CustomQuery[],
+    customPodQueries: CustomQuery[],
     testCustomRoute: RequestHandler,
-    addCustomRoute: RequestHandler
+    addCustomRoute: RequestHandler,
+    getCustomRoutes: RequestHandler
 }
 export type NumOfData = {
     nodes: number,
