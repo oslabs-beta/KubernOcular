@@ -12,7 +12,7 @@ customRouter.post('/queries', customController.testCustomRoute, customController
   return res.status(status).json(res.locals.addedRoute);
 });
 
-customRouter.get('/queries', customController.getCustomRoutes, (req: Request, res: Response) => {
+customRouter.get('/queries', customController.getCustomRoute, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.data);
 });
 
