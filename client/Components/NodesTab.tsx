@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom'
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,14 +13,9 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 interface Data {
   name: string;
   transmit: number;
@@ -106,16 +101,13 @@ const headCells: readonly HeadCell[] = [
 ];
 
 interface EnhancedTableProps {
-  // numSelected: number;
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-  // onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
   rowCount: number;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-  // const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
   const { order, orderBy, onRequestSort } =
     props;
   const createSortHandler =
@@ -155,55 +147,23 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-// interface EnhancedTableToolbarProps {
-//   numSelected: number;
-// }
-
-// const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const EnhancedTableToolbar = () => {
-  // const { numSelected } = props;
 
   return (
     <Toolbar
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
-        // ...(numSelected > 0 && {
-        //   bgcolor: (theme) =>
-        //     alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        // }),
       }}
     >
-      {/* {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : ( */}
-        <Typography
-          sx={{ flex: '1 1 100%', ml: 1, }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nodes
-        </Typography>
-      {/* )}
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-          </IconButton>
-        </Tooltip>
-      )} */}
+    <Typography
+      sx={{ flex: '1 1 100%', ml: 1, }}
+      variant="h6"
+      id="tableTitle"
+      component="div"
+    >
+      Nodes
+    </Typography>
     </Toolbar>
   );
 };
@@ -211,7 +171,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data>('name');
-  // const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -223,8 +182,6 @@ export default function EnhancedTable() {
     [index: string]: string;
   }
 
-
-  // retrieve nodes but no instant metrics yet
   React.useEffect((): void => {
     const fetchNodes = async () => {
       const allNodes = await axios.get('/api/cluster/nodes');
@@ -254,41 +211,13 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
 
-  // const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.checked) {
-  //     const newSelected = rows.map((n) => n.name);
-  //     setSelected(newSelected);
-  //     return;
-  //   }
-  //   setSelected([]);
-  // };
-
-  // put in our redirect to node display
   const navigate = useNavigate();
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     console.log(name);
     console.log(nameToIP);
 
-    // change this later as you dont search node using pod name
     navigate(`../nodedisplay/?nodeip=${nameToIP[name]}&name=${name}`);
 
-    // const selectedIndex = selected.indexOf(name);
-    // let newSelected: readonly string[] = [];
-
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected.concat(selected, name);
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1));
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1));
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //     selected.slice(0, selectedIndex),
-    //     selected.slice(selectedIndex + 1),
-    //   );
-    // }
-
-    // setSelected(newSelected);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -304,8 +233,6 @@ export default function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  // const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -316,9 +243,7 @@ export default function EnhancedTable() {
         <Paper
         sx={{ width: '100%', mb: 2 }}
         >
-          {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
           <EnhancedTableToolbar />
-          {/* <div style={{display: 'flex', justifyContent: 'right', marginTop: -50, marginRight: 15 }}><NamespaceDropDown setRows={setRows}/></div> */}
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -326,10 +251,8 @@ export default function EnhancedTable() {
               size={dense ? 'small' : 'medium'}
             >
               <EnhancedTableHead
-                // numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}
-                // onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
               />
@@ -339,7 +262,6 @@ export default function EnhancedTable() {
                 {stableSort(rows, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    // const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
@@ -347,10 +269,8 @@ export default function EnhancedTable() {
                         hover
                         onClick={(event) => handleClick(event, row.name)}
                         role="checkbox"
-                        // aria-checked={isItemSelected}
                         tabIndex={-1}
                         key={row.name}
-                        // selected={isItemSelected}
                       >
                         <TableCell padding="checkbox">
                         </TableCell>

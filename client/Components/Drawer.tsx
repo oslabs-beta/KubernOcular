@@ -26,6 +26,8 @@ import ListItemText from '@mui/material/ListItemText';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import HelpIcon from '@mui/icons-material/Help';
 
 const drawerWidth = 175;
 
@@ -127,16 +129,8 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          {/* <img id='logo-icon' src='https://hmp.me/dydh' /> */}
-          {/* <img id='logo-icon' src='https://hmp.me/dydi' /> */}
           <img id='logo-icon' src='https://hmp.me/dydj' />
-          {/* <img id='logo-icon' src='https://hmp.me/dydm' /> */}
           <img id='logo' src='https://hmp.me/dydf' />
-          {/* <img id='logo' src='https://hmp.me/dydk' /> */}
-          {/* <img id='logo' src='https://hmp.me/dydl' /> */}
-          {/* <Typography variant="h6" noWrap component="div">
-            KubernOcular
-          </Typography> */}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -222,7 +216,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <AutoAwesomeMotionIcon />
+                  <VisibilityIcon />
                 </ListItemIcon>
                 <ListItemText primary='Visualizer' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>
@@ -242,7 +236,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <AutoAwesomeMotionIcon />
+                  <HelpIcon />
                 </ListItemIcon>
                 <ListItemText primary='Queries' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>
@@ -255,8 +249,8 @@ export default function MiniDrawer() {
           <Route path='/' element={<Dashboard/>} />
           <Route path='/pods' element={<PodsTab />} />
           <Route path='/nodes' element={<NodesTab />} />
-          <Route path='/custom' element={<CustomMetricsTab />} />
           <Route path='/visual' element={<VisualizerTab />} />
+          <Route path='/custom' element={<CustomMetricsTab />} />
           <Route path='/poddisplay' element={<PodDisplay />} />
           <Route path='/nodedisplay' element={<NodeDisplay />} />
         </Routes>
