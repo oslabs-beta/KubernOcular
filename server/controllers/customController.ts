@@ -13,24 +13,33 @@ const customController: CustomController = {
       const data = await axios.get(`http://localhost:9090/api/v1/query?query=${query}`);
       if (scope === 'cluster') {
         if (data.data.status === 'success' && data.data.data.result.length === 1) {
+          console.log('passed cluster test');
           res.locals.valid = true;
         } else {
+          console.log('failed cluster test');
           res.locals.valid = false;
         }
       } else if (scope === 'pod') {
         if (data.data.status === 'success' && data.data.data.result.length && data.data.data.result[0].metric.pod) {
+          console.log('passed pod test');
           res.locals.valid = true;
         } else {
+          console.log('failed pod test');
           res.locals.valid = false;
         }
       } else if (scope === 'node') {
         if (data.data.status === 'success' && data.data.data.result.length && data.data.data.result[0].metric.job === 'node-exporter') {
+          console.log('passed node test');
           res.locals.valid = true;
           req.body.query = `sum(${query})by(instance)`;
         } else {
           res.locals.valid = false;
+          console.log('failed cluster test');
         }
-      } else throw 'Scope parameter must be defined as cluster, node, or pod';
+      } else {
+        console.log('failed - no scope set');
+        res.locals.valid = false;
+      };
       // console.log('transmit data:', data.data.data.result);
       return next();
     } catch(err) {
@@ -45,7 +54,8 @@ const customController: CustomController = {
   addCustomRoute: async (req, res, next) => {
     try {
       if (res.locals.valid) {
-        const { query, name, yAxisType, scope } = req.body;
+        const { query, name, scope } = req.body;
+        const yAxisType = req.body.yAxisType === 'null' ? '' : req.body.yAxisType;
         let scopedQueries: CustomQuery[] = [];
         if (scope === 'cluster') scopedQueries = customController.customClusterQueries;
         else if (scope === 'node') scopedQueries = customController.customNodeQueries;
