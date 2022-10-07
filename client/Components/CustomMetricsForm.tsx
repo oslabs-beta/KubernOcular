@@ -7,13 +7,10 @@ const CustomMetricsForm: FC = () => {
   const [yAxisType, setYAxisType] = React.useState('');
   const [scope, setScope] = React.useState('');
 
-  // form
-  // Metric name - text box (text field) // PromQL query - text box (text field)
-  // Y axis type - dropdown menu - percent, GB, KB (select) // scope - dropdown menu - cluster, node, pod (select)
-  // submit button (make all fields required)
-
   return (
-    <div>CustomMetricsForm</div>
+    <div>
+        <h4>CustomMetricsForm</h4>
+    </div>
   )
 }
 
