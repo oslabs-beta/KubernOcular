@@ -35,7 +35,7 @@ export type CustomController = {
     customPodQueries: CustomQuery[],
     testCustomRoute: RequestHandler,
     addCustomRoute: RequestHandler,
-    getCustomRoutes: RequestHandler,
+    getCustomRoute: RequestHandler,
     listCustomRoutes: RequestHandler,
     deleteCustomRoute: RequestHandler,
     changeRouteActive: RequestHandler

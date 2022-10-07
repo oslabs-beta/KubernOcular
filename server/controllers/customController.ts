@@ -67,25 +67,18 @@ const customController: CustomController = {
     }
   },
 
-  getCustomRoutes: async (req, res, next) => {
+  getCustomRoute: async (req, res, next) => {
     try {
-      const { scope } = req.query;
+      const { scope, index } = req.query;
       let scopedQueries: CustomQuery[] = [];
       if (scope === 'cluster') scopedQueries = customController.customClusterQueries;
       else if (scope === 'node') scopedQueries = customController.customNodeQueries;
       else if (scope === 'pod') scopedQueries = customController.customPodQueries;
       else throw 'Scope parameter must be defined as cluster, node, or pod';
       // resolve custom queries here
-      const data = scopedQueries.filter(queryObject => queryObject.active).map(async (queryObject) => {
-        const { query, name, yAxisType } = queryObject;
-        const result = await axios.get(`http://localhost:9090/api/v1/query_range?query=${query}&start=${start}&end=${end}&step=10m`);
-        return {
-          name,
-          yAxisType,
-          result: result.data
-        }
-      });
-      res.locals.data = await Promise.all(data);
+      const query = scopedQueries[Number(index)].query;
+      const data = await axios.get(`http://localhost:9090/api/v1/query_range?query=${query}&start=${start}&end=${end}&step=10m`);
+      res.locals.data = data.data
       return next();
     } catch(err) {
       return next({
