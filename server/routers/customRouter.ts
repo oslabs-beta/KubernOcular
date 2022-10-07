@@ -25,4 +25,8 @@ customRouter.delete('/queries', customController.deleteCustomRoute, (req: Reques
   return res.status(status).json(res.locals.route);
 });
 
+customRouter.post('/active', customController.changeRouteActive, (req: Request, res: Response) => {
+  return res.status(200).send(`Query ${req.body.id} set to ${req.body.active}`);
+})
+
 module.exports = customRouter;
