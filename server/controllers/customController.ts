@@ -3,7 +3,7 @@ import { start, end, CustomController, axios, CustomQuery } from '../../types';
 
 const customController: CustomController = {
 
-  customClusterQueries: [{query: 'sum(up)', name:'Name for up', yAxisType: ''}], // dummy metrics for testing
+  customClusterQueries: [{query: 'sum(up)', name:'Name for up', yAxisType: '', active: true}, {query: 'sum(up)', name:'Another name for up', yAxisType: '', active: true}], // dummy metrics for testing
   customNodeQueries: [],
   customPodQueries: [],
 
@@ -51,7 +51,7 @@ const customController: CustomController = {
         else if (scope === 'node') scopedQueries = customController.customNodeQueries;
         else if (scope === 'pod') scopedQueries = customController.customPodQueries;
         else throw 'Scope parameter must be defined as cluster, node, or pod';
-        scopedQueries.push({ query, name, yAxisType })
+        scopedQueries.push({ query, name, yAxisType, active: true })
         console.log(`New queries for ${scope}:`, scopedQueries)
         res.locals.addedRoute = true;
       } else {
@@ -76,7 +76,7 @@ const customController: CustomController = {
       else if (scope === 'pod') scopedQueries = customController.customPodQueries;
       else throw 'Scope parameter must be defined as cluster, node, or pod';
       // resolve custom queries here
-      const data = scopedQueries.map(async (queryObject) => {
+      const data = scopedQueries.filter(queryObject => queryObject.active).map(async (queryObject) => {
         const { query, name, yAxisType } = queryObject;
         const result = await axios.get(`http://localhost:9090/api/v1/query_range?query=${query}&start=${start}&end=${end}&step=10m`);
         return {
@@ -129,6 +129,25 @@ const customController: CustomController = {
       scopedQueries.splice(id, 1);
       const currentLen = scopedQueries.length;
       res.locals.deletedRoute = initLen === currentLen ? false : true;
+      return next();
+    } catch(err) {
+      return next({
+        log: `Error in customController.deleteCustomRoute: ${err}`,
+        status: 500,
+        message: {err: 'Error occured while deleting custom query'},
+      });
+    }
+  },
+
+  changeRouteActive: async (req, res, next) => {
+    try {
+      const { scope, id, active } = req.body;
+      let scopedQueries: CustomQuery[] = [];
+      if (scope === 'cluster') scopedQueries = customController.customClusterQueries;
+      else if (scope === 'node') scopedQueries = customController.customNodeQueries;
+      else if (scope === 'pod') scopedQueries = customController.customPodQueries;
+      else throw 'Scope parameter must be defined as cluster, node, or pod';
+      scopedQueries[id].active = active;
       return next();
     } catch(err) {
       return next({
