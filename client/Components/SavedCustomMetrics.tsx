@@ -1,22 +1,39 @@
-import React from "react";
+import * as React from 'react';
 import { FC, useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import CommentIcon from '@mui/icons-material/Comment';
 
 const SavedCustomMetrics: FC = () => {
   const defaultMetricNames: string[] = [];
-  const defaultActive: boolean[] = [];
+  const defaultActive: number[] = [];
   const [scope, setScope] = useState('cluster');
   const [metricNames, setMetricNames] = useState(defaultMetricNames);
   const [active, setActive] = useState(defaultActive);
+
+  const handleBoxChange = (event: SelectChangeEvent) => {
+    setScope(event.target.value as string);
+  };
 
   const resetMetricDisplay = () => {
     fetch(`/api/custom/list?scope=${scope}`)
       .then(res => res.json())
       .then(data => {
         const newMetricNames: string[] = [];
-        const newActive: boolean[] = [];
-        for (const el of data) {
-          newMetricNames.push(el.name);
-          newActive.push(el.active);
+        const newActive: number[] = [];
+        for (let i = 0; i < data.length; i++) {
+          newMetricNames.push(data[i].name);
+          if(data[i].active) newActive.push(i);
         }
         setMetricNames(newMetricNames);
         setActive(newActive);
@@ -44,28 +61,79 @@ const SavedCustomMetrics: FC = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({scope, id: index, active: !active[index]})
+      body: JSON.stringify({scope, id: index, active: !active.includes(index)})
     })
+
     if (didChangeActive.status === 200) {
-      console.log('changed active status for', index);
       resetMetricDisplay();
     }
   }
 
-  const metricsList = [];
-  for (let i = 0; i < metricNames.length; i++) {
-    metricsList.push(
-      <li>{metricNames[i]}
-        <input type="checkbox" checked={active[i]} onChange={() => handleChange(i)} />
-        <button onClick={() => handleDelete(i)}>X</button>
-      </li>)
-  }
+  const [checked, setChecked] = React.useState([0]);
+
+  const handleToggle = (value: number) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
+  };
+
   return (
     <div>
       <h4>Saved Metrics</h4>
-      <ul>
-        {metricsList}
-      </ul>
+      <Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Scope</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={scope}
+            label="Scope"
+            onChange={handleBoxChange}
+          >
+            <MenuItem value={'cluster'}>Cluster</MenuItem>
+            <MenuItem value={'node'}>Node</MenuItem>
+            <MenuItem value={'pod'}>Pod</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      {metricNames.map((name, index) => {
+        const labelId = `checkbox-list-label-${index}`;
+
+        return (
+          <ListItem
+            key={index}
+            secondaryAction={
+              // this is where the delete button will live
+              <IconButton edge="end" aria-label="comments">
+                <CommentIcon /> 
+              </IconButton>
+            }
+            disablePadding
+          >
+            <ListItemButton role={undefined} onClick={() => handleChange(index)} dense>
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={active.indexOf(index) !== -1}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ 'aria-labelledby': labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={name} />
+            </ListItemButton>
+          </ListItem>
+        );
+      })}
+    </List>
     </div>
   )
 }
