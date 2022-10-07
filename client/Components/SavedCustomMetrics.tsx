@@ -39,7 +39,11 @@ const SavedCustomMetrics: FC = () => {
   }
   return (
     <div>
-      <h4>Saved Metrics</h4>
+      <h2
+      style={{ margin: 25 }}
+      >
+      Saved Metrics
+      </h2>
       <ul>
         {metricsList}
       </ul>

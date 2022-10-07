@@ -10,23 +10,24 @@ const NodeDisplay: FC = () => {
   const nodeIP = searchParams.get("nodeip");
   const nodeName = searchParams.get("name");
   const navigate = useNavigate();
+
   return (
     <div>
-    <div style={{display: 'flex', justifyContent: 'right'}}>
-      <Button
-        // variant="outlined"
-        color="secondary"
-        sx={{ mb: 2.5 }}
-        startIcon={<ArrowBackIcon />}
-        onClick={()=> navigate('/nodes')}
-        >
-        Back to Nodes
-      </Button>
-    </div>
-    <div id="metric-graphs">
-      <LineGraph label={`Network Received Bytes Total: ${nodeName}`} query={`/api/node/receive?nodeIP=${nodeIP}`} backgroundColor="rgba(54, 162, 235, 0.2)" borderColor="rgba(54, 162, 235, 1)" yAxisType="kilobytes"/>
-      <LineGraph label={`Network Transmit Bytes Total: ${nodeName}`} query={`/api/node/transmit?nodeIP=${nodeIP}`} backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="kilobytes"/>
-    </div>
+      <div style={{display: 'flex', justifyContent: 'right'}}>
+        <Button
+          // variant="outlined"
+          color="secondary"
+          sx={{ mb: 2.5 }}
+          startIcon={<ArrowBackIcon />}
+          onClick={()=> navigate('/nodes')}
+          >
+          Back to Nodes
+        </Button>
+      </div>
+      <div id="metric-graphs">
+        <LineGraph label={`Network Received Bytes Total: ${nodeName}`} query={`/api/node/receive?nodeIP=${nodeIP}`} backgroundColor="rgba(54, 162, 235, 0.2)" borderColor="rgba(54, 162, 235, 1)" yAxisType="kilobytes"/>
+        <LineGraph label={`Network Transmit Bytes Total: ${nodeName}`} query={`/api/node/transmit?nodeIP=${nodeIP}`} backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="kilobytes"/>
+      </div>
   </div>
   )
 };

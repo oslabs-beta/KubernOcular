@@ -53,8 +53,7 @@ const VisualizerTab = () => {
                 shape: 'hexagon',
                 "background-color": 'blue'
             }
-        }
-        
+        } 
     ]
 
     return (
