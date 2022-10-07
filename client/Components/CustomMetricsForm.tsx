@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FC } from 'react';
-import axios from "axios";
+import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,13 +9,16 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import ErrorIcon from '@mui/icons-material/Error';
 
-const CustomMetricsForm: FC = () => {
+const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = props => {
+  const {updateList, setUpdateList} = props;
   const [metricName, setMetricName] = React.useState('');
   const [promQuery, setPromQuery] = React.useState('');
   const [yAxisType, setYAxisType] = React.useState('');
   const [scope, setScope] = React.useState('');
-  const [valid, setValid] = React.useState(false);
+  const [validity, setValidity] = React.useState(false);
 
   const handleMetricInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log('metric name: ', event.target.value);
@@ -39,8 +42,38 @@ const CustomMetricsForm: FC = () => {
 
   // unclear on event type
   const handleSubmit = (event: any) => {
-    return console.log('hi');
+    fetch('/api/custom/queries', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({scope, query: promQuery, yAxisType, name: metricName})
+    })
+      .then(res => res.json())
+      .then(addedQuery => {
+        if (addedQuery) {
+          console.log('Query added successfully');
+          setUpdateList(updateList + 1);
+        }
+        else console.log('Query was not added');
+      })
   };
+
+  React.useEffect(() => {
+    // send query to backend (delay)
+    fetch('/api/custom/test', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({scope: scope, query: promQuery})
+    })
+      .then(res => res.json())
+      .then(data => setValidity(data === true ? true : false))
+    // render check or x based on validity
+  }, [promQuery, scope]);
+
+  console.log('query validity: ', validity);
 
   return (
     <div>
@@ -68,25 +101,59 @@ const CustomMetricsForm: FC = () => {
           />
         </div>
       </Box>
-      <Box
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 3, width: '65ch' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <div>
-          <TextField
-            id="outlined-required"
-            label="PromQL Query"
-            variant="outlined"
-            defaultValue=""
-            value={promQuery}
-            onChange={handleQueryInput}
-          />
-        </div>
-      </Box>
+      {validity === true || promQuery === '' ?
+        <Stack
+        direction="row"
+        >
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 3, width: '65ch' },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <div>
+            <TextField
+              id="outlined-required"
+              label="PromQL Query"
+              variant="outlined"
+              defaultValue=""
+              value={promQuery}
+              onChange={handleQueryInput}
+            />
+          </div>
+        </Box>
+        {validity && <TaskAltIcon sx={{ mt: 5 }} />}
+        </Stack>
+        :
+        <Stack
+        direction="row"
+        >
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 3, width: '65ch' },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <div>
+            <TextField
+              id="outlined-error-helper-text"
+              label="PromQL Query"
+              variant="outlined"
+              defaultValue=""
+              value={promQuery}
+              onChange={handleQueryInput}
+              error
+              helperText="Invalid"
+            />
+          </div>
+        </Box>
+        <ErrorIcon sx={{ mt: 5 }} />
+        </Stack>
+      }
       <Box sx={{ m: 3, width: '25ch' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Unit Type</InputLabel>
@@ -97,9 +164,11 @@ const CustomMetricsForm: FC = () => {
             label="Unit Type"
             onChange={handleYAxisSelect}
           >
-            <MenuItem value={'Percent'}>Percent</MenuItem>
-            <MenuItem value={'Gigabytes'}>Gigabytes</MenuItem>
-            <MenuItem value={'Kilobytes'}>Kilobytes</MenuItem>
+            <MenuItem value={'percent'}>Percent</MenuItem>
+            <MenuItem value={'seconds'}>Seconds</MenuItem>
+            <MenuItem value={'gigabytes'}>Gigabytes</MenuItem>
+            <MenuItem value={'kilobytes'}>Kilobytes</MenuItem>
+            <MenuItem value={'null'}>None</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -113,16 +182,16 @@ const CustomMetricsForm: FC = () => {
             label="Unit Type"
             onChange={handleScopeSelect}
           >
-            <MenuItem value={'Cluster'}>Cluster</MenuItem>
-            <MenuItem value={'Nodes'}>Nodes</MenuItem>
-            <MenuItem value={'Pods'}>Pods</MenuItem>
+            <MenuItem value={'cluster'}>Cluster</MenuItem>
+            <MenuItem value={'node'}>Nodes</MenuItem>
+            <MenuItem value={'pod'}>Pods</MenuItem>
           </Select>
         </FormControl>
       </Box>
       <Button
         variant="contained"
         endIcon={<SendIcon />}
-        disabled={metricName === '' || promQuery === '' || yAxisType === '' || scope === ''}
+        disabled={metricName === '' || promQuery === '' || scope === '' || validity === false}
         onClick={() => handleSubmit(event)}
         sx={{ m: 3, width: '25ch' }}
         >
