@@ -16,6 +16,10 @@ customRouter.get('/queries', customController.getCustomRoutes, (req: Request, re
   return res.status(200).json(res.locals.data);
 });
 
+customRouter.get('/list', customController.listCustomRoutes, (req: Request, res: Response) => {
+  return res.status(200).json(res.locals.data);
+})
+
 customRouter.delete('/queries', customController.deleteCustomRoute, (req: Request, res: Response) => {
   const status = res.locals.deletedRoute ? 200 : 400;
   return res.status(status).json(res.locals.route);

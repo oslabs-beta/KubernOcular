@@ -22,8 +22,7 @@ const dashboardController: DashboardController = {
       ingresses: data[4].body.items.length,
       services: data[5].body.items.length
     };
-
-    console.log(numOfData);
+    
     res.locals.data = numOfData;
     return next();
   },

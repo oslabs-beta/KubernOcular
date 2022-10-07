@@ -35,6 +35,7 @@ export type CustomController = {
     testCustomRoute: RequestHandler,
     addCustomRoute: RequestHandler,
     getCustomRoutes: RequestHandler,
+    listCustomRoutes: RequestHandler,
     deleteCustomRoute: RequestHandler
 }
 export type NumOfData = {
