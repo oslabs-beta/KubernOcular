@@ -5,7 +5,7 @@ const customController: CustomController = {
 
   customClusterQueries: [{query: 'sum(up)', name:'Name for up', yAxisType: '', active: true}, {query: 'sum(up)', name:'Another name for up', yAxisType: '', active: true}], // dummy metrics for testing
   customNodeQueries: [],
-  customPodQueries: [],
+  customPodQueries: [{query: 'up', name: 'Pod is up', yAxisType: '', active: true}],
 
   testCustomRoute: async (req, res, next) => {
     const { query, scope } = req.body;
@@ -32,6 +32,7 @@ const customController: CustomController = {
           console.log('passed node test');
           res.locals.valid = true;
           req.body.query = `sum(${query})by(instance)`;
+          console.log(req.body.query);
         } else {
           res.locals.valid = false;
           console.log('failed cluster test');
@@ -79,7 +80,7 @@ const customController: CustomController = {
 
   getCustomRoute: async (req, res, next) => {
     try {
-      const { scope, index } = req.query;
+      const { scope, index, pod, nodeIP } = req.query;
       let scopedQueries: CustomQuery[] = [];
       if (scope === 'cluster') scopedQueries = customController.customClusterQueries;
       else if (scope === 'node') scopedQueries = customController.customNodeQueries;
@@ -87,14 +88,20 @@ const customController: CustomController = {
       else throw 'Scope parameter must be defined as cluster, node, or pod';
       // resolve custom queries here
       const query = scopedQueries[Number(index)].query;
-      const data = await axios.get(`http://localhost:9090/api/v1/query_range?query=${query}&start=${start}&end=${end}&step=10m`);
-      res.locals.data = data.data
+      const result = await axios.get(`http://localhost:9090/api/v1/query_range?query=${query}&start=${start}&end=${end}&step=10m`);
+      if (scope === 'pod') {
+        result.data.data.result = result.data.data.result.filter((podMetric: any) => podMetric.metric.pod === pod);
+      }
+      else if (scope === 'node') {
+        result.data.data.result = result.data.data.result.filter((nodeMetric: any) => nodeMetric.metric.instance === `${nodeIP}:9100`);
+      }
+      res.locals.data = result.data;
       return next();
     } catch(err) {
       return next({
-        log: `Error in customController.getCustomRoutes: ${err}`,
+        log: `Error in customController.getCustomRoute: ${err}`,
         status: 500,
-        message: {err: 'Error occured while getting custom queries'},
+        message: {err: 'Error occured while getting custom query'},
       });
     }
   },
