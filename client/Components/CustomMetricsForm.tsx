@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FC } from 'react';
+import axios from "axios";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -14,6 +15,7 @@ const CustomMetricsForm: FC = () => {
   const [promQuery, setPromQuery] = React.useState('');
   const [yAxisType, setYAxisType] = React.useState('');
   const [scope, setScope] = React.useState('');
+  const [valid, setValid] = React.useState(false);
 
   const handleMetricInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log('metric name: ', event.target.value);
@@ -33,6 +35,11 @@ const CustomMetricsForm: FC = () => {
   const handleScopeSelect = (event: SelectChangeEvent) => {
     console.log('scope: ', event.target.value);
     setScope(event.target.value);
+  };
+
+  // unclear on event type
+  const handleSubmit = (event: any) => {
+    return console.log('hi');
   };
 
   return (
@@ -72,7 +79,7 @@ const CustomMetricsForm: FC = () => {
         <div>
           <TextField
             id="outlined-required"
-            label="Your PromQL Query"
+            label="PromQL Query"
             variant="outlined"
             defaultValue=""
             value={promQuery}
@@ -115,21 +122,28 @@ const CustomMetricsForm: FC = () => {
       <Button
         variant="contained"
         endIcon={<SendIcon />}
-        color="secondary"
         disabled={metricName === '' || promQuery === '' || yAxisType === '' || scope === ''}
-        sx={{ m: 3, width: '15ch' }}
+        onClick={() => handleSubmit(event)}
+        sx={{ m: 3, width: '25ch' }}
         >
-        Submit
+        Submit Query
       </Button>
     </div>
   )
 }
 
 // form
-// Metric name - text box (text field) // PromQL query - text box (text field)
-// Y axis type - dropdown menu - percent, GB, KB (select) // scope - dropdown menu - cluster, node, pod (select)
-// submit button (make all fields required)
-// require all fields
-// add check for if promql query is valid
+// metric name: text field
+// prom query: text field
+// y axis type: select (percent, GB, KB)
+// scope: select (cluster, node, pod)
+// submit: button (all fields required to enable)
+
+// fill out form
+// submit enabled
+// on submit, send this query to the backend
+  // clear out forms if valid, success snackbar
+    // send full state info to backend
+  // leave filled out forms if invalid, error snackbar, highlight query input field red
 
 export default CustomMetricsForm;
