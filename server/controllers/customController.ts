@@ -96,6 +96,26 @@ const customController: CustomController = {
     }
   },
 
+  listCustomRoutes: async (req, res, next) => {
+    try {
+      const { scope } = req.query;
+      let scopedQueries: CustomQuery[] = [];
+      if (scope === 'cluster') scopedQueries = customController.customClusterQueries;
+      else if (scope === 'node') scopedQueries = customController.customNodeQueries;
+      else if (scope === 'pod') scopedQueries = customController.customPodQueries;
+      else throw 'Scope parameter must be defined as cluster, node, or pod';
+      // resolve custom queries here
+      res.locals.data = scopedQueries;
+      return next();
+    } catch(err) {
+      return next({
+        log: `Error in customController.getCustomRoutes: ${err}`,
+        status: 500,
+        message: {err: 'Error occured while getting custom queries'},
+      });
+    }
+  },
+
   deleteCustomRoute: async (req, res, next) => {
     try {
       const { scope, id } = req.body;
