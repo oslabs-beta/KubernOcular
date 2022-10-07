@@ -17,6 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Dashboard: FC = () => {
   const [numInfo, setNumInfo] =  React.useState<JSX.Element[]>([]);
+  const [customGraphs, setCustomGraphs] = React.useState<JSX.Element[]>([]);
 
   React.useEffect((): void => {
     const fetchNumInfo = async () => {
@@ -44,6 +45,31 @@ const Dashboard: FC = () => {
     fetchNumInfo();
   }, [])
 
+  React.useEffect((): void => {
+    const newCustomGraphs: JSX.Element[] = [];
+    fetch('/api/custom/list?scope=cluster')
+      .then(res => res.json())
+      .then(data => {
+        data.forEach((metric: any, index: number) => {
+          if(metric.active) {
+            const customColors: number[] = [];
+            for (let i = 0; i < 3; i++) {
+              customColors.push(Math.floor(Math.random() * 256))
+            }
+            newCustomGraphs.push(
+              <LineGraph 
+                label={metric.name}
+                query={`/api/custom/queries?scope=cluster&index=${index}`} 
+                backgroundColor={`rgba(${customColors[0]}, ${customColors[1]}, ${customColors[2]}, 0.2)`}
+                borderColor={`rgba(${customColors[0]}, ${customColors[1]}, ${customColors[2]}, 1)`}
+                yAxisType={metric.yAxisType}/>
+            )
+          }
+        })
+        setCustomGraphs(newCustomGraphs);
+      })
+  }, [])
+
   return (
     <div>
       <div>
@@ -58,6 +84,7 @@ const Dashboard: FC = () => {
         <LineGraph label='Memory Usage' query='/api/dashboard/mem' backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="gigabytes"/>
         <LineGraph label='Node Bytes Transmitted' query='/api/dashboard/transmit' backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="kilobytes"/>
         <LineGraph label='Node Bytes Received' query='/api/dashboard/receive' backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="kilobytes"/>
+        {customGraphs}
       </div>
     </div>
   )
