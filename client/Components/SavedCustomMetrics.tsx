@@ -12,9 +12,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-const SavedCustomMetrics: FC = () => {
+const SavedCustomMetrics: FC<{updateList: number}> = props => {
+  const { updateList } = props;
   const defaultMetricNames: string[] = [];
   const defaultActive: number[] = [];
   const [scope, setScope] = useState('cluster');
@@ -40,7 +41,7 @@ const SavedCustomMetrics: FC = () => {
       })
   }
 
-  useEffect(resetMetricDisplay, [scope])
+  useEffect(resetMetricDisplay, [scope, updateList])
 
   const handleDelete = async (index: number) => {
     const didDelete = await fetch('/api/custom/queries', {
@@ -86,8 +87,12 @@ const SavedCustomMetrics: FC = () => {
 
   return (
     <div>
-      <h4>Saved Metrics</h4>
-      <Box sx={{ minWidth: 120 }}>
+      <h2
+      style={{ margin: 25 }}
+      >
+      Saved Metrics
+      </h2>
+      <Box sx={{ m: 3, width: '25ch' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Scope</InputLabel>
           <Select
@@ -106,14 +111,12 @@ const SavedCustomMetrics: FC = () => {
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       {metricNames.map((name, index) => {
         const labelId = `checkbox-list-label-${index}`;
-
         return (
           <ListItem
             key={index}
             secondaryAction={
-              // this is where the delete button will live
-              <IconButton edge="end" aria-label="comments">
-                <CommentIcon /> 
+              <IconButton edge="end" aria-label="comments" onClick={() => handleDelete(index)}>
+                <HighlightOffIcon /> 
               </IconButton>
             }
             disablePadding
@@ -133,7 +136,7 @@ const SavedCustomMetrics: FC = () => {
           </ListItem>
         );
       })}
-    </List>
+      </List>
     </div>
   )
 }
