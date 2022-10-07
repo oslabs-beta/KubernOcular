@@ -69,7 +69,7 @@ const Dashboard: FC = () => {
         setCustomGraphs(newCustomGraphs);
       })
   }, [])
-
+  
   return (
     <div>
       <div>

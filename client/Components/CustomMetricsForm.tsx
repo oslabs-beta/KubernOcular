@@ -59,8 +59,8 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
       })
   };
 
+  // check validity of query
   React.useEffect(() => {
-    // send query to backend (delay)
     fetch('/api/custom/test', {
       method: 'POST',
       headers: {
@@ -70,7 +70,6 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
     })
       .then(res => res.json())
       .then(data => setValidity(data === true ? true : false))
-    // render check or x based on validity
   }, [promQuery, scope]);
 
   console.log('query validity: ', validity);
@@ -108,7 +107,7 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
         <Box
           component="form"
           sx={{
-            '& .MuiTextField-root': { m: 3, width: '65ch' },
+            '& .MuiTextField-root': { m: 3, width: '75ch' },
           }}
           noValidate
           autoComplete="off"
@@ -133,7 +132,7 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
         <Box
           component="form"
           sx={{
-            '& .MuiTextField-root': { m: 3, width: '65ch' },
+            '& .MuiTextField-root': { m: 3, width: '75ch' },
           }}
           noValidate
           autoComplete="off"
@@ -147,14 +146,14 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
               value={promQuery}
               onChange={handleQueryInput}
               error
-              helperText="Invalid"
+              helperText="Incorrect scope or invalid query"
             />
           </div>
         </Box>
         <ErrorIcon sx={{ mt: 5 }} />
         </Stack>
       }
-      <Box sx={{ m: 3, width: '25ch' }}>
+      <Box sx={{ m: 3, width: '13ch' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Unit Type</InputLabel>
           <Select
@@ -172,7 +171,7 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
           </Select>
         </FormControl>
       </Box>
-      <Box sx={{ m: 3, width: '25ch' }}>
+      <Box sx={{ m: 3, mt: 6, width: '10ch' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Scope</InputLabel>
           <Select
@@ -200,19 +199,5 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
     </div>
   )
 }
-
-// form
-// metric name: text field
-// prom query: text field
-// y axis type: select (percent, GB, KB)
-// scope: select (cluster, node, pod)
-// submit: button (all fields required to enable)
-
-// fill out form
-// submit enabled
-// on submit, send this query to the backend
-  // clear out forms if valid, success snackbar
-    // send full state info to backend
-  // leave filled out forms if invalid, error snackbar, highlight query input field red
 
 export default CustomMetricsForm;
