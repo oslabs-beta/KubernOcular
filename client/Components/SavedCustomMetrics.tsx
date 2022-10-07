@@ -90,9 +90,9 @@ const SavedCustomMetrics: FC<{updateList: number}> = props => {
       <h2
       style={{ margin: 25 }}
       >
-      Saved Metrics
+      Display Saved Metrics
       </h2>
-      <Box sx={{ m: 3, width: '25ch' }}>
+      <Box sx={{ m: 3, mt: 6, width: '80ch' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Scope</InputLabel>
           <Select
@@ -108,7 +108,7 @@ const SavedCustomMetrics: FC<{updateList: number}> = props => {
           </Select>
         </FormControl>
       </Box>
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <List sx={{ width: '100%', ml: 1.2, maxWidth: 735, bgcolor: 'background.paper', variant: "outlined"}}>
       {metricNames.map((name, index) => {
         const labelId = `checkbox-list-label-${index}`;
         return (

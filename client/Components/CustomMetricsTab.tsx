@@ -13,10 +13,20 @@ const CustomMetricsTab: FC = () => {
             direction="row"
             spacing={2}
             >
-                <Box sx={{ minWidth: 700 }}>
+                <Box sx={{
+                    minWidth: 775,
+                    minHeight: 725,
+                    border: 0.1,
+                    borderRadius: '16px',
+                    }}>
                     <CustomMetricsForm setUpdateList={setUpdateList} updateList={updateList}/>
                 </Box>
-                <Box sx={{ minWidth: 500 }}>
+                <Box sx={{
+                    minWidth: 775,
+                    minHeight: 725,
+                    border: 0.1,
+                    borderRadius: '16px',
+                    }}>
                     <SavedCustomMetrics updateList={updateList} />
                 </Box>
             </Stack>
