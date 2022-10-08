@@ -124,11 +124,34 @@ p {
   width: 20%;
 }
 
-.legend-item, .shape, .legend-header {
-  border: dotted white;
-}
-
 #visualizer-legend, .legend-item {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+#triangle {
+  width: 0; 
+  height: 0; 
+  border-bottom: 100px solid rgb(138,255,128); 
+  border-left: 50px solid transparent; 
+  border-right: 50px solid transparent; 
+}
+
+#square {
+  width: 100px; 
+  height: 100px; 
+  background: rgb(241, 250, 140); 
+}
+
+#circle { 
+  width: 140px;
+  height: 140px;
+  background: rgb(255, 121, 198); 
+  -moz-border-radius: 70px; 
+  -webkit-border-radius: 70px; 
+  border-radius: 70px;
 }

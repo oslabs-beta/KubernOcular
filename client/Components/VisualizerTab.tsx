@@ -67,22 +67,24 @@ const VisualizerTab = () => {
 
     return (
         <div id="visualizer-page-container">
+            
             <div id="visualizer-legend">
+            <h1>Visualizer</h1>
                 <div className='legend-item' id='services'>
-                    <h2 className ='legend-header'>Services</h2> 
-                    <div className='shape'>x</div>
+                    <h2 className ='legend-header'>Services = evan put hexagon here</h2> 
+                    <div className='shape' id='hexagon'></div>
                 </div>
                 <div className='legend-item' id='pods'>
-                    <h2 className ='legend-header'>Pods</h2> 
-                    <div className='shape'>y</div>
+                    <h2 className ='legend-header'>Pods = </h2> 
+                    <div className='shape' id='circle'></div>
                 </div>
                 <div className='legend-item' id='namespaces'>
-                    <h2 className ='legend-header'>Namespaces</h2> 
-                    <div className='shape'>z</div>
+                    <h2 className ='legend-header'>Namespaces = </h2> 
+                    <div className='shape' id='square'></div>
                 </div>
                 <div className='legend-item' id='nodes'>
-                    <h2 className ='legend-header'>Nodes</h2> 
-                    <div className='shape'>a</div>
+                    <h2 className ='legend-header'>Nodes = </h2> 
+                    <div className='shape' id='triangle'></div>
                 </div>
             </div>
             <CytoscapeComponent elements={elements} stylesheet={styleSheet} style={ { width: '100%', height: '1080px', border: 'solid' } }></CytoscapeComponent>
