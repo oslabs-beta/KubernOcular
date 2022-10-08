@@ -123,3 +123,12 @@ p {
   /* flex-shrink: 2;  */
   width: 20%;
 }
+
+.legend-item, .shape, .legend-header {
+  border: dotted white;
+}
+
+#visualizer-legend, .legend-item {
+  display: flex;
+  flex-direction: row;
+}
