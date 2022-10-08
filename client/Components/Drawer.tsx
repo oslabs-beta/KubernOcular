@@ -3,7 +3,8 @@ import { Link, Routes, Route } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import PodsTab from './PodsTab';
 import NodesTab from './NodesTab';
-import VisualizerTab from './VisualizerTab'
+import CustomMetricsTab from './CustomMetricsTab';
+import VisualizerTab from './VisualizerTab';
 import PodDisplay from './PodDisplay';
 import NodeDisplay from './NodeDisplay';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
@@ -25,6 +26,8 @@ import ListItemText from '@mui/material/ListItemText';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import HelpIcon from '@mui/icons-material/Help';
 
 const drawerWidth = 175;
 
@@ -126,16 +129,8 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          {/* <img id='logo-icon' src='https://hmp.me/dydh' /> */}
-          {/* <img id='logo-icon' src='https://hmp.me/dydi' /> */}
           <img id='logo-icon' src='https://hmp.me/dydj' />
-          {/* <img id='logo-icon' src='https://hmp.me/dydm' /> */}
           <img id='logo' src='https://hmp.me/dydf' />
-          {/* <img id='logo' src='https://hmp.me/dydk' /> */}
-          {/* <img id='logo' src='https://hmp.me/dydl' /> */}
-          {/* <Typography variant="h6" noWrap component="div">
-            KubernOcular
-          </Typography> */}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -221,9 +216,29 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <AutoAwesomeMotionIcon />
+                  <VisibilityIcon />
                 </ListItemIcon>
                 <ListItemText primary='Visualizer' sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton></Link>
+            </ListItem>
+            <ListItem key='Queries' disablePadding sx={{ display: 'block' }}>
+              <Link to='/custom' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <HelpIcon />
+                </ListItemIcon>
+                <ListItemText primary='Queries' sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton></Link>
             </ListItem>
         </List>
@@ -235,6 +250,7 @@ export default function MiniDrawer() {
           <Route path='/pods' element={<PodsTab />} />
           <Route path='/nodes' element={<NodesTab />} />
           <Route path='/visual' element={<VisualizerTab />} />
+          <Route path='/custom' element={<CustomMetricsTab />} />
           <Route path='/poddisplay' element={<PodDisplay />} />
           <Route path='/nodedisplay' element={<NodeDisplay />} />
         </Routes>

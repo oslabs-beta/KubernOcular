@@ -25,7 +25,9 @@ export type DashboardController = {
 }
 export type CustomQuery = {
     query: string,
-    name: string
+    name: string,
+    yAxisType: string,
+    active: boolean
 }
 export type CustomController = {
     customClusterQueries: CustomQuery[],
@@ -33,7 +35,10 @@ export type CustomController = {
     customPodQueries: CustomQuery[],
     testCustomRoute: RequestHandler,
     addCustomRoute: RequestHandler,
-    getCustomRoutes: RequestHandler
+    getCustomRoute: RequestHandler,
+    listCustomRoutes: RequestHandler,
+    deleteCustomRoute: RequestHandler,
+    changeRouteActive: RequestHandler
 }
 export type NumOfData = {
     nodes: number,
@@ -77,7 +82,8 @@ export type Elements = {
         id?: string,
         label?: string,
         source?: string,
-        target?: string
+        target?: string,
+        type?: string
     },
     position?: {
         x: number,

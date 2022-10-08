@@ -22,6 +22,31 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Dashboard: FC = () => {
 
+  React.useEffect((): void => {
+    const newCustomGraphs: JSX.Element[] = [];
+    fetch('/api/custom/list?scope=cluster')
+      .then(res => res.json())
+      .then(data => {
+        data.forEach((metric: any, index: number) => {
+          if(metric.active) {
+            const customColors: number[] = [];
+            for (let i = 0; i < 3; i++) {
+              customColors.push(Math.floor(Math.random() * 256))
+            }
+            newCustomGraphs.push(
+              <LineGraph 
+                label={metric.name}
+                query={`/api/custom/queries?scope=cluster&index=${index}`} 
+                backgroundColor={`rgba(${customColors[0]}, ${customColors[1]}, ${customColors[2]}, 0.2)`}
+                borderColor={`rgba(${customColors[0]}, ${customColors[1]}, ${customColors[2]}, 1)`}
+                yAxisType={metric.yAxisType}/>
+            )
+          }
+        })
+        setCustomGraphs(newCustomGraphs);
+      })
+  }, [])
+  
   return (
     <div id="db-container">
       <div id="instant-metrics-container">

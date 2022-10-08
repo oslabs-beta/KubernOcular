@@ -1,4 +1,4 @@
-# ![KubernOcular Logo](https://hmp.me/dyf9)
+# <p align="center"><img src="https://hmp.me/dyf9" width=50%></p>
 
 ## Set Up
 

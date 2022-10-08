@@ -18,12 +18,12 @@ const hierarchyController: HierarchyController = {
         namespaceData.body.items.forEach((space: any) => {
           const name = space.metadata.name;
           if (name !== 'kube-system') namespaces.push(name);
-          elements.push({ data: { id: name, label: name }, position: { x: (distance * multiplier),  y: 600 } });
+          elements.push({ data: { id: name, label: name, type: 'namespace' }, position: { x: (distance * multiplier),  y: 600 } });
           multiplier++;
         });
         
         const len = await k8sApi.listPodForAllNamespaces();
-        distance = 1280/(len.body.items.length + 1);
+        distance = 2560/(len.body.items.length + 1);
         multiplier = 1;
         let alter = false;
         
@@ -38,7 +38,7 @@ const hierarchyController: HierarchyController = {
             const yVal = alter ? 350 : 500;
             const name = pod.metadata.name;
             elements.push(
-              { data: { id: name, label: name }, position: { x: (distance * multiplier), y: yVal } }
+              { data: { id: name, label: name, type: 'pod' }, position: { x: (distance * multiplier), y: yVal } }
             );
             multiplier++;
             elements.push(
@@ -58,7 +58,7 @@ const hierarchyController: HierarchyController = {
             const name = node.metadata.name;
             if (!nodeSet.has(name)) {
               elements.push(
-                { data: { id: name, label: name }, position: { x: (distance * multiplier), y: yVal } }
+                { data: { id: name, label: name, type: 'node' }, position: { x: (distance * multiplier), y: yVal } }
               )
               multiplier++;
               nodeSet.add(name);
@@ -70,7 +70,7 @@ const hierarchyController: HierarchyController = {
           })
       
           const lenSrv = await k8sApi.listServiceForAllNamespaces()
-          distance = 1280/(lenSrv.body.items.length + 1);
+          distance = 2560/(lenSrv.body.items.length + 1);
           
           const serviceData = await k8sApi.listNamespacedService(namespace)
           // eslint-disable-next-line no-loop-func
@@ -79,7 +79,7 @@ const hierarchyController: HierarchyController = {
             const name = service.metadata.name
             if (!srvSet.has(name)) {
               elements.push(
-                { data: { id: name, label: name }, position: { x: (distance * multiplier), y: yVal}}
+                { data: { id: name, label: name, type: 'service' }, position: { x: (distance * multiplier), y: yVal}}
               )
               multiplier++;
               srvSet.add(name);
@@ -92,7 +92,7 @@ const hierarchyController: HierarchyController = {
       
       
           const lenDep = await k8sApi1.listDeploymentForAllNamespaces()
-          distance = 1280/(lenDep.body.items.length + 1);
+          distance = 2560/(lenDep.body.items.length + 1);
           multiplier = 1;
       
           const deployData = await k8sApi1.listNamespacedDeployment(namespace)
@@ -102,7 +102,7 @@ const hierarchyController: HierarchyController = {
             const name = deploy.metadata.name;
             if (!deplSet.has(name)) {
               elements.push(
-                { data: { id: name, label: name }, position: { x: (distance * multiplier), y: yVal } }
+                { data: { id: name, label: name, type: 'deployment' }, position: { x: (distance * multiplier), y: yVal } }
               );
               multiplier++;
               deplSet.add(name);
