@@ -29,6 +29,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend,
 );
 
@@ -60,12 +61,16 @@ const LineGraph: FC<MetricProps> = (props) => {
       intersect: false
     },
     plugins: {
+      datalabels: {
+        display: false,
+      },
       legend: {
         position: 'top',
+        display: false,
       },
       title: {
         display: true,
-        text: '',
+        text: props.label,
       },
       filler: {
         drawTime: 'beforeDatasetsDraw',
@@ -107,7 +112,6 @@ const LineGraph: FC<MetricProps> = (props) => {
     .then(data => {
       // removes unnecessary data
       const usefulData = data.data.result[0].values;
-      console.log('usefulData', usefulData);
       // creates a date display when the day changes
       let displayDate = true;
       let prevDate = '';
@@ -125,9 +129,6 @@ const LineGraph: FC<MetricProps> = (props) => {
         // displayDate = false;
         return timeString;
       });
-      console.log('xAxisLabels:', xAxisLabels);
-      console.log('Useful data:', usefulData);
-      console.log(props.yAxisType)
       let yAxisValues: number[] = []       
       switch(props.yAxisType) {
         case 'gigabytes': 
@@ -138,8 +139,6 @@ const LineGraph: FC<MetricProps> = (props) => {
         default:
           yAxisValues = usefulData.map((value: [number, string]) => Number(value[1]))
       }
-
-      console.log('yAxisValues', yAxisValues);
       
       const newData: ChartData<'line'> = {
         labels: xAxisLabels,
@@ -150,10 +149,10 @@ const LineGraph: FC<MetricProps> = (props) => {
           borderColor: props.borderColor,
           borderWidth: 1.5,
           pointRadius: 1,
-          tension: 0.3,
+          tension: 0.2,
           pointBorderWidth: 1,
           pointHoverRadius: 4,
-          fill: true,
+          // fill: true,
           capBezierPoints: true,
         }]
       }

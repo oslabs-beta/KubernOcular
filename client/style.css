@@ -40,6 +40,8 @@ p {
   margin: 10px;
   width: 40vw;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  /* background-image: linear-gradient(rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.09)); */
+  /* box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%); */
   border-radius: 10px;
 }
 
@@ -66,4 +68,58 @@ p {
 
 .MuiTableBody-root {
   cursor: pointer;
+}
+
+#instant-metrics-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
+  width: 81vw;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.09));
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  border-radius: 10px;
+}
+
+#instant-metrics {
+  width: 65%;
+  border: dotted gray;
+}
+
+#db-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#nav-instant-metrics-table {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  font-size: 0.7vw;
+}
+
+.metric-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.09));
+  /* box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%); */
+  border-radius: 10px;
+  margin: 0.5vw;
+  width: 5vw;
+}
+
+.metric-label {
+  padding: 0.25vw;
+}
+
+.instant-metric-comp {
+  padding: 0.5vw;
+  /* flex-shrink: 0.5; */
+  width: 24%;
+}
+
+#stacked-bar-chart {
+  /* flex-shrink: 2;  */
+  width: 20%;
 }
