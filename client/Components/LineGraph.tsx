@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { FC, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
   Chart as ChartJS,
@@ -29,7 +31,6 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Filler,
   Legend,
 );
 
@@ -61,16 +62,12 @@ const LineGraph: FC<MetricProps> = (props) => {
       intersect: false
     },
     plugins: {
-      datalabels: {
-        display: false,
-      },
       legend: {
         position: 'top',
-        display: false,
       },
       title: {
         display: true,
-        text: props.label,
+        text: '',
       },
       filler: {
         drawTime: 'beforeDatasetsDraw',
@@ -112,6 +109,7 @@ const LineGraph: FC<MetricProps> = (props) => {
     .then(data => {
       // removes unnecessary data
       const usefulData = data.data.result[0].values;
+      console.log('usefulData', usefulData);
       // creates a date display when the day changes
       let displayDate = true;
       let prevDate = '';
@@ -129,6 +127,9 @@ const LineGraph: FC<MetricProps> = (props) => {
         // displayDate = false;
         return timeString;
       });
+      console.log('xAxisLabels:', xAxisLabels);
+      console.log('Useful data:', usefulData);
+      console.log(props.yAxisType)
       let yAxisValues: number[] = []       
       switch(props.yAxisType) {
         case 'gigabytes': 
@@ -139,6 +140,8 @@ const LineGraph: FC<MetricProps> = (props) => {
         default:
           yAxisValues = usefulData.map((value: [number, string]) => Number(value[1]))
       }
+
+      console.log('yAxisValues', yAxisValues);
       
       const newData: ChartData<'line'> = {
         labels: xAxisLabels,
@@ -149,10 +152,10 @@ const LineGraph: FC<MetricProps> = (props) => {
           borderColor: props.borderColor,
           borderWidth: 1.5,
           pointRadius: 1,
-          tension: 0.2,
+          tension: 0.3,
           pointBorderWidth: 1,
           pointHoverRadius: 4,
-          // fill: true,
+          fill: true,
           capBezierPoints: true,
         }]
       }
@@ -161,32 +164,33 @@ const LineGraph: FC<MetricProps> = (props) => {
       setChartLoaded(true);
     })
     .catch(err => {
-      console.log(err)
+      console.log(err);
       setLoadError(true);
     });
   }, [])
 
   // demos 1 sec load, comment out lines 102, 103, and or statement in 105 to remove
-  const [oneSecPassed, setOneSecPassed] = useState(false);
-  setTimeout(() => setOneSecPassed(true), 1000);
+  // const [oneSecPassed, setOneSecPassed] = useState(false);
+  // setTimeout(() => setOneSecPassed(true), 1000);
   
   if (loadError) {
-    // render error screen here
     return (
       <div className="error">
-        
+        <WarningAmberIcon sx={{ fontSize: "60px" }} className="warning-icon" />
+        <h5>Error loading graph</h5>
+        <h5 className="error-bottom">Check out our <a href="/error">troubleshooting page</a></h5>
       </div>
     )
-  } else if (!chartLoaded || !oneSecPassed) {
+  } else if (!chartLoaded) {
     return (
       <div className="loading">
-        < CircularProgress />
+        <CircularProgress />
       </div>
     )
   } else {  
     return (
       <div className="graph">
-        < Line options={options} data={data} />
+        <Line options={options} data={data} />
       </div>
     )
   }
