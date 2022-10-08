@@ -6,6 +6,11 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
+import StackedBarChart from './StackedBarChart';
+import HorizontalBarChart from './HorizontalBarChart';
+import NavInstantMetricsTable from './NavInstantMetricsTable';
+import SpeedometerChart from './SpeedometerChart';
+import colors from '../colors';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -16,34 +21,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Dashboard: FC = () => {
-  const [numInfo, setNumInfo] =  React.useState<JSX.Element[]>([]);
-  const [customGraphs, setCustomGraphs] = React.useState<JSX.Element[]>([]);
-
-  React.useEffect((): void => {
-    const fetchNumInfo = async () => {
-      const allNumInfo = await axios.get('../api/dashboard/num');
-      const tempArray: JSX.Element[] = [];
-      for (const element in allNumInfo.data) {
-        tempArray.push(
-          <Grid xs={2}>
-            <Item>
-              <Box
-                id={element}
-                sx={{ fontSize: '12px', textTransform: 'uppercase' }}
-              >
-                {element}
-              </Box>
-              <Box component="ul" aria-labelledby={element} sx={{ pl: 0, fontSize: '20px' }}>
-                {allNumInfo.data[element]}
-              </Box>
-            </Item>
-          </Grid>
-        )
-      }
-      setNumInfo(tempArray);
-    }
-    fetchNumInfo();
-  }, [])
 
   React.useEffect((): void => {
     const newCustomGraphs: JSX.Element[] = [];
@@ -71,20 +48,25 @@ const Dashboard: FC = () => {
   }, [])
   
   return (
-    <div>
-      <div>
-        <Box sx={{ flexGrow: 1, padding: '0px' }}>
-          <Grid container id='num-info' spacing={2}>
-            {numInfo}
-          </Grid>
-        </Box>
+    <div id="db-container">
+      <div id="instant-metrics-container">
+        < StackedBarChart label='User and System CPU Time'/>
+        < SpeedometerChart label='Process Heap Size from Node' />
+        {/* <div id="instant-metrics">
+          <Box sx={{ flexGrow: 1, padding: '0px' }}>
+            <Grid container id='num-info' spacing={2}>
+              {numInfo}
+            </Grid>
+          </Box>
+        </div> */}
+        < NavInstantMetricsTable label="Instant Metrics" />
+        < HorizontalBarChart label="Total CPU Usage" />
       </div>
       <div id='metric-graphs'>
-        <LineGraph label='CPU Usage' query='/api/dashboard/cpu' backgroundColor="rgba(54, 162, 235, 0.2)" borderColor="rgba(54, 162, 235, 1)" yAxisType="percent"/>
-        <LineGraph label='Memory Usage' query='/api/dashboard/mem' backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="gigabytes"/>
-        <LineGraph label='Node Bytes Transmitted' query='/api/dashboard/transmit' backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="kilobytes"/>
-        <LineGraph label='Node Bytes Received' query='/api/dashboard/receive' backgroundColor="rgba(255, 99, 132, 0.2)" borderColor="rgba(255, 99, 132, 1)" yAxisType="kilobytes"/>
-        {customGraphs}
+        <LineGraph label='CPU Usage' query='/api/dashboard/cpu' backgroundColor={colors.translucent.purple} borderColor={colors.solid.purple} yAxisType="percent"/>
+        <LineGraph label='Memory Usage' query='/api/dashboard/mem' backgroundColor={colors.translucent.cyan} borderColor={colors.solid.cyan} yAxisType="gigabytes"/>
+        <LineGraph label='Node Bytes Transmitted' query='/api/dashboard/transmit' backgroundColor={colors.translucent.orange} borderColor={colors.solid.orange} yAxisType="kilobytes"/>
+        <LineGraph label='Node Bytes Received' query='/api/dashboard/receive' backgroundColor={colors.translucent.pink}  borderColor={colors.solid.pink} yAxisType="kilobytes"/>
       </div>
     </div>
   )

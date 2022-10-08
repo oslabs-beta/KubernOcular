@@ -13,7 +13,7 @@ const client = require('prom-client');
 client.collectDefaultMetrics();
 
 client.register.getMetricsAsJSON()
-.then(data => console.log(data[26].values));
+.then(data => console.log(data[20].values));
 ;
 
 // total user CPU time = data[0].values[0].value
