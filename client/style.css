@@ -136,20 +136,20 @@ p {
 #triangle {
   width: 0; 
   height: 0; 
-  border-bottom: 100px solid rgb(138,255,128); 
-  border-left: 50px solid transparent; 
-  border-right: 50px solid transparent; 
+  border-bottom: 80px solid rgb(138,255,128); 
+  border-left: 40px solid transparent; 
+  border-right: 40px solid transparent; 
 }
 
 #square {
-  width: 100px; 
+  width: 80px; 
   height: 100px; 
   background: rgb(241, 250, 140); 
 }
 
 #circle { 
-  width: 140px;
-  height: 140px;
+  width: 80px;
+  height: 80px;
   background: rgb(255, 121, 198); 
   -moz-border-radius: 70px; 
   -webkit-border-radius: 70px; 

@@ -1,6 +1,10 @@
+import Avatar from '@mui/material/Avatar';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 import React, { useState, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import colors from '../colors';
+import { kubesColors } from '../colors';
 
 const VisualizerTab = () => {
     const [elements, setElements] = useState([]); 
@@ -25,7 +29,7 @@ const VisualizerTab = () => {
                 "border-width": "3px",
                 "border-color": "black",
                 shape: 'rectangle',
-                "background-color": colors.solid.yellow,
+                "background-color": colors.pastel.solid.envy,
             }
         },
         {
@@ -34,7 +38,7 @@ const VisualizerTab = () => {
                 "border-width": "3px",
                 "border-color": "black",
                 shape: 'circle',
-                "background-color": colors.solid.pink,
+                "background-color": colors.pastel.solid.polo,
             }
         },
         {
@@ -43,7 +47,7 @@ const VisualizerTab = () => {
                 "border-width": "3px",
                 "border-color": "black",
                 shape: 'triangle',
-                "background-color": colors.solid.green,
+                "background-color": kubesColors.blue,
             }
         },
         {
@@ -52,14 +56,14 @@ const VisualizerTab = () => {
                 "border-width": "3px",
                 "border-color": "black",
                 shape: 'hexagon',
-                "background-color": colors.solid.cyan,
+                "background-color": colors.pastel.solid.martini,
             }
         },
         {
             selector: "edge",
             style: {
               width: 3,
-              "line-color": colors.solid.comment,
+              "line-color": colors.pastel.translucent.geyser,
             }
           } 
         //"#AAD8FF"
@@ -67,27 +71,23 @@ const VisualizerTab = () => {
 
     return (
         <div id="visualizer-page-container">
-            
-            <div id="visualizer-legend">
+            <div style={{display: 'flex'}}>
             <h1>Visualizer</h1>
-                <div className='legend-item' id='services'>
-                    <h2 className ='legend-header'>Services = evan put hexagon here</h2> 
-                    <div className='shape' id='hexagon'></div>
-                </div>
-                <div className='legend-item' id='pods'>
-                    <h2 className ='legend-header'>Pods = </h2> 
-                    <div className='shape' id='circle'></div>
-                </div>
-                <div className='legend-item' id='namespaces'>
-                    <h2 className ='legend-header'>Namespaces = </h2> 
-                    <div className='shape' id='square'></div>
-                </div>
-                <div className='legend-item' id='nodes'>
-                    <h2 className ='legend-header'>Nodes = </h2> 
-                    <div className='shape' id='triangle'></div>
-                </div>
+            <Stack direction="row" spacing={1}>
+                
+                <Chip avatar={<Avatar>M</Avatar>} label="Namespaces" variant="outlined"/>
+                <Chip avatar={<Avatar>M</Avatar>} label="Nodes" variant="outlined"/>
+                <Chip avatar={<Avatar>M</Avatar>} label="Pods" variant="outlined"/>
+                <Chip
+                avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+                label="Services"
+                variant="outlined"
+                />
+            </Stack>
             </div>
-            <CytoscapeComponent elements={elements} stylesheet={styleSheet} style={ { width: '100%', height: '1080px', border: 'solid' } }></CytoscapeComponent>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <CytoscapeComponent elements={elements} stylesheet={styleSheet} style={ { width: '100%', height: '860px', border: 'solid' } }></CytoscapeComponent>
+            </div>
         </div>
     )
   }

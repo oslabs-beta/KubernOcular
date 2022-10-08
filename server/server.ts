@@ -35,3 +35,5 @@ app.use((err: ErrObject, req: Request, res: Response, next: NextFunction) => {
   });
 
 app.listen(3000, () => console.log('listening on port 3000'));
+
+module.exports = app;
