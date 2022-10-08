@@ -48,6 +48,7 @@ const initialData: ChartData<'line'> = {
 const LineGraph: FC<MetricProps> = (props) => {
   const [chartLoaded, setChartLoaded] = useState(false);
   const [data, setData] = useState(initialData);
+  const [loadError, setLoadError] = useState(false);
 
   const options: ChartOptions<'line'> = {
     animation: {
@@ -159,14 +160,24 @@ const LineGraph: FC<MetricProps> = (props) => {
       // setOptions(newOptions);
       setChartLoaded(true);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err)
+      setLoadError(true);
+    });
   }, [])
 
   // demos 1 sec load, comment out lines 102, 103, and or statement in 105 to remove
   const [oneSecPassed, setOneSecPassed] = useState(false);
   setTimeout(() => setOneSecPassed(true), 1000);
   
-  if (!chartLoaded || !oneSecPassed) {
+  if (loadError) {
+    // render error screen here
+    return (
+      <div className="error">
+        
+      </div>
+    )
+  } else if (!chartLoaded || !oneSecPassed) {
     return (
       <div className="loading">
         < CircularProgress />

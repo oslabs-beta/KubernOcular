@@ -21,6 +21,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Dashboard: FC = () => {
+  const [customGraphs, setCustomGraphs] = React.useState<JSX.Element[]>([]);
 
   React.useEffect((): void => {
     const newCustomGraphs: JSX.Element[] = [];
@@ -67,6 +68,7 @@ const Dashboard: FC = () => {
         <LineGraph label='Memory Usage' query='/api/dashboard/mem' backgroundColor={colors.translucent.cyan} borderColor={colors.solid.cyan} yAxisType="gigabytes"/>
         <LineGraph label='Node Bytes Transmitted' query='/api/dashboard/transmit' backgroundColor={colors.translucent.orange} borderColor={colors.solid.orange} yAxisType="kilobytes"/>
         <LineGraph label='Node Bytes Received' query='/api/dashboard/receive' backgroundColor={colors.translucent.pink}  borderColor={colors.solid.pink} yAxisType="kilobytes"/>
+        {customGraphs}
       </div>
     </div>
   )

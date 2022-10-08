@@ -129,8 +129,10 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
+          <Link to='/'>
           <img id='logo-icon' src='https://hmp.me/dydj' />
           <img id='logo' src='https://hmp.me/dydf' />
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
