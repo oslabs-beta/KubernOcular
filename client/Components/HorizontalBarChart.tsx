@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import { useState } from "react";
-import { Bar } from "react-chartjs-2";
+import React, { FC, useEffect } from 'react';
+import { Bar } from 'react-chartjs-2';
+import { useState } from 'react';
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
 import {
@@ -31,12 +31,17 @@ type MetricProps = {
   label: string,
 }
 
+const initialData: ChartData<'bar'> = {
+  datasets: [],
+}
+
 const labels = ["CPU Usage %"];
-const mockData = [Math.floor(Math.random() * 99)];
-// const backgroundColor = mockData > 90 ? "rgba(255, 99, 132, 0.5)" : "rgba(75, 192, 192, 0.5)";
-const backgroundColor = ["rgba(255, 99, 132, 0.5)"];
+// const mockData = [Math.floor(Math.random() * 99)]; // const usefulData = data.data.result[0].values[data.data.result[0].values.length - 1];v
+// // const backgroundColor = mockData > 90 ? "rgba(255, 99, 132, 0.5)" : "rgba(75, 192, 192, 0.5)";
+// const backgroundColor = ["rgba(255, 99, 132, 0.5)"];
 
 const HorizontalBarChart: FC<MetricProps> = (props) => {
+  const [data, setData] = useState(initialData);
   
   const options: ChartOptions<'bar'> = {
       responsive: true,
@@ -76,14 +81,20 @@ const HorizontalBarChart: FC<MetricProps> = (props) => {
       },
     };
 
-    
+    useEffect(() => {
+      fetch('../api/dashboard/cpu')
+      .then(res => res.json())
+      .then(data => {
+        const usefulData = data.data.result[0].values[data.data.result[0].values.length - 1];
+        const chartData = Number(usefulData[1]);
+        console.log('horizontal bar chart', usefulData)
 
-  const data: ChartData<'bar'> = {
+  const newData: ChartData<'bar'> = {
     labels: labels,
     datasets: [
       {
         label: "Dataset 1",
-        data: [92],
+        data: [chartData],
         // borderColor: "rgba(255, 99, 132, 0.5)",
         // backgroundColor: "rgba(255, 99, 132, 0.5)",
         borderColor: colors.translucent.red,
@@ -95,6 +106,10 @@ const HorizontalBarChart: FC<MetricProps> = (props) => {
       },
     ],
   };
+  setData(newData);
+    })
+    .catch(err => console.log(err));
+  }, []);
 
   return (
     <div id="horizontal-bar-chart" className="instant-metric-comp">
