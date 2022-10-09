@@ -68,14 +68,18 @@ const VisualizerTab = () => {
           } 
         //"#AAD8FF"
     ]
-
+    
+// namespace: colors.pastel.solid.envy
+// service: colors.pastel.solid.martini
+// node: kubesColors.blue
+// pod: colors.pastel.solid.polo
     return (
         <div id="visualizer-page-container">
-            <div style={{display: 'flex'}}>
+            <div>
             <h1>Visualizer</h1>
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center" >
                 
-                <Chip avatar={<Avatar>M</Avatar>} label="Namespaces" variant="outlined"/>
+                <Chip avatar={<Avatar alt="namespace square" src="./namespace.jpg" />} label="Namespaces" variant="outlined" />
                 <Chip avatar={<Avatar>M</Avatar>} label="Nodes" variant="outlined"/>
                 <Chip avatar={<Avatar>M</Avatar>} label="Pods" variant="outlined"/>
                 <Chip
@@ -86,7 +90,7 @@ const VisualizerTab = () => {
             </Stack>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
-            <CytoscapeComponent elements={elements} stylesheet={styleSheet} style={ { width: '100%', height: '860px', border: 'solid' } }></CytoscapeComponent>
+            <CytoscapeComponent elements={elements} stylesheet={styleSheet} style={ { width: '100%', height: '65rem', border: 'solid' } }></CytoscapeComponent>
             </div>
         </div>
     )
