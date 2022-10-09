@@ -18,14 +18,23 @@ const CustomMetricsTab: FC = () => {
                     minHeight: 725,
                     border: 0.1,
                     borderRadius: '16px',
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 700,
+                    overflow: "hidden",
+                    overflowY: "scroll"
                     }}>
                     <CustomMetricsForm setUpdateList={setUpdateList} updateList={updateList}/>
                 </Box>
                 <Box sx={{
-                    minWidth: 775,
                     minHeight: 725,
+                    maxHeight: 725,
+                    width: "auto",
                     border: 0.1,
                     borderRadius: '16px',
+                    display: "flex",
+                    flexDirection: "column",
+                    overflow: "auto",
                     }}>
                     <SavedCustomMetrics updateList={updateList} />
                 </Box>
