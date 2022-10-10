@@ -2,12 +2,10 @@ const express = require('express');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const app = express();
 
-
 const k8s = require('@kubernetes/client-node');
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-
 
 const client = require('prom-client');
 client.collectDefaultMetrics();
@@ -27,9 +25,6 @@ client.register.getMetricsAsJSON()
 // process heap size from Node = data[19].values[0].value
 // process heap size used from Node = data[20].values[0].value
 // node duration seconds = data[26].values[0].value
-
-
-
 
 app.use(express.json());
 
@@ -61,11 +56,7 @@ k8sApi.listNode()
     // console.log(output);
 }) 
 
-
 k8sApi.list
-
-
-
 
 const url = 'http://localhost:9090/api/v1/';
 const start = new Date(Date.now() - (1440 * 60000)).toISOString();
@@ -73,7 +64,6 @@ const end = new Date(Date.now()).toISOString();
 console.log('start: ', start);
 console.log('end: ', end);
 const step = '1h';
-
 
 app.get('/', (req, res) => {
     fetch(`http://localhost:9090/api/v1/query_range?query=sum(up)&start=${start}&end=${end}&step=20m`)
@@ -113,7 +103,6 @@ app.get('/mem', (req, res) => {
         return res.status(200).send(data);
     })
 })
-
 
 app.get('/cpubynode', (req, res) => {
     const { node } = req.query;
