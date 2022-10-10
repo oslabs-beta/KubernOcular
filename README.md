@@ -1,4 +1,7 @@
-<p align="center"><img src="https://hmp.me/dyi8"></p>
+<picture>
+<source media="(prefers-color-scheme:dark)" srcset="https://hmp.me/dykg">
+<img alt="light and dark kubernocular" src="https://hmp.me/dyki">
+</picture>
 
 ## Set Up
 
