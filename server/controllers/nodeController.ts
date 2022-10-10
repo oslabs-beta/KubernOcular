@@ -14,14 +14,12 @@ const nodeController: NodeController = {
                     receive: responseReceive.data.data.result[i].value[1]
                 }
             }
-            console.log(res.locals.data);
             return next();
         } catch(err) {
-            console.log(err);
             return next({
-              log: 'Error in nodeController.getInstantMetrics middleware',
+              log: `Error in nodeController.getInstantMetrics middleware: ${err}`,
               status: 500,
-              message: { err: 'An error occurred' },
+              message: { err: 'An error occurred in while getting node instant metrics' },
             })
         }
     },
@@ -31,7 +29,6 @@ const nodeController: NodeController = {
         try {
             const data = await axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(node_network_transmit_bytes_total{instance='${nodeIP}:9100'}[10m]))&start=${start}&end=${end}&step=10m`)
             res.locals.transmitBytes = data;
-            // console.log('transmit data:', data.data.data.result);
             return next();
         } catch(err) {
             return next({
@@ -47,7 +44,6 @@ const nodeController: NodeController = {
         try {
             const data = await axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(node_network_receive_bytes_total{instance='${nodeIP}:9100'}[10m]))&start=${start}&end=${end}&step=10m`)
             res.locals.receiveBytes = data;
-            // console.log('receive data:', data.data.data.result);
             return next();
         } catch(err) {
             return next({

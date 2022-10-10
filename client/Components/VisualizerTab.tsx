@@ -76,22 +76,7 @@ const VisualizerTab = () => {
               "line-color": colors.translucent.currentLine,
             }
           } 
-        //"#AAD8FF"
-    ]
-    
-// namespace: colors.pastel.solid.envy
-// service: colors.pastel.solid.martini
-// node: kubesColors.blue
-// pod: colors.pastel.solid.polo
-
-{/* <Stack direction="row" spacing={1}>
-      <Chip avatar={<Avatar>M</Avatar>} label="Avatar" />
-      <Chip
-        avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label="Avatar"
-        variant="outlined"
-      />
-    </Stack> */}
+    ];
 
     return (
         <div id="visualizer-page-container">

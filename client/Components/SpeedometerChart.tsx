@@ -57,19 +57,15 @@ const SpeedometerChart: FC<MetricProps> = (props) => {
         percentage: data.heapSizeUsed / data.heapSizeByes,
         // color: this.percentage > .9 ? 'rgba(255, 99, 132, 0.2)' : 'rgba(75, 192, 192, 0.2)',
       };
-      console.log(data);
       setChartData(fetchedData);
     })
     .catch(err => console.log(err));
   }, []);
-  
-
 
   const options: ChartOptions<'doughnut'> = {
     animation: {
       easing: "easeInCubic",
       duration: 1200,
-      // delay: 2000,
     },
     responsive: true,
     maintainAspectRatio: false,
@@ -96,16 +92,12 @@ const SpeedometerChart: FC<MetricProps> = (props) => {
       {
         data: [chartData.heapSizeUsed, chartData.difference],
         backgroundColor: [
-          // 'rgba(255, 99, 132, 0.2)',
           colors.translucent.comment,
           'rgba(255, 255, 255, 0.01',
-          // 'rgba(75, 192, 192, 0.2)',
         ],
         borderColor: [
-          // 'rgba(255, 99, 132, 1)',
           colors.solid.comment,
           'rgba(255, 255, 255, 0.05',
-          // 'rgba(75, 192, 192, 1)',
         ],
         borderWidth: 1,
       },
@@ -117,7 +109,6 @@ const SpeedometerChart: FC<MetricProps> = (props) => {
     < Doughnut options={options} data={data} />
     </div>
   )
-
 }
 
 export default SpeedometerChart;

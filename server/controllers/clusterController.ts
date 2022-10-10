@@ -16,7 +16,7 @@ const clusterController: ClusterController = {
             return next();
         })
         .catch((err: string | null) => next({
-            log: 'Error in clusterController.getNamespaces middleware',
+            log: `Error in clusterController.getNamespaces middleware: ${err}`,
             status: 500,
             message: { err: 'An error occurred' },
         })) 
@@ -36,18 +36,15 @@ const clusterController: ClusterController = {
         .catch((err: string | null) => next({
             log: `Error in clusterController.getPodsByNamespace middleware: ${err}`,
             status: 500,
-            message: { err: 'An error occurred' },
+            message: { err: 'An error occurred while getting pods by namespace' },
         }))      
     },
 
     getNodes: (req, res, next) => {
-        // const { namespace } = req.query;
-        // k8sApi.listNode(namespace)
         k8sApi.listNode()
         .then((data: any) => {
             const output = [];
             for (const element of data.body.items) {
-                // console.log(element.status.addresses);
                 type Names = {
                     name: string,
                     ip: string
@@ -69,9 +66,9 @@ const clusterController: ClusterController = {
             return next();
         }) 
         .catch((err: string | null) => next({
-            log: 'Error in clusterController.getNodes middleware',
+            log: `Error in clusterController.getNodes middleware: ${err}`,
             status: 500,
-            message: { err: 'An error occurred' },
+            message: { err: 'An error occurred while getting all node names' },
         }))     
     }
 }

@@ -21,27 +21,23 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
   const [validity, setValidity] = React.useState(false);
 
   const handleMetricInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('metric name: ', event.target.value);
     setMetricName(event.target.value);
   };
 
   const handleQueryInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('your prom query: ', event.target.value);
     setPromQuery(event.target.value);
   };
 
   const handleYAxisSelect = (event: SelectChangeEvent) => {
-    console.log('y axis unit: ', event.target.value);
     setYAxisType(event.target.value);
   };
 
   const handleScopeSelect = (event: SelectChangeEvent) => {
-    console.log('scope: ', event.target.value);
     setScope(event.target.value);
   };
 
   // unclear on event type
-  const handleSubmit = (event: any) => {
+  const handleSubmit = () => {
     fetch('/api/custom/queries', {
       method: 'POST',
       headers: {
@@ -52,7 +48,6 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
       .then(res => res.json())
       .then(addedQuery => {
         if (addedQuery) {
-          console.log('Query added successfully');
           setUpdateList(updateList + 1);
         }
         else console.log('Query was not added');
@@ -72,14 +67,13 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
       .then(data => setValidity(data === true ? true : false))
   }, [promQuery, scope]);
 
-  console.log('query validity: ', validity);
 
   return (
     <div>
       <h2
-      style={{ margin: 25 }}
+      style={{ margin: 28 }}
       >
-      Custom Metrics Form
+      Create a Custom Metric
       </h2>
       <Box
         component="form"
@@ -191,10 +185,10 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
         variant="contained"
         endIcon={<SendIcon />}
         disabled={metricName === '' || promQuery === '' || scope === '' || validity === false}
-        onClick={() => handleSubmit(event)}
+        onClick={() => handleSubmit()}
         sx={{ m: 3, width: '25ch' }}
         >
-        Submit Query
+        Add Metric
       </Button>
     </div>
   )

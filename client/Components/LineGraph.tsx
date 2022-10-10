@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { FC, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
   Chart as ChartJS,
@@ -55,7 +54,6 @@ const LineGraph: FC<MetricProps> = (props) => {
     animation: {
       easing: "easeInCubic",
       duration: 1200,
-      // delay: 2000,
     },
     responsive: true,
     interaction: {
@@ -106,25 +104,18 @@ const LineGraph: FC<MetricProps> = (props) => {
       const usefulData = data.data.result[0].values;
       console.log('usefulData', usefulData);
       // creates a date display when the day changes
-      let displayDate = true;
-      let prevDate = '';
+      // let displayDate = true;
+      // let prevDate = '';
       // maps the xAxis label
       const xAxisLabels = usefulData.map((value: [number, string]) => {
         // logic for converting timestamp to human-readable time
         const currentDate = new Date(value[0] * 1000);
         let timeString = currentDate.toLocaleString('en-GB');
-        // if (timeString.slice(0, 10) !== prevDate.slice(0,10)) displayDate = true;
-        // prevDate = timeString;
-        // if (!displayDate) {
           const iOfComma = timeString.indexOf(',') + 1;
           timeString = timeString.slice(iOfComma).trim();
-        // }
         // displayDate = false;
         return timeString;
       });
-      console.log('xAxisLabels:', xAxisLabels);
-      console.log('Useful data:', usefulData);
-      console.log(props.yAxisType)
       let yAxisValues: number[] = []       
       switch(props.yAxisType) {
         case 'gigabytes': 
@@ -132,11 +123,10 @@ const LineGraph: FC<MetricProps> = (props) => {
           break;
         case 'kilobytes':
           yAxisValues = usefulData.map((value: [number, string]) => Number(value[1]) / 1000000)
+          break;
         default:
           yAxisValues = usefulData.map((value: [number, string]) => Number(value[1]))
       }
-
-      console.log('yAxisValues', yAxisValues);
       
       const newData: ChartData<'line'> = {
         labels: xAxisLabels,
@@ -155,7 +145,6 @@ const LineGraph: FC<MetricProps> = (props) => {
         }]
       }
       setData(newData);
-      // setOptions(newOptions);
       setChartLoaded(true);
     })
     .catch(err => {
@@ -163,10 +152,6 @@ const LineGraph: FC<MetricProps> = (props) => {
       setLoadError(true);
     });
   }, [])
-
-  // demos 1 sec load, comment out lines 102, 103, and or statement in 105 to remove
-  // const [oneSecPassed, setOneSecPassed] = useState(false);
-  // setTimeout(() => setOneSecPassed(true), 1000);
   
   if (loadError) {
     return (

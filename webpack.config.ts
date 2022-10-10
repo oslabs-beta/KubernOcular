@@ -35,7 +35,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './client/index.html',
       filename: './index.html',
-      favicon: "./client/images/favicon.ico"
+      favicon: "./client/favicon.ico"
     }),
     new CopyPlugin({
       patterns: [{ from: './client/style.css' }],
@@ -55,6 +55,5 @@ module.exports = {
     port: 8080,
     hot: true,
     historyApiFallback:true,
-  },
-
+  }
 }

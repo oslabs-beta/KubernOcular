@@ -186,14 +186,12 @@ export default function EnhancedTable() {
     const fetchNodes = async () => {
       const allNodes = await axios.get('/api/cluster/nodes');
       const instantMetrics = await axios.get('/api/node/instant');
-      // console.log('all nodes: ', allNodes.data);
       const newRows: any = {};
       const newNameToIP: StringMap = {...nameToIP};
       for (let i = 0; i < allNodes.data.length; i++) {
         const nodeName: string = allNodes.data[i].name;
         const nodeIP: string = allNodes.data[i].ip;
         newNameToIP[nodeName] = nodeIP;
-        console.log(instantMetrics.data);
         if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, Math.round(Number(instantMetrics.data[nodeIP].transmit)), Math.round(Number(instantMetrics.data[nodeIP].receive)));
       }
       setRows(Object.values(newRows));
@@ -213,11 +211,7 @@ export default function EnhancedTable() {
 
   const navigate = useNavigate();
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    console.log(name);
-    console.log(nameToIP);
-
     navigate(`../nodedisplay/?nodeip=${nameToIP[name]}&name=${name}`);
-
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
