@@ -1,4 +1,4 @@
-import Avatar from '@mui/material/Avatar';
+import Avatar from '@mui/material/Avatar'; 
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import React, { useState, useEffect } from 'react';
@@ -37,6 +37,7 @@ const VisualizerTab = () => {
             style: {
                 "border-width": "3px",
                 "border-color": "black",
+                "text-vertical-align": "bottom",
                 shape: 'circle',
                 "background-color": colors.pastel.solid.polo,
             }
@@ -57,6 +58,15 @@ const VisualizerTab = () => {
                 "border-color": "black",
                 shape: 'hexagon',
                 "background-color": colors.pastel.solid.martini,
+            }
+        },
+        {
+            selector: "node[type='deployment']",
+            style: {
+                "border-width": "3px",
+                "border-color": "black",
+                shape: 'diamond',
+                "background-color": colors.pastel.solid.glacier,
             }
         },
         {
@@ -94,7 +104,7 @@ const VisualizerTab = () => {
                 style={{ color: kubesColors.purple, borderColor: kubesColors.purple }}
                 />
                 <Chip
-                avatar={<Avatar src="https://hmp.me/dyjn" />}
+                avatar={<Avatar src="https://hmp.me/dyka" />}
                 label="Namespaces"
                 variant="outlined"
                 style={{ color: colors.pastel.solid.envy, borderColor: colors.pastel.solid.envy }}
@@ -110,6 +120,12 @@ const VisualizerTab = () => {
                 label="Services"
                 variant="outlined"
                 style={{ color: colors.pastel.solid.martini, borderColor: colors.pastel.solid.martini }}
+                />
+                <Chip
+                avatar={<Avatar src="https://hmp.me/dyj6" />}
+                label="Deployments"
+                variant="outlined"
+                style={{ color: colors.pastel.solid.glacier, borderColor: colors.pastel.solid.glacier }}
                 />
             </Stack>
             </div>
