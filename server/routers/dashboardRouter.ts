@@ -1,7 +1,7 @@
 import { express } from '../../types';
 import { Request, Response } from 'express';
+import dashboardController from '../controllers/dashboardController';
 const dashboardRouter = express.Router();
-const dashboardController = require('../controllers/dashboardController');
 
 dashboardRouter.get('/num', dashboardController.getNumberOf, (req: Request, res: Response) => {
     return res.status(200).send(res.locals.data);

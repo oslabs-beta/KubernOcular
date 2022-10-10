@@ -20,7 +20,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-function NamespaceDropDown(props: {setRows: Function}) {
+function NamespaceDropDown(props: {setRows: React.Dispatch<React.SetStateAction<Data[]>>}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [namespaces, setNamespaces] = React.useState<JSX.Element[]>([]);
   const [selectedNamespace, setSelectedNamespace] = React.useState<string>('');
@@ -32,12 +32,9 @@ function NamespaceDropDown(props: {setRows: Function}) {
   };
 
   const handleClose = (event: React.MouseEvent<unknown>, namespace: string): void => {
-    console.log(event);
     setAnchorEl(null);
     if (namespace !== 'backdropClick') setSelectedNamespace(namespace);
   };
-
-  console.log('selected NS: ', selectedNamespace);
 
   React.useEffect((): void => {
     const namespaceArr: string[] = [];
@@ -56,12 +53,9 @@ function NamespaceDropDown(props: {setRows: Function}) {
     .then(() => setSelectedNamespace(namespaceArr[0]));
   }, [])
 
-  console.log('selected NS: ', namespaces);
-
   React.useEffect((): void => {
     const fetchPods = async () => {
       const allPodData = await axios.get(`/api/pod/instant?namespace=${selectedNamespace}`);
-      console.log('data: ', allPodData.data);
       const cpuData = allPodData.data.cpu;
       const memData = allPodData.data.mem;
       const newRows: any = {};
@@ -275,7 +269,6 @@ export default function EnhancedTable() {
 
   const navigate = useNavigate();
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    console.log(name);
     navigate(`../poddisplay/?podname=${name}`);
   };
 

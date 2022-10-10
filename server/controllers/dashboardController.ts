@@ -39,7 +39,6 @@ const dashboardController: DashboardController = {
       totalActiveRequests: 0,
       heapSizeBytes: 0,
       heapSizeUsed: 0,
-      //nodeDuration: number
     }
     client.register.getMetricsAsJSON()
     .then((data: any) => {
@@ -116,4 +115,4 @@ const dashboardController: DashboardController = {
 
 }
 
-module.exports = dashboardController;
+export default dashboardController;

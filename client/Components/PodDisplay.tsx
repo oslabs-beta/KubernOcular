@@ -40,7 +40,6 @@ const PodDisplay: FC = () => {
     <div>
       <div style={{display: 'flex', justifyContent: 'right'}}>
         <Button
-          // variant="outlined"
           color="secondary"
           sx={{ mb: 2.5 }}
           startIcon={<ArrowBackIcon />}

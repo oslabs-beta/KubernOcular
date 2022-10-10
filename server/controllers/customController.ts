@@ -3,9 +3,9 @@ import { start, end, CustomController, axios, CustomQuery } from '../../types';
 
 const customController: CustomController = {
 
-  customClusterQueries: [{query: 'sum(up)', name:'Name for up', yAxisType: '', active: true}, {query: 'sum(up)', name:'Another name for up', yAxisType: '', active: true}], // dummy metrics for testing
+  customClusterQueries: [],
   customNodeQueries: [],
-  customPodQueries: [{query: 'up', name: 'Pod is up', yAxisType: '', active: true}],
+  customPodQueries: [],
 
   testCustomRoute: async (req, res, next) => {
     const { query, scope } = req.body;
@@ -13,35 +13,26 @@ const customController: CustomController = {
       const data = await axios.get(`http://localhost:9090/api/v1/query?query=${query}`);
       if (scope === 'cluster') {
         if (data.data.status === 'success' && data.data.data.result.length === 1) {
-          console.log('passed cluster test');
           res.locals.valid = true;
         } else {
-          console.log('failed cluster test');
           res.locals.valid = false;
         }
       } else if (scope === 'pod') {
         if (data.data.status === 'success' && data.data.data.result.length && data.data.data.result[0].metric.pod) {
-          console.log('passed pod test');
           res.locals.valid = true;
         } else {
-          console.log('failed pod test');
           res.locals.valid = false;
         }
       } else if (scope === 'node') {
         if (data.data.status === 'success' && data.data.data.result.length && data.data.data.result[0].metric.job === 'node-exporter') {
-          console.log('passed node test');
           res.locals.valid = true;
           req.body.query = `sum(${query})by(instance)`;
-          console.log(req.body.query);
         } else {
           res.locals.valid = false;
-          console.log('failed cluster test');
         }
       } else {
-        console.log('failed - no scope set');
         res.locals.valid = false;
       };
-      // console.log('transmit data:', data.data.data.result);
       return next();
     } catch(err) {
       return next({
@@ -63,7 +54,6 @@ const customController: CustomController = {
         else if (scope === 'pod') scopedQueries = customController.customPodQueries;
         else throw 'Scope parameter must be defined as cluster, node, or pod';
         scopedQueries.push({ query, name, yAxisType, active: true })
-        console.log(`New queries for ${scope}:`, scopedQueries)
         res.locals.addedRoute = true;
       } else {
         res.locals.addedRoute = false;
@@ -114,7 +104,6 @@ const customController: CustomController = {
       else if (scope === 'node') scopedQueries = customController.customNodeQueries;
       else if (scope === 'pod') scopedQueries = customController.customPodQueries;
       else throw 'Scope parameter must be defined as cluster, node, or pod';
-      // resolve custom queries here
       res.locals.data = scopedQueries;
       return next();
     } catch(err) {
@@ -169,4 +158,4 @@ const customController: CustomController = {
   }
 }
 
-module.exports = customController;
+export default customController;

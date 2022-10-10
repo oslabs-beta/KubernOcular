@@ -15,7 +15,6 @@ const NavInstantMetricsTable: FC<MetricProps> = (props) => {
     fetch('../api/dashboard/num')
     .then(res => res.json())
     .then(data => {
-      console.log('data in nav instant:', data)
       setData(data);
       const newMetricDivs: JSX.Element[] = [];
       for (const prop in data) {

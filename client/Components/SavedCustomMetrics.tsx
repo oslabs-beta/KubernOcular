@@ -90,7 +90,7 @@ const SavedCustomMetrics: FC<{updateList: number}> = props => {
       <h2
       style={{ margin: 25 }}
       >
-      Display Saved Metrics
+      Saved Metrics
       </h2>
       <Box sx={{ m: 3, mt: 6, width: '80ch' }}>
         <FormControl fullWidth>

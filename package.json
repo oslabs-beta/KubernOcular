@@ -7,7 +7,8 @@
     "test": "jest",
     "build": "NODE_ENV=production webpack",
     "start": "nodemon server/server.ts",
-    "dev": "webpack-dev-server & nodemon server/server.ts"
+    "dev": "webpack-dev-server & nodemon server/server.ts",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,6 @@
     "chartjs-plugin-datalabels": "^2.1.0",
     "cors": "^2.8.5",
     "cytoscape": "^3.23.0",
-    "eslint": "^8.24.0",
     "express": "^4.18.1",
     "node-fetch": "^3.2.10",
     "nodemon": "^2.0.20",
@@ -57,9 +57,12 @@
     "@types/node": "^18.7.20",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "enzyme": "^3.11.0",
+    "eslint": "^8.25.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "img-loader": "^4.0.0",
