@@ -106,7 +106,7 @@ const hierarchyController: HierarchyController = {
               );
               multiplier++;
               deplSet.add(name);
-            };
+            }
             elements.push(
               { data: { source: name, target: namespace } }
             )
@@ -114,7 +114,7 @@ const hierarchyController: HierarchyController = {
       
           })
       
-        };
+        }
       
         res.locals.elements = elements;
         return next();
@@ -128,4 +128,4 @@ const hierarchyController: HierarchyController = {
     }
 }
 
-module.exports = hierarchyController;
+export default hierarchyController;

@@ -53,4 +53,4 @@ const podController: PodController = {
   
 }
 
-module.exports = podController;
+export default podController;

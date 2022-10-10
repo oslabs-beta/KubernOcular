@@ -1,8 +1,8 @@
 import { express } from '../../types';
 import { Request, Response } from 'express';
-
+import clusterController from '../controllers/clusterController';
 const clusterRouter = express.Router();
-const clusterController = require('../controllers/clusterController');
+
 
 clusterRouter.get('/namespaces', clusterController.getNamespaces, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.namespaces);

@@ -35,7 +35,7 @@ const initialData: ChartData<'bar'> = {
 
 const labels = ["CPU Usage %"];
 
-const HorizontalBarChart: FC<MetricProps> = (props) => {
+const HorizontalBarChart: FC<MetricProps> = () => {
   const [data, setData] = useState(initialData);
   
   const options: ChartOptions<'bar'> = {

@@ -56,4 +56,4 @@ const nodeController: NodeController = {
 
 }
 
-module.exports = nodeController;
+export default nodeController;

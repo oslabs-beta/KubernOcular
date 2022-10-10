@@ -20,7 +20,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-function NamespaceDropDown(props: {setRows: void}) {
+function NamespaceDropDown(props: {setRows: React.Dispatch<React.SetStateAction<Data[]>>}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [namespaces, setNamespaces] = React.useState<JSX.Element[]>([]);
   const [selectedNamespace, setSelectedNamespace] = React.useState<string>('');

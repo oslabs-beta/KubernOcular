@@ -14,8 +14,6 @@ import {
   ChartData,
   ArcElement, 
 } from 'chart.js';
-import { axios } from '../../types';
-import { isWhiteSpaceLike } from 'typescript';
 import colors from '../colors';
 
 ChartJS.register(
@@ -41,8 +39,7 @@ const dataArg: FetchedData = {
   percentage: 0,
 }
 
-
-const SpeedometerChart: FC<MetricProps> = (props) => {
+const SpeedometerChart: FC<MetricProps> = () => {
 
   const [chartData, setChartData] = useState(dataArg);
 

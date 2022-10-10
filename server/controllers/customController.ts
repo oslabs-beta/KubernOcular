@@ -158,4 +158,4 @@ const customController: CustomController = {
   }
 }
 
-module.exports = customController;
+export default customController;

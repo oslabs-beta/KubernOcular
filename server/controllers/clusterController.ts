@@ -59,7 +59,7 @@ const clusterController: ClusterController = {
                     } else if (el.type === 'InternalIP') {
                         names.ip = el.address;
                     }
-                };
+                }
                 output.push(names);
             }
             res.locals.nodes = output;
@@ -73,4 +73,4 @@ const clusterController: ClusterController = {
     }
 }
 
-module.exports = clusterController;
+export default clusterController;

@@ -1,5 +1,5 @@
-const request = require('supertest');
-const app = require('../server/server');
+import request = require('supertest');
+import app = require('../server/server');
 
 describe('route integration tests', () => {
     describe('/api/dashboard', () => {

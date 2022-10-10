@@ -15,7 +15,7 @@ const Dashboard: FC = () => {
     fetch('/api/custom/list?scope=cluster')
       .then(res => res.json())
       .then(data => {
-        data.forEach((metric: any, index: number) => {
+        data.forEach((metric: Record<string, string>, index: number) => {
           if(metric.active) {
             const customColors: number[] = [];
             for (let i = 0; i < 3; i++) {

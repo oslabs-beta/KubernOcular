@@ -1,7 +1,7 @@
 import { express } from '../../types';
 import { Request, Response } from 'express';
+import podController from '../controllers/podController';
 const podRouter = express.Router();
-const podController = require('../controllers/podController');
 
 podRouter.get('/cpu', podController.getCpuUsage, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.cpuUsage.data);

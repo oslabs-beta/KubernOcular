@@ -115,4 +115,4 @@ const dashboardController: DashboardController = {
 
 }
 
-module.exports = dashboardController;
+export default dashboardController;

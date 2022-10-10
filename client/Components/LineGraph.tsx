@@ -14,14 +14,7 @@ import {
   Legend,
   ChartOptions,
   ChartData, 
-  CartesianScaleOptions,
-  CartesianScaleTypeRegistry,
-  CoreScaleOptions,
-  Filler,
 } from 'chart.js';
-import { time } from "console";
-import { setConstantValue } from "typescript";
-import { linearBuckets } from "prom-client";
 
 ChartJS.register(
   CategoryScale,
