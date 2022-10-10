@@ -88,6 +88,7 @@ const HorizontalBarChart: FC<MetricProps> = (props) => {
         const usefulData = data.data.result[0].values[data.data.result[0].values.length - 1];
         const chartData = Number(usefulData[1]);
         console.log('horizontal bar chart', usefulData)
+        const backgroundColor = chartData >= 90 ? colors.translucent.red : colors.translucent.green;
 
   const newData: ChartData<'bar'> = {
     labels: labels,
@@ -97,8 +98,8 @@ const HorizontalBarChart: FC<MetricProps> = (props) => {
         data: [chartData],
         // borderColor: "rgba(255, 99, 132, 0.5)",
         // backgroundColor: "rgba(255, 99, 132, 0.5)",
-        borderColor: colors.translucent.red,
-        backgroundColor: colors.translucent.red,
+        borderColor: backgroundColor,
+        backgroundColor: backgroundColor,
         datalabels: {
           align: "center",
           anchor: "center",
