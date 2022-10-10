@@ -1,4 +1,4 @@
-# <p align="center"><img src="https://hmp.me/dyf9" width=50%></p>
+<p align="center"><img src="https://hmp.me/dyi8"></p>
 
 ## Set Up
 

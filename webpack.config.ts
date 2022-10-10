@@ -35,6 +35,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './client/index.html',
       filename: './index.html',
+      favicon: "./client/images/favicon.ico"
     }),
     new CopyPlugin({
       patterns: [{ from: './client/style.css' }],
