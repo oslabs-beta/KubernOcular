@@ -1,9 +1,17 @@
 const request = require('supertest');
-
-const server = 'http://localhost:3000';
+const app = require('../server/server');
 
 describe('route integration tests', () => {
-    describe('dashboard router', () => {
-
+    describe('/api/dashboard', () => {
+        it('/num', () => {
+            return request(app)
+              .get('/api/dashboard/num')
+              .expect('Content-Type', /application\/json/)
+              .expect(200)
+              .then(res => {
+                expect(typeof res).toBe('object')
+              })
+        })
     })
+
 })

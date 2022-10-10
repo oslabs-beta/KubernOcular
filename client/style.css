@@ -155,3 +155,35 @@ p {
   /* flex-shrink: 2;  */
   width: 20%;
 }
+
+#visualizer-legend, .legend-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+#triangle {
+  width: 0; 
+  height: 0; 
+  border-bottom: 80px solid rgb(138,255,128); 
+  border-left: 40px solid transparent; 
+  border-right: 40px solid transparent; 
+}
+
+#square {
+  width: 80px; 
+  height: 100px; 
+  background: rgb(241, 250, 140); 
+}
+
+#circle { 
+  width: 80px;
+  height: 80px;
+  background: rgb(255, 121, 198); 
+  -moz-border-radius: 70px; 
+  -webkit-border-radius: 70px; 
+  border-radius: 70px;
+}
