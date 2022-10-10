@@ -72,6 +72,10 @@ const LineGraph: FC<MetricProps> = (props) => {
       filler: {
         drawTime: 'beforeDatasetsDraw',
         propagate: true,
+      },
+      // displays data labels inside the chart
+      datalabels: {
+        display: false,
       }
     },
     scales: { // <-- ScaleChartOptions
@@ -82,23 +86,14 @@ const LineGraph: FC<MetricProps> = (props) => {
           display: true,
           text: props.yAxisType,
         },
-        grid: {
-          // display: true,
-          // color: 'rbga(252,252,252, 0.5)', 
-        }
       },
       x: {  // <-- ScaleOptionsByType
         display: true, // <-- any options within CartesianScaleTypeRegistry
-    
         axis: 'y',
         title: {
           display: true,
           text: 'Time',
         },
-        grid: {
-          // display: true,
-          // color: 'default', 
-        }
       },
     }
   }
