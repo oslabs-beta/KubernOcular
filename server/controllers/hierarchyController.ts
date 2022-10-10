@@ -18,7 +18,7 @@ const hierarchyController: HierarchyController = {
         namespaceData.body.items.forEach((space: any) => {
           const name = space.metadata.name;
           if (name !== 'kube-system') namespaces.push(name);
-          elements.push({ data: { id: name, label: name, type: 'namespace' }, position: { x: (distance * multiplier),  y: 600 } });
+          elements.push({ data: { id: name, label: name, type: 'namespace' }, position: { x: (distance * multiplier),  y: 175 } });
           multiplier++;
         });
         
@@ -35,7 +35,7 @@ const hierarchyController: HierarchyController = {
           const podData = await k8sApi.listNamespacedPod(namespace)
           // eslint-disable-next-line no-loop-func
           podData.body.items.forEach((pod: any) => {
-            const yVal = alter ? 350 : 500;
+            const yVal = alter ? 250 : 350;
             const name = pod.metadata.name;
             elements.push(
               { data: { id: name, label: name, type: 'pod' }, position: { x: (distance * multiplier), y: yVal } }
@@ -54,7 +54,7 @@ const hierarchyController: HierarchyController = {
           multiplier = 1;
           // eslint-disable-next-line no-loop-func
           nodeData.body.items.forEach((node: any) => {
-            const yVal = alter ? 775 : 927;
+            const yVal = alter ? 0 : 50;
             const name = node.metadata.name;
             if (!nodeSet.has(name)) {
               elements.push(
@@ -75,7 +75,7 @@ const hierarchyController: HierarchyController = {
           const serviceData = await k8sApi.listNamespacedService(namespace)
           // eslint-disable-next-line no-loop-func
           serviceData.body.items.forEach((service: any) => {
-            const yVal = alter ? 150 : 375;
+            const yVal = alter ? 450 : 525;
             const name = service.metadata.name
             if (!srvSet.has(name)) {
               elements.push(
@@ -98,8 +98,8 @@ const hierarchyController: HierarchyController = {
           const deployData = await k8sApi1.listNamespacedDeployment(namespace)
           // eslint-disable-next-line no-loop-func
           deployData.body.items.forEach((deploy: any) => {
-            const yVal = alter ? 1300 : 1150;
-            const name = deploy.metadata.name;
+            const yVal = alter ? 575 : 625;
+            const name = deploy.metadata.name + ' (depl)';
             if (!deplSet.has(name)) {
               elements.push(
                 { data: { id: name, label: name, type: 'deployment' }, position: { x: (distance * multiplier), y: yVal } }
