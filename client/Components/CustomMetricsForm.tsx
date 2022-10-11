@@ -149,7 +149,7 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
         <ErrorIcon sx={{ mt: 5 }} />
         </Stack>
       }
-      <Box sx={{ m: 3, width: '13ch' }}>
+      <Box sx={{ m: 3, width: '15ch' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Unit Type</InputLabel>
           <Select
@@ -167,7 +167,7 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
           </Select>
         </FormControl>
       </Box>
-      <Box sx={{ m: 3, mt: 6, width: '10ch' }}>
+      <Box sx={{ m: 3, mt: 6, width: '15ch' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Scope</InputLabel>
           <Select
