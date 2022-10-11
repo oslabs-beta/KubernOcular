@@ -1,13 +1,13 @@
 import { ErrObject, express } from '../types';
 import { Request, Response, NextFunction }  from 'express';
+import cors from 'cors';
+import dashboardRouter from './routers/dashboardRouter';
+import clusterRouter from './routers/clusterRouter';
+import podRouter from './routers/podRouter';
+import nodeRouter from './routers/nodeRouter';
+import customRouter from './routers/customRouter';
+import hierarchyRouter from './routers/hierarchyRouter';
 const app = express();
-const cors = require('cors');
-const dashboardRouter = require('./routers/dashboardRouter');
-const clusterRouter = require('./routers/clusterRouter');
-const podRouter = require('./routers/podRouter');
-const nodeRouter = require('./routers/nodeRouter');
-const customRouter = require('./routers/customRouter');
-const hierarchyRouter = require('./routers/hierarchyRouter');
 
 app.use(cors());
 app.use(express.json());
@@ -35,4 +35,4 @@ app.use((err: ErrObject, req: Request, res: Response, next: NextFunction) => {
 
 app.listen(3000, () => console.log('listening on port 3000'));
 
-module.exports = app;
+export default app;

@@ -15,4 +15,4 @@ nodeRouter.get('/instant', nodeController.getInstantMetrics, (req: Request, res:
   return res.status(200).json(res.locals.data);
 })
 
-module.exports = nodeRouter;
+export default nodeRouter;

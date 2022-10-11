@@ -7,4 +7,4 @@ hierarchyRouter.get('/', hierarchyController.getElements, (req: Request, res: Re
     return res.status(200).json(res.locals.elements);
 })
 
-module.exports = hierarchyRouter;
+export default hierarchyRouter;

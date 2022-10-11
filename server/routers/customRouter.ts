@@ -29,4 +29,4 @@ customRouter.post('/active', customController.changeRouteActive, (req: Request, 
   return res.status(200).send(`Query ${req.body.id} set to ${req.body.active}`);
 })
 
-module.exports = customRouter;
+export default customRouter;
