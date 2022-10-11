@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./client/dark.png">
-  <img src="./client/light.png">
+  <source width="100%" media="(prefers-color-scheme: dark)" srcset="./client/dark.png">
+  <img width="100%" src="./client/light.png">
 </picture>
 
 ## Set Up
