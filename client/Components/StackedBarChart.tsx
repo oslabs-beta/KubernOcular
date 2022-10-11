@@ -23,7 +23,6 @@ ChartJS.register(
 );
 import colors from '../colors';
 
-
 type MetricProps = {
   label: string,
 }

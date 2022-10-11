@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import customController from '../controllers/customController';
 const customRouter = express.Router();
 
-
 customRouter.post('/test', customController.testCustomRoute, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.valid);
 });

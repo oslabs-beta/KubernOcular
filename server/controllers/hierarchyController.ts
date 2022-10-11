@@ -47,7 +47,6 @@ const hierarchyController: HierarchyController = {
             alter = alter ? false : true;
           })
       
-      
           const nodeData = await k8sApi.listNode(namespace);
           const lenNode = await k8sApi.listNode();
           distance = 1280/(lenNode.body.items.length + 1)
@@ -113,7 +112,6 @@ const hierarchyController: HierarchyController = {
             alter = alter ? false : true;
       
           })
-      
         }
       
         res.locals.elements = elements;

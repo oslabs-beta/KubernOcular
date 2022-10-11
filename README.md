@@ -73,8 +73,8 @@
 * [Kubernetes-Client](https://www.npmjs.com/package/kubernetes-client)
 * [Prometheus/PromQL](https://prometheus.io/)
 * [Jest](https://jestjs.io/)
-* [Puppeteer](https://pptr.dev/)
 * [Supertest](https://www.npmjs.com/package/supertest)
+* [Puppeteer](https://pptr.dev/)
 * [Webpack](https://webpack.js.org/)
 
 ## The KubernOcular Team
