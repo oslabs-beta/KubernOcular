@@ -1,5 +1,7 @@
-![dark mode logo](./client/dark.png#gh-dark-mode-only)
-![light mode logo](./client/light.png#gh-light-mode-only)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./client/dark.png">
+  <img src="./client/light.png">
+</picture>
 
 ## Set Up
 
