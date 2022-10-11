@@ -59,24 +59,20 @@ export type GeneralData = {
     totalActiveRequests: number,
     heapSizeBytes: number,
     heapSizeUsed: number,
-    //nodeDuration: number
 }
 export type PodController = {
     getCpuUsage: RequestHandler,
     getMemUsage: RequestHandler,
     getInstantMetrics: RequestHandler
 }
-
 export type HierarchyController = {
     getElements: RequestHandler
 }
-
 export type ErrObject = {
     log: string,
     status: number,
     message: { err: string }
 };
-
 export type Elements = {
     data: {
         id?: string,

@@ -1,4 +1,3 @@
-import cluster from 'cluster';
 import { start, end, CustomController, axios, CustomQuery } from '../../types';
 
 const customController: CustomController = {

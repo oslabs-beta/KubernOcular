@@ -9,7 +9,6 @@ const nodeRouter = require('./routers/nodeRouter');
 const customRouter = require('./routers/customRouter');
 const hierarchyRouter = require('./routers/hierarchyRouter');
 
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
