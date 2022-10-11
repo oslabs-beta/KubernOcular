@@ -1,7 +1,5 @@
-<picture>
-<source media="(prefers-color-scheme:dark)" srcset="https://hmp.me/dykg">
-<img alt="light and dark kubernocular" src="https://hmp.me/dyki">
-</picture>
+![dark mode logo](./client/dark.png#gh-dark-mode-only)
+![light mode logo](./client/light.png#gh-light-mode-only)
 
 ## Set Up
 
