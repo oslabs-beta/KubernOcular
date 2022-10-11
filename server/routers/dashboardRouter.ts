@@ -27,4 +27,4 @@ dashboardRouter.get('/receive', dashboardController.getTotalReceive, (req: Reque
     return res.status(200).send(res.locals.totalReceive.data);
 });
 
-module.exports = dashboardRouter;
+export default dashboardRouter;

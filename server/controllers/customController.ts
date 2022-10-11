@@ -31,7 +31,7 @@ const customController: CustomController = {
         }
       } else {
         res.locals.valid = false;
-      };
+      }
       return next();
     } catch(err) {
       return next({

@@ -15,4 +15,4 @@ podRouter.get('/instant', podController.getInstantMetrics, (req: Request, res: R
   return res.status(200).json(res.locals.data);
 })
 
-module.exports = podRouter;
+export default podRouter;

@@ -15,4 +15,4 @@ clusterRouter.get('/nodes', clusterController.getNodes, (req: Request, res: Resp
   return res.status(200).json(res.locals.nodes);
 });
 
-module.exports = clusterRouter;
+export default clusterRouter;
