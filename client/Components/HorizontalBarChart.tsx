@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useState } from 'react';
+import colors from '../colors';
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import {
   Chart as ChartJS,
@@ -23,7 +24,6 @@ ChartJS.register(
   Legend,
   ChartDataLabels
 );
-import colors from '../colors';
 
 type MetricProps = {
   label: string,

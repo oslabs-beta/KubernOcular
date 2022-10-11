@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
+
 interface Data {
   name: string;
   transmit: number;
@@ -182,6 +183,7 @@ export default function EnhancedTable() {
     [index: string]: string;
   }
 
+  // upon component load, fetch list of all nodes along with instant metrics for each (transmit and receive bytes)
   React.useEffect((): void => {
     const fetchNodes = async () => {
       const allNodes = await axios.get('/api/cluster/nodes');

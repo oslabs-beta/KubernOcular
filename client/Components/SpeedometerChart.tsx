@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { useState, useEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import colors from '../colors';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,7 +15,6 @@ import {
   ChartData,
   ArcElement, 
 } from 'chart.js';
-import colors from '../colors';
 
 ChartJS.register(
   CategoryScale,

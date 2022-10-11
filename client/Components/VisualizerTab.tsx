@@ -9,12 +9,14 @@ import { kubesColors } from '../colors';
 const VisualizerTab = () => {
     const [elements, setElements] = useState([]); 
 
+    // upon component load, fetch network relational data and set state for these elements
     useEffect(() => {
         fetch('/api/hierarchy')
           .then(response => response.json())
           .then(data => setElements(data))
     },[])
 
+    
     const styleSheet = [
         {
             selector: 'node',

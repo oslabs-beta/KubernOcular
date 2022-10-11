@@ -67,6 +67,7 @@ const customController: CustomController = {
     }
   },
 
+
   getCustomRoute: async (req, res, next) => {
     try {
       const { scope, index, pod, nodeIP } = req.query;

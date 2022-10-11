@@ -8,8 +8,10 @@ import SpeedometerChart from './SpeedometerChart';
 import colors from '../colors';
 
 const Dashboard: FC = () => {
+  // preserve state of all custom metric graphs currently checked active for display
   const [customGraphs, setCustomGraphs] = React.useState<JSX.Element[]>([]);
 
+  // upon component load, fetch custom metrics data to render graphs for cluster and push element into custom graphs state
   React.useEffect((): void => {
     const newCustomGraphs: JSX.Element[] = [];
     fetch('/api/custom/list?scope=cluster')
@@ -38,10 +40,10 @@ const Dashboard: FC = () => {
   return (
     <div id="db-container">
       <div id="instant-metrics-container">
-        < StackedBarChart label='User and System CPU Time'/>
-        < SpeedometerChart label='Process Heap Size from Node' />
-        < NavInstantMetricsTable label="Instant Metrics" />
-        < HorizontalBarChart label="Total CPU Usage" />
+        <StackedBarChart label='User and System CPU Time'/>
+        <SpeedometerChart label='Process Heap Size from Node'/>
+        <NavInstantMetricsTable label="Instant Metrics"/>
+        <HorizontalBarChart label="Total CPU Usage"/>
       </div>
       <div id='metric-graphs'>
         <LineGraph label='CPU Usage' query='/api/dashboard/cpu' backgroundColor={colors.translucent.purple} borderColor={colors.solid.purple} yAxisType="percent"/>

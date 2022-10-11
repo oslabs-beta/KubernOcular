@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useState } from 'react';
+import colors from '../colors';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,7 +13,7 @@ import {
   ChartOptions,
   ChartData,
 } from 'chart.js';
-import { BorderColor } from '@mui/icons-material';
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -21,7 +22,6 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-import colors from '../colors';
 
 type MetricProps = {
   label: string,
@@ -65,6 +65,7 @@ const StackedBarChart: FC<MetricProps> = (props) => {
     },
   }
 
+  // upon component load, fetch general cluster metrics to render CPU bar component
   useEffect(() => {
     fetch('../api/dashboard/general')
     .then(res => res.json())
@@ -95,7 +96,7 @@ const StackedBarChart: FC<MetricProps> = (props) => {
 
   return (
     <div id="stacked-bar-chart" className='instant-metric-comp'>
-      < Bar options={options} data={data} />
+      <Bar options={options} data={data} />
     </div>
   )
 }

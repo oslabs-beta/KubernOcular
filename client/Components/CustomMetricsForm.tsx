@@ -13,6 +13,7 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import ErrorIcon from '@mui/icons-material/Error';
 
 const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = props => {
+  // preserve state of user input for custom metrics
   const {updateList, setUpdateList} = props;
   const [metricName, setMetricName] = React.useState('');
   const [promQuery, setPromQuery] = React.useState('');
@@ -20,6 +21,7 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
   const [scope, setScope] = React.useState('');
   const [validity, setValidity] = React.useState(false);
 
+  // handlers for each portion of input form
   const handleMetricInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMetricName(event.target.value);
   };
@@ -36,7 +38,7 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
     setScope(event.target.value);
   };
 
-  // unclear on event type
+  // upon clicking "add metric", send post request with user input data and increment saved metrics counter by 1 (for other component to recognize increase and in turn, rerender with added metric)
   const handleSubmit = () => {
     fetch('/api/custom/queries', {
       method: 'POST',
@@ -54,7 +56,7 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
       })
   };
 
-  // check validity of query
+  // check for validity of query upon change in prom query input field and scope select
   React.useEffect(() => {
     fetch('/api/custom/test', {
       method: 'POST',

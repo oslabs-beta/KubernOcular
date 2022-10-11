@@ -36,6 +36,7 @@ function NamespaceDropDown(props: {setRows: React.Dispatch<React.SetStateAction<
     if (namespace !== 'backdropClick') setSelectedNamespace(namespace);
   };
 
+  // upon component load, fetch list of all namespaces in order to render pods table by namespace
   React.useEffect((): void => {
     const namespaceArr: string[] = [];
     const fetchNamespaces = async () => {
@@ -53,6 +54,7 @@ function NamespaceDropDown(props: {setRows: React.Dispatch<React.SetStateAction<
     .then(() => setSelectedNamespace(namespaceArr[0]));
   }, [])
 
+  // new selection of namespace, fetch new list of pods based on namespace selection
   React.useEffect((): void => {
     const fetchPods = async () => {
       const allPodData = await axios.get(`/api/pod/instant?namespace=${selectedNamespace}`);
