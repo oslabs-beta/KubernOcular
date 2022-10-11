@@ -117,7 +117,7 @@ const VisualizerTab = () => {
             </Stack>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
-            <CytoscapeComponent elements={elements} stylesheet={styleSheet} style={{ width: '100%', height: '65rem', border: 'solid' }}></CytoscapeComponent>
+            <CytoscapeComponent elements={elements} stylesheet={styleSheet} style={{ width: '100%', height: '65rem', border: 'solid', objectFit: 'cover' }}></CytoscapeComponent>
             </div>
         </div>
     )

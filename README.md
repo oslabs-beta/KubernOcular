@@ -62,12 +62,15 @@
         helm uninstall prometheus
 
 ## Technologies
-
 * [React](https://reactjs.org/)
-* [React Router](https://reactrouter.com/en/main)
 * [TypeScript](https://www.typescriptlang.org/)
+* [React Router](https://reactrouter.com/en/main)
 * [Material UI](https://mui.com/)
+* [Cytoscape](https://js.cytoscape.org/)
 * [Chart.js](https://www.chartjs.org/)
+* [Kubernetes](https://kubernetes.io/)
+* [Docker](https://www.docker.com/)
+* [Helm](https://helm.sh/)
 * [Node](https://nodejs.org/en/)
 * [Express](https://expressjs.com/)
 * [Kubernetes-Client](https://www.npmjs.com/package/kubernetes-client)
@@ -84,3 +87,7 @@
 * Brian Preston: [Github](https://github.com/BrianJPreston) | [LinkedIn](https://www.linkedin.com/in/brian-preston-33444430/)
 * Evan Emenegger: [Github](https://github.com/emenegger) | [LinkedIn](https://www.linkedin.com/in/evan-emenegger/)
 * Michael Mezhiritskiy: [Github](https://github.com/MichaelMezhiritskiy) | [LinkedIn](https://www.linkedin.com/in/michael-mezhiritskiy-41a0aa1b4/)
+
+## License
+
+This project is licensed under Mozilla Public License Version 2.0 - see the LICENSE.md file for details.
