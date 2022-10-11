@@ -6,7 +6,9 @@ import CustomMetricsForm from './CustomMetricsForm';
 import SavedCustomMetrics from './SavedCustomMetrics';
 
 const CustomMetricsTab: FC = () => {
+    // preserve state of saved metrics list (if incremented, saved custom metrics component will rerender)
     const [updateList, setUpdateList] = React.useState(0);
+
     return (
         <div>
             <Stack

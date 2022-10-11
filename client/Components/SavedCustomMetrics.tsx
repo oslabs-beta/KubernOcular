@@ -81,7 +81,6 @@ const SavedCustomMetrics: FC<{updateList: number}> = props => {
     } else {
       newChecked.splice(currentIndex, 1);
     }
-
     setChecked(newChecked);
   };
 

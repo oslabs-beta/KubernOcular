@@ -12,6 +12,7 @@ const NodeDisplay: FC = () => {
   const navigate = useNavigate();
   const [customGraphs, setCustomGraphs] = React.useState<JSX.Element[]>([]);
 
+  // upon component load, fetch custom metrics data to render graphs for nodes and push element into custom graphs state
   React.useEffect((): void => {
     const newCustomGraphs: JSX.Element[] = [];
     fetch('/api/custom/list?scope=node')
