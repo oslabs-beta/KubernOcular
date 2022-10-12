@@ -29,6 +29,8 @@ import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import HelpIcon from '@mui/icons-material/Help';
 
+
+// renders the sidebar and gives it open/close functionality
 const drawerWidth = 175;
 
 const openedMixin = (theme: Theme): CSSObject => ({

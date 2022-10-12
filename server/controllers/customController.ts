@@ -1,6 +1,8 @@
 import { start, end, CustomController, axios, CustomQuery } from '../../types';
 
 const customController: CustomController = {
+  
+  // these arrays store all custom queries scoped by namespace
   customClusterQueries: [],
   customNodeQueries: [],
   customPodQueries: [],
@@ -92,6 +94,7 @@ const customController: CustomController = {
     }
   },
 
+  // frontend components use this route to get data from custom queries
   getCustomRoute: async (req, res, next) => {
     try {
       const { scope, index, pod, nodeIP } = req.query;
@@ -130,6 +133,7 @@ const customController: CustomController = {
     }
   },
 
+  // the custom query list and custom query renderers use this to list custom queries
   listCustomRoutes: async (req, res, next) => {
     try {
       const { scope } = req.query;
@@ -182,6 +186,7 @@ const customController: CustomController = {
     }
   },
 
+  // this route triggers when user presses the checkbox for a custom query
   changeRouteActive: async (req, res, next) => {
     try {
       const { scope, id, active } = req.body;
