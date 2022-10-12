@@ -20,23 +20,23 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 );
 
 type MetricProps = {
-  label: string,
-}
+  label: string;
+};
 
 const initialData: ChartData<'bar'> = {
   datasets: [],
-}
+};
 
 const StackedBarChart: FC<MetricProps> = (props) => {
   const [data, setData] = useState(initialData);
 
   const options: ChartOptions<'bar'> = {
     animation: {
-      easing: "easeInCubic",
+      easing: 'easeInCubic',
       duration: 1200,
     },
     plugins: {
@@ -63,42 +63,42 @@ const StackedBarChart: FC<MetricProps> = (props) => {
         stacked: true,
       },
     },
-  }
+  };
 
   // upon component load, fetch general cluster metrics to render CPU bar component
   useEffect(() => {
     fetch('../api/dashboard/general')
-    .then(res => res.json())
-    .then(data => {
-      const data1 = data.totalSystemCpu.toFixed(2);
-      const data2 = data.totalUserSystemCpu.toFixed(2);
-      const newData: ChartData<'bar'> = {
-        labels: [props.label],
-        datasets: [
-        {
-          label: 'total user CPU time',
-          data: [data1],
-          backgroundColor: colors.translucent.cyan,
-          borderColor: colors.solid.cyan,
-        },
-        {
-          label: 'total system CPU time',
-          data: [data2],
-          backgroundColor: colors.translucent.purple,
-          borderColor: colors.solid.purple,
-        },
-        ] 
-      } 
-      setData(newData);
-    })
-    .catch(err => console.log(err));
+      .then((res) => res.json())
+      .then((data) => {
+        const data1 = data.totalSystemCpu.toFixed(2);
+        const data2 = data.totalUserSystemCpu.toFixed(2);
+        const newData: ChartData<'bar'> = {
+          labels: [props.label],
+          datasets: [
+            {
+              label: 'total user CPU time',
+              data: [data1],
+              backgroundColor: colors.translucent.cyan,
+              borderColor: colors.solid.cyan,
+            },
+            {
+              label: 'total system CPU time',
+              data: [data2],
+              backgroundColor: colors.translucent.purple,
+              borderColor: colors.solid.purple,
+            },
+          ],
+        };
+        setData(newData);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
-    <div id="stacked-bar-chart" className='instant-metric-comp'>
+    <div id="stacked-bar-chart" className="instant-metric-comp">
       <Bar options={options} data={data} />
     </div>
-  )
-}
+  );
+};
 
 export default StackedBarChart;

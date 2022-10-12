@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useState } from 'react';
 import colors from '../colors';
-import ChartDataLabels from "chartjs-plugin-datalabels";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +13,7 @@ import {
   Legend,
   ChartOptions,
   ChartData,
-} from "chart.js";
+} from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -26,82 +26,84 @@ ChartJS.register(
 );
 
 type MetricProps = {
-  label: string,
-}
+  label: string;
+};
 
 const initialData: ChartData<'bar'> = {
   datasets: [],
-}
+};
 
-const labels = ["CPU Usage %"];
+const labels = ['CPU Usage %'];
 
 const HorizontalBarChart: FC<MetricProps> = () => {
   const [data, setData] = useState(initialData);
-  
+
   const options: ChartOptions<'bar'> = {
-      responsive: true,
-      maintainAspectRatio: false,
-      // aspectRatio:
-      indexAxis: "y",
-      elements: {
-        bar: {
-          borderWidth: 2,
-        },
+    responsive: true,
+    maintainAspectRatio: false,
+    // aspectRatio:
+    indexAxis: 'y',
+    elements: {
+      bar: {
+        borderWidth: 2,
       },
-      scales: {
-        x: {
-          beginAtZero: true,
-          max: 100,
-        },
-        y: {
-          display: false,
-        }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        max: 100,
       },
-      plugins: {
-        datalabels: {
-          color: "#cee2fd",
-          font: {
-            weight: "bold",
-          },
-          formatter: Math.round,
-        },
-        legend: {
-          display: false,
-        },
-        title: {
-          display: true,
-          text: 'CPU Usage %',
-          color: '#e1eeff',
-        },
+      y: {
+        display: false,
       },
-    };
-
-    useEffect(() => {
-      fetch('../api/dashboard/cpu')
-      .then(res => res.json())
-      .then(data => {
-        const usefulData = data.data.result[0].values[data.data.result[0].values.length - 1];
-        const chartData = Number(usefulData[1]);
-        const backgroundColor = chartData >= 90 ? colors.translucent.red : colors.translucent.green;
-
-  const newData: ChartData<'bar'> = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: [chartData],
-        borderColor: backgroundColor,
-        backgroundColor: backgroundColor,
-        datalabels: {
-          align: "center",
-          anchor: "center",
+    },
+    plugins: {
+      datalabels: {
+        color: '#cee2fd',
+        font: {
+          weight: 'bold',
         },
+        formatter: Math.round,
       },
-    ],
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: 'CPU Usage %',
+        color: '#e1eeff',
+      },
+    },
   };
-  setData(newData);
-    })
-    .catch(err => console.log(err));
+
+  useEffect(() => {
+    fetch('../api/dashboard/cpu')
+      .then((res) => res.json())
+      .then((data) => {
+        const usefulData =
+          data.data.result[0].values[data.data.result[0].values.length - 1];
+        const chartData = Number(usefulData[1]);
+        const backgroundColor =
+          chartData >= 90 ? colors.translucent.red : colors.translucent.green;
+
+        const newData: ChartData<'bar'> = {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Dataset 1',
+              data: [chartData],
+              borderColor: backgroundColor,
+              backgroundColor: backgroundColor,
+              datalabels: {
+                align: 'center',
+                anchor: 'center',
+              },
+            },
+          ],
+        };
+        setData(newData);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (

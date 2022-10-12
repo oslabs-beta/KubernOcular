@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Drawer from './Components/Drawer'
+import Drawer from './Components/Drawer';
 import './style.css';
 
 const darkTheme = createTheme({
@@ -13,12 +13,12 @@ const darkTheme = createTheme({
 const App = () => {
   return (
     <div>
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <Drawer />
-    </ThemeProvider>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <Drawer />
+      </ThemeProvider>
     </div>
-  )
-}
+  );
+};
 
 export default App;

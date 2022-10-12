@@ -4,10 +4,7 @@ import NodesTab from '../../client/Components/NodesTab';
 import userEvent from '@testing-library/user-event';
 
 describe('Drawer', () => {
-    beforeEach(() => {
-      render(<NodesTab />);
-    });
-
-    
-
+  beforeEach(() => {
+    render(<NodesTab />);
+  });
 });

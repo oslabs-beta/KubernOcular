@@ -4,10 +4,7 @@ import Dashboard from '../../client/Components/Dashboard';
 import userEvent from '@testing-library/user-event';
 
 describe('Drawer', () => {
-    beforeEach(() => {
-      render(<Dashboard />);
-    });
-
-    
-
+  beforeEach(() => {
+    render(<Dashboard />);
+  });
 });

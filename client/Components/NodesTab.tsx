@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom'
-import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -23,11 +23,7 @@ interface Data {
   receive: number;
 }
 
-function createData(
-  name: string,
-  transmit: number,
-  receive: number,
-): Data {
+function createData(name: string, transmit: number, receive: number): Data {
   return {
     name,
     transmit,
@@ -49,10 +45,10 @@ type Order = 'asc' | 'desc';
 
 function getComparator<Key extends keyof any>(
   order: Order,
-  orderBy: Key,
+  orderBy: Key
 ): (
   a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
+  b: { [key in Key]: number | string }
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -61,7 +57,10 @@ function getComparator<Key extends keyof any>(
 
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
-function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(
+  array: readonly T[],
+  comparator: (a: T, b: T) => number
+) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -98,58 +97,57 @@ const headCells: readonly HeadCell[] = [
     numeric: true,
     disablePadding: false,
     label: 'Receive Bytes',
-  }
+  },
 ];
 
 interface EnhancedTableProps {
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+  onRequestSort: (
+    event: React.MouseEvent<unknown>,
+    property: keyof Data
+  ) => void;
   order: Order;
   orderBy: string;
   rowCount: number;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-  const { order, orderBy, onRequestSort } =
-    props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler =
     (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
-
   return (
     <TableHead>
-    <TableRow>
-      <TableCell padding="checkbox">
-      </TableCell>
-      {headCells.map((headCell) => (
-        <TableCell
-          key={headCell.id}
-          align={headCell.numeric ? 'right' : 'left'}
-          padding={headCell.disablePadding ? 'none' : 'normal'}
-          sortDirection={orderBy === headCell.id ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === headCell.id}
-            direction={orderBy === headCell.id ? order : 'asc'}
-            onClick={createSortHandler(headCell.id)}
+      <TableRow>
+        <TableCell padding="checkbox"></TableCell>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align={headCell.numeric ? 'right' : 'left'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
+            sortDirection={orderBy === headCell.id ? order : false}
           >
-            {headCell.label}
-            {orderBy === headCell.id ? (
-              <Box component="span" sx={visuallyHidden}>
-                {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-              </Box>
-            ) : null}
-          </TableSortLabel>
-        </TableCell>
-      ))}
-    </TableRow>
-  </TableHead>
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
   );
 }
 
-  const EnhancedTableToolbar = () => {
-
+const EnhancedTableToolbar = () => {
   return (
     <Toolbar
       sx={{
@@ -157,14 +155,14 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         pr: { xs: 1, sm: 1 },
       }}
     >
-    <Typography
-      sx={{ flex: '1 1 100%', ml: 1, }}
-      variant="h6"
-      id="tableTitle"
-      component="div"
-    >
-      Nodes
-    </Typography>
+      <Typography
+        sx={{ flex: '1 1 100%', ml: 1 }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        Nodes
+      </Typography>
     </Toolbar>
   );
 };
@@ -175,13 +173,13 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rows, setRows] = React.useState([createData('[empty]', 0 , 0)]);
+  const [rows, setRows] = React.useState([createData('[empty]', 0, 0)]);
   const defaultNameToIP: StringMap = {};
-  const [nameToIP, setNameToIP] = React.useState(defaultNameToIP)
+  const [nameToIP, setNameToIP] = React.useState(defaultNameToIP);
 
   type StringMap = {
     [index: string]: string;
-  }
+  };
 
   // upon component load, fetch list of all nodes along with instant metrics for each (transmit and receive bytes)
   React.useEffect((): void => {
@@ -189,22 +187,27 @@ export default function EnhancedTable() {
       const allNodes = await axios.get('/api/cluster/nodes');
       const instantMetrics = await axios.get('/api/node/instant');
       const newRows: any = {};
-      const newNameToIP: StringMap = {...nameToIP};
+      const newNameToIP: StringMap = { ...nameToIP };
       for (let i = 0; i < allNodes.data.length; i++) {
         const nodeName: string = allNodes.data[i].name;
         const nodeIP: string = allNodes.data[i].ip;
         newNameToIP[nodeName] = nodeIP;
-        if (!newRows[nodeName]) newRows[nodeName] = createData(nodeName, Math.round(Number(instantMetrics.data[nodeIP].transmit)), Math.round(Number(instantMetrics.data[nodeIP].receive)));
+        if (!newRows[nodeName])
+          newRows[nodeName] = createData(
+            nodeName,
+            Math.round(Number(instantMetrics.data[nodeIP].transmit)),
+            Math.round(Number(instantMetrics.data[nodeIP].receive))
+          );
       }
       setRows(Object.values(newRows));
       setNameToIP(newNameToIP);
     };
     fetchNodes();
-  }, [])
+  }, []);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data,
+    property: keyof Data
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -220,7 +223,9 @@ export default function EnhancedTable() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -236,9 +241,7 @@ export default function EnhancedTable() {
   return (
     <div>
       <Box sx={{ width: '100%' }}>
-        <Paper
-        sx={{ width: '100%', mb: 2 }}
-        >
+        <Paper sx={{ width: '100%', mb: 2 }}>
           <EnhancedTableToolbar />
           <TableContainer>
             <Table
@@ -268,8 +271,7 @@ export default function EnhancedTable() {
                         tabIndex={-1}
                         key={row.name}
                       >
-                        <TableCell padding="checkbox">
-                        </TableCell>
+                        <TableCell padding="checkbox"></TableCell>
                         <TableCell
                           component="th"
                           id={labelId}
@@ -306,10 +308,13 @@ export default function EnhancedTable() {
           />
         </Paper>
         <FormControlLabel
-          control={<Switch
-          color="secondary"
-          checked={dense}
-          onChange={handleChangeDense} />}
+          control={
+            <Switch
+              color="secondary"
+              checked={dense}
+              onChange={handleChangeDense}
+            />
+          }
           label="compact display"
           sx={{ ml: 3 }}
         />

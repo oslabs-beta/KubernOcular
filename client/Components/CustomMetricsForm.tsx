@@ -12,9 +12,11 @@ import SendIcon from '@mui/icons-material/Send';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import ErrorIcon from '@mui/icons-material/Error';
 
-const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = props => {
+const CustomMetricsForm: FC<{ setUpdateList: Function; updateList: number }> = (
+  props
+) => {
   // preserve state of user input for custom metrics
-  const {updateList, setUpdateList} = props;
+  const { updateList, setUpdateList } = props;
   const [metricName, setMetricName] = React.useState('');
   const [promQuery, setPromQuery] = React.useState('');
   const [yAxisType, setYAxisType] = React.useState('');
@@ -43,17 +45,21 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
     fetch('/api/custom/queries', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({scope, query: promQuery, yAxisType, name: metricName})
+      body: JSON.stringify({
+        scope,
+        query: promQuery,
+        yAxisType,
+        name: metricName,
+      }),
     })
-      .then(res => res.json())
-      .then(addedQuery => {
+      .then((res) => res.json())
+      .then((addedQuery) => {
         if (addedQuery) {
           setUpdateList(updateList + 1);
-        }
-        else console.log('Query was not added');
-      })
+        } else console.log('Query was not added');
+      });
   };
 
   // check for validity of query upon change in prom query input field and scope select
@@ -61,26 +67,27 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
     fetch('/api/custom/test', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({scope: scope, query: promQuery})
+      body: JSON.stringify({
+        scope: scope,
+        query: promQuery,
+      }),
     })
-      .then(res => res.json())
-      .then(data => setValidity(data === true ? true : false))
+      .then((res) => res.json())
+      .then((data) => setValidity(data === true ? true : false));
   }, [promQuery, scope]);
-
 
   return (
     <div>
-      <h2
-      style={{ margin: 28 }}
-      >
-      Create a Custom Metric
-      </h2>
+      <h2 style={{ margin: 28 }}>Create a Custom Metric</h2>
       <Box
         component="form"
         sx={{
-          '& .MuiTextField-root': { m: 3, width: '65ch' },
+          '& .MuiTextField-root': {
+            m: 3,
+            width: '65ch',
+          },
         }}
         noValidate
         autoComplete="off"
@@ -96,59 +103,61 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
           />
         </div>
       </Box>
-      {validity === true || promQuery === '' ?
-        <Stack
-        direction="row"
-        >
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 3, width: '75ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            <TextField
-              id="outlined-required"
-              label="PromQL Query"
-              variant="outlined"
-              defaultValue=""
-              value={promQuery}
-              onChange={handleQueryInput}
-            />
-          </div>
-        </Box>
-        {validity && <TaskAltIcon sx={{ mt: 5 }} />}
+      {validity === true || promQuery === '' ? (
+        <Stack direction="row">
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': {
+                m: 3,
+                width: '75ch',
+              },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <TextField
+                id="outlined-required"
+                label="PromQL Query"
+                variant="outlined"
+                defaultValue=""
+                value={promQuery}
+                onChange={handleQueryInput}
+              />
+            </div>
+          </Box>
+          {validity && <TaskAltIcon sx={{ mt: 5 }} />}
         </Stack>
-        :
-        <Stack
-        direction="row"
-        >
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 3, width: '75ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            <TextField
-              id="outlined-error-helper-text"
-              label="PromQL Query"
-              variant="outlined"
-              defaultValue=""
-              value={promQuery}
-              onChange={handleQueryInput}
-              error
-              helperText="Incorrect scope or invalid query"
-            />
-          </div>
-        </Box>
-        <ErrorIcon sx={{ mt: 5 }} />
+      ) : (
+        <Stack direction="row">
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': {
+                m: 3,
+                width: '75ch',
+              },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <TextField
+                id="outlined-error-helper-text"
+                label="PromQL Query"
+                variant="outlined"
+                defaultValue=""
+                value={promQuery}
+                onChange={handleQueryInput}
+                error
+                helperText="Incorrect scope or invalid query"
+              />
+            </div>
+          </Box>
+          <ErrorIcon sx={{ mt: 5 }} />
         </Stack>
-      }
+      )}
       <Box sx={{ m: 3, width: '15ch' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Unit Type</InputLabel>
@@ -186,14 +195,19 @@ const CustomMetricsForm: FC<{setUpdateList: Function, updateList: number}> = pro
       <Button
         variant="contained"
         endIcon={<SendIcon />}
-        disabled={metricName === '' || promQuery === '' || scope === '' || validity === false}
+        disabled={
+          metricName === '' ||
+          promQuery === '' ||
+          scope === '' ||
+          validity === false
+        }
         onClick={() => handleSubmit()}
         sx={{ m: 3, width: '25ch' }}
-        >
+      >
         Add Metric
       </Button>
     </div>
-  )
-}
+  );
+};
 
 export default CustomMetricsForm;

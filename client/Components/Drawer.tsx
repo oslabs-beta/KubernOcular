@@ -83,22 +83,22 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open && {
+    ...openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme),
   }),
-);
+  ...(!open && {
+    ...closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme),
+  }),
+}));
 
 export default function MiniDrawer() {
   const theme = useTheme();
@@ -124,27 +124,40 @@ export default function MiniDrawer() {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && { display: 'none' }),
+              ...(open && {
+                display: 'none',
+              }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Link to='/' className='logo-link'>
-            <img id='logo-icon' src='https://hmp.me/dydj' />
-            <img id='logo' src='https://hmp.me/dydf' />
+          <Link to="/" className="logo-link">
+            <img id="logo-icon" src="https://hmp.me/dydj" />
+            <img id="logo" src="https://hmp.me/dydf" />
           </Link>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === 'rtl' ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-        <ListItem key='Cluster' disablePadding sx={{ display: 'block' }}>
-              <Link to='/' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
+          <ListItem key="Cluster" disablePadding sx={{ display: 'block' }}>
+            <Link
+              to="/"
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+              }}
+            >
+              <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -160,11 +173,24 @@ export default function MiniDrawer() {
                 >
                   <AccountTreeIcon />
                 </ListItemIcon>
-                <ListItemText primary='Cluster' sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton></Link>
-            </ListItem>
-            <ListItem key='Nodes' disablePadding sx={{ display: 'block' }}>
-            <Link to='/nodes' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
+                <ListItemText
+                  primary="Cluster"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                  }}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+          <ListItem key="Nodes" disablePadding sx={{ display: 'block' }}>
+            <Link
+              to="/nodes"
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+              }}
+            >
+              <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -180,11 +206,24 @@ export default function MiniDrawer() {
                 >
                   <DeveloperBoardIcon />
                 </ListItemIcon>
-                <ListItemText primary='Nodes' sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton></Link>
-            </ListItem>
-            <ListItem key='Pods' disablePadding sx={{ display: 'block' }}>
-              <Link to='/pods' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
+                <ListItemText
+                  primary="Nodes"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                  }}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+          <ListItem key="Pods" disablePadding sx={{ display: 'block' }}>
+            <Link
+              to="/pods"
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+              }}
+            >
+              <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -200,11 +239,24 @@ export default function MiniDrawer() {
                 >
                   <AutoAwesomeMotionIcon />
                 </ListItemIcon>
-                <ListItemText primary='Pods' sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton></Link>
-            </ListItem>
-            <ListItem key='Visualizer' disablePadding sx={{ display: 'block' }}>
-              <Link to='/visual' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
+                <ListItemText
+                  primary="Pods"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                  }}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+          <ListItem key="Visualizer" disablePadding sx={{ display: 'block' }}>
+            <Link
+              to="/visual"
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+              }}
+            >
+              <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -220,11 +272,24 @@ export default function MiniDrawer() {
                 >
                   <VisibilityIcon />
                 </ListItemIcon>
-                <ListItemText primary='Visualizer' sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton></Link>
-            </ListItem>
-            <ListItem key='Queries' disablePadding sx={{ display: 'block' }}>
-              <Link to='/custom' style={{ color: 'white', textDecoration: 'none' }}><ListItemButton
+                <ListItemText
+                  primary="Visualizer"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                  }}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+          <ListItem key="Queries" disablePadding sx={{ display: 'block' }}>
+            <Link
+              to="/custom"
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+              }}
+            >
+              <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -240,21 +305,27 @@ export default function MiniDrawer() {
                 >
                   <HelpIcon />
                 </ListItemIcon>
-                <ListItemText primary='Queries' sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton></Link>
-            </ListItem>
+                <ListItemText
+                  primary="Queries"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                  }}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Routes>
-          <Route path='/' element={<Dashboard/>} />
-          <Route path='/pods' element={<PodsTab />} />
-          <Route path='/nodes' element={<NodesTab />} />
-          <Route path='/visual' element={<VisualizerTab />} />
-          <Route path='/custom' element={<CustomMetricsTab />} />
-          <Route path='/poddisplay' element={<PodDisplay />} />
-          <Route path='/nodedisplay' element={<NodeDisplay />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/pods" element={<PodsTab />} />
+          <Route path="/nodes" element={<NodesTab />} />
+          <Route path="/visual" element={<VisualizerTab />} />
+          <Route path="/custom" element={<CustomMetricsTab />} />
+          <Route path="/poddisplay" element={<PodDisplay />} />
+          <Route path="/nodedisplay" element={<NodeDisplay />} />
         </Routes>
       </Box>
     </Box>
