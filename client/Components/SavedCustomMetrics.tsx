@@ -14,7 +14,7 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-const SavedCustomMetrics: FC<{updateList: number}> = props => {
+const SavedCustomMetrics: FC<{ updateList: number }> = (props) => {
   const { updateList } = props;
   const defaultMetricNames: string[] = [];
   const defaultActive: number[] = [];
@@ -28,47 +28,51 @@ const SavedCustomMetrics: FC<{updateList: number}> = props => {
 
   const resetMetricDisplay = () => {
     fetch(`/api/custom/list?scope=${scope}`)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         const newMetricNames: string[] = [];
         const newActive: number[] = [];
         for (let i = 0; i < data.length; i++) {
           newMetricNames.push(data[i].name);
-          if(data[i].active) newActive.push(i);
+          if (data[i].active) newActive.push(i);
         }
         setMetricNames(newMetricNames);
         setActive(newActive);
-      })
-  }
+      });
+  };
 
-  useEffect(resetMetricDisplay, [scope, updateList])
+  useEffect(resetMetricDisplay, [scope, updateList]);
 
   const handleDelete = async (index: number) => {
     const didDelete = await fetch('/api/custom/queries', {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({scope, id: index})
-    })
+      body: JSON.stringify({ scope, id: index }),
+    });
     if (didDelete.status === 200) {
       resetMetricDisplay();
     }
-  }
+  };
 
   const handleChange = async (index: number) => {
     const didChangeActive = await fetch('/api/custom/active', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({scope, id: index, active: !active.includes(index)})
-    })
+      body: JSON.stringify({
+        scope,
+        id: index,
+        active: !active.includes(index),
+      }),
+    });
 
     if (didChangeActive.status === 200) {
       resetMetricDisplay();
     }
-  }
+  };
 
   const [checked, setChecked] = React.useState([0]);
 
@@ -86,11 +90,7 @@ const SavedCustomMetrics: FC<{updateList: number}> = props => {
 
   return (
     <div>
-      <h2
-      style={{ margin: 25 }}
-      >
-      Saved Metrics
-      </h2>
+      <h2 style={{ margin: 25 }}>Saved Metrics</h2>
       <Box sx={{ m: 3, mt: 6, width: '80ch' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Scope</InputLabel>
@@ -107,37 +107,55 @@ const SavedCustomMetrics: FC<{updateList: number}> = props => {
           </Select>
         </FormControl>
       </Box>
-      <List sx={{ width: '100%', ml: 1.2, maxWidth: 735, bgcolor: 'background.paper', variant: "outlined"}}>
-      {metricNames.map((name, index) => {
-        const labelId = `checkbox-list-label-${index}`;
-        return (
-          <ListItem
-            key={index}
-            secondaryAction={
-              <IconButton edge="end" aria-label="comments" onClick={() => handleDelete(index)}>
-                <HighlightOffIcon /> 
-              </IconButton>
-            }
-            disablePadding
-          >
-            <ListItemButton role={undefined} onClick={() => handleChange(index)} dense>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={active.indexOf(index) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ 'aria-labelledby': labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={name} />
-            </ListItemButton>
-          </ListItem>
-        );
-      })}
+      <List
+        sx={{
+          width: '100%',
+          ml: 1.2,
+          maxWidth: 735,
+          bgcolor: 'background.paper',
+          variant: 'outlined',
+        }}
+      >
+        {metricNames.map((name, index) => {
+          const labelId = `checkbox-list-label-${index}`;
+          return (
+            <ListItem
+              key={index}
+              secondaryAction={
+                <IconButton
+                  edge="end"
+                  aria-label="comments"
+                  onClick={() => handleDelete(index)}
+                >
+                  <HighlightOffIcon />
+                </IconButton>
+              }
+              disablePadding
+            >
+              <ListItemButton
+                role={undefined}
+                onClick={() => handleChange(index)}
+                dense
+              >
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={active.indexOf(index) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{
+                      'aria-labelledby': labelId,
+                    }}
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={name} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </div>
-  )
-}
+  );
+};
 
 export default SavedCustomMetrics;

@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -35,7 +35,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './client/index.html',
       filename: './index.html',
-      favicon: "./client/favicon.ico"
+      favicon: './client/favicon.ico',
     }),
     new CopyPlugin({
       patterns: [{ from: './client/style.css' }],
@@ -48,12 +48,12 @@ module.exports = {
     },
     proxy: {
       '/api': 'http://localhost:3000',
-      secure: false
+      secure: false,
     },
     compress: false,
     host: 'localhost',
     port: 8080,
     hot: true,
-    historyApiFallback:true,
-  }
-}
+    historyApiFallback: true,
+  },
+};

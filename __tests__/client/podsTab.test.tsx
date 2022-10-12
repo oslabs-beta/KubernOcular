@@ -4,10 +4,7 @@ import PodsTab from '../../client/Components/PodsTab';
 import userEvent from '@testing-library/user-event';
 
 describe('Drawer', () => {
-    beforeEach(() => {
-      render(<PodsTab />);
-    });
-
-    
-
+  beforeEach(() => {
+    render(<PodsTab />);
+  });
 });

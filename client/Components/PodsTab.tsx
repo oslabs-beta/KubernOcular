@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,7 +20,9 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-function NamespaceDropDown(props: {setRows: React.Dispatch<React.SetStateAction<Data[]>>}) {
+function NamespaceDropDown(props: {
+  setRows: React.Dispatch<React.SetStateAction<Data[]>>;
+}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [namespaces, setNamespaces] = React.useState<JSX.Element[]>([]);
   const [selectedNamespace, setSelectedNamespace] = React.useState<string>('');
@@ -31,7 +33,10 @@ function NamespaceDropDown(props: {setRows: React.Dispatch<React.SetStateAction<
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (event: React.MouseEvent<unknown>, namespace: string): void => {
+  const handleClose = (
+    event: React.MouseEvent<unknown>,
+    namespace: string
+  ): void => {
     setAnchorEl(null);
     if (namespace !== 'backdropClick') setSelectedNamespace(namespace);
   };
@@ -40,24 +45,27 @@ function NamespaceDropDown(props: {setRows: React.Dispatch<React.SetStateAction<
   React.useEffect((): void => {
     const namespaceArr: string[] = [];
     const fetchNamespaces = async () => {
-        const allNamespaces = await axios.get('../api/cluster/namespaces');
-        const tempArray: JSX.Element[] = [];
-        for (const namespace of allNamespaces.data) {
-          namespaceArr.push(namespace);
-          tempArray.push(
-            <MenuItem onClick={(event) => handleClose(event, namespace)}>{namespace}</MenuItem>
-          )
-        }
-        setNamespaces(tempArray);
+      const allNamespaces = await axios.get('../api/cluster/namespaces');
+      const tempArray: JSX.Element[] = [];
+      for (const namespace of allNamespaces.data) {
+        namespaceArr.push(namespace);
+        tempArray.push(
+          <MenuItem onClick={(event) => handleClose(event, namespace)}>
+            {namespace}
+          </MenuItem>
+        );
+      }
+      setNamespaces(tempArray);
     };
-    fetchNamespaces()
-    .then(() => setSelectedNamespace(namespaceArr[0]));
-  }, [])
+    fetchNamespaces().then(() => setSelectedNamespace(namespaceArr[0]));
+  }, []);
 
   // new selection of namespace, fetch new list of pods based on namespace selection
   React.useEffect((): void => {
     const fetchPods = async () => {
-      const allPodData = await axios.get(`/api/pod/instant?namespace=${selectedNamespace}`);
+      const allPodData = await axios.get(
+        `/api/pod/instant?namespace=${selectedNamespace}`
+      );
       const cpuData = allPodData.data.cpu;
       const memData = allPodData.data.mem;
       const newRows: any = {};
@@ -65,12 +73,13 @@ function NamespaceDropDown(props: {setRows: React.Dispatch<React.SetStateAction<
         const podName = cpuData[i].metric.pod;
         const cpuMetric = cpuData[i].value[1];
         const memMetric = memData[i].value[1];
-        if (!newRows[podName]) newRows[podName] = createData(podName, cpuMetric, memMetric);
+        if (!newRows[podName])
+          newRows[podName] = createData(podName, cpuMetric, memMetric);
       }
       props.setRows(Object.values(newRows));
     };
     fetchPods();
-  }, [selectedNamespace])
+  }, [selectedNamespace]);
 
   return (
     <div>
@@ -107,11 +116,7 @@ interface Data {
   name: string;
 }
 
-function createData(
-  name: string,
-  cpu: number,
-  mem: number,
-): Data {
+function createData(name: string, cpu: number, mem: number): Data {
   return {
     name,
     cpu,
@@ -133,10 +138,10 @@ type Order = 'asc' | 'desc';
 
 function getComparator<Key extends keyof any>(
   order: Order,
-  orderBy: Key,
+  orderBy: Key
 ): (
   a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
+  b: { [key in Key]: number | string }
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -145,7 +150,10 @@ function getComparator<Key extends keyof any>(
 
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
-function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(
+  array: readonly T[],
+  comparator: (a: T, b: T) => number
+) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -182,19 +190,21 @@ const headCells: readonly HeadCell[] = [
     numeric: true,
     disablePadding: false,
     label: 'Memory Usage',
-  }
+  },
 ];
 
 interface EnhancedTableProps {
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+  onRequestSort: (
+    event: React.MouseEvent<unknown>,
+    property: keyof Data
+  ) => void;
   order: Order;
   orderBy: string;
   rowCount: number;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-  const { order, orderBy, onRequestSort } =
-    props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler =
     (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
@@ -202,37 +212,35 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
   return (
     <TableHead>
-    <TableRow>
-      <TableCell padding="checkbox">
-      </TableCell>
-      {headCells.map((headCell) => (
-        <TableCell
-          key={headCell.id}
-          align={headCell.numeric ? 'right' : 'left'}
-          padding={headCell.disablePadding ? 'none' : 'normal'}
-          sortDirection={orderBy === headCell.id ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === headCell.id}
-            direction={orderBy === headCell.id ? order : 'asc'}
-            onClick={createSortHandler(headCell.id)}
+      <TableRow>
+        <TableCell padding="checkbox"></TableCell>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align={headCell.numeric ? 'right' : 'left'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
+            sortDirection={orderBy === headCell.id ? order : false}
           >
-            {headCell.label}
-            {orderBy === headCell.id ? (
-              <Box component="span" sx={visuallyHidden}>
-                {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-              </Box>
-            ) : null}
-          </TableSortLabel>
-        </TableCell>
-      ))}
-    </TableRow>
-  </TableHead>
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
   );
 }
 
 const EnhancedTableToolbar = () => {
-
   return (
     <Toolbar
       sx={{
@@ -240,14 +248,14 @@ const EnhancedTableToolbar = () => {
         pr: { xs: 1, sm: 1 },
       }}
     >
-    <Typography
-      sx={{ flex: '1 1 100%', ml: 1, }}
-      variant="h6"
-      id="tableTitle"
-      component="div"
-    >
-      Pods
-    </Typography>
+      <Typography
+        sx={{ flex: '1 1 100%', ml: 1 }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        Pods
+      </Typography>
     </Toolbar>
   );
 };
@@ -258,11 +266,11 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rows, setRows] = React.useState([createData('[empty]', 0 , 0)]);
+  const [rows, setRows] = React.useState([createData('[empty]', 0, 0)]);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data,
+    property: keyof Data
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -278,7 +286,9 @@ export default function EnhancedTable() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -294,12 +304,18 @@ export default function EnhancedTable() {
   return (
     <div>
       <Box sx={{ width: '100%' }}>
-        
-        <Paper
-        sx={{ width: '100%', mb: 2 }}
-        >
+        <Paper sx={{ width: '100%', mb: 2 }}>
           <EnhancedTableToolbar />
-          <div style={{display: 'flex', justifyContent: 'right', marginTop: -50, marginRight: 15 }}><NamespaceDropDown setRows={setRows}/></div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'right',
+              marginTop: -50,
+              marginRight: 15,
+            }}
+          >
+            <NamespaceDropDown setRows={setRows} />
+          </div>
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -328,8 +344,7 @@ export default function EnhancedTable() {
                         tabIndex={-1}
                         key={row.name}
                       >
-                        <TableCell padding="checkbox">
-                        </TableCell>
+                        <TableCell padding="checkbox"></TableCell>
                         <TableCell
                           component="th"
                           id={labelId}
@@ -366,10 +381,13 @@ export default function EnhancedTable() {
           />
         </Paper>
         <FormControlLabel
-          control={<Switch
-          color="secondary"
-          checked={dense}
-          onChange={handleChangeDense} />}
+          control={
+            <Switch
+              color="secondary"
+              checked={dense}
+              onChange={handleChangeDense}
+            />
+          }
           label="compact display"
           sx={{ ml: 3 }}
         />
