@@ -92,6 +92,7 @@ const LineGraph: FC<MetricProps> = (props) => {
     },
   };
 
+  // on load, the component accesses the passed-in query and displays the result as a line graph
   useEffect(() => {
     fetch(props.query)
       .then((res) => res.json())
@@ -99,7 +100,7 @@ const LineGraph: FC<MetricProps> = (props) => {
         // removes unnecessary data
         const usefulData = data.data.result[0].values;
         console.log('usefulData', usefulData);
-        // creates a date display when the day changes
+        // the following commented code will display a date when the day changes - this is turned off for the production build
         // let displayDate = true;
         // let prevDate = '';
         // maps the xAxis label

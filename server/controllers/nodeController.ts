@@ -1,6 +1,8 @@
 import { start, end, NodeController, axios } from '../../types';
 
 const nodeController: NodeController = {
+
+  // node list queries this to populate instant metrics next to names
   getInstantMetrics: async (req, res, next) => {
     try {
       const responseTransmit = await axios.get(
@@ -30,6 +32,7 @@ const nodeController: NodeController = {
     }
   },
 
+  // node display makes the following queries to display the preset metrics
   getNetworkTransmitBytes: async (req, res, next) => {
     const { nodeIP } = req.query;
     try {

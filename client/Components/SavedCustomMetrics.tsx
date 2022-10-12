@@ -14,6 +14,8 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
+/* handles logic for getting the current saved custom metrics,
+    as well as toggling their active state and deleting them  */
 const SavedCustomMetrics: FC<{ updateList: number }> = (props) => {
   const { updateList } = props;
   const defaultMetricNames: string[] = [];
@@ -75,18 +77,6 @@ const SavedCustomMetrics: FC<{ updateList: number }> = (props) => {
   };
 
   const [checked, setChecked] = React.useState([0]);
-
-  const handleToggle = (value: number) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-  };
 
   return (
     <div>

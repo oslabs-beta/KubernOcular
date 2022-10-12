@@ -75,7 +75,8 @@ const HorizontalBarChart: FC<MetricProps> = () => {
       },
     },
   };
-
+  
+  // queries the cpu usage and displays info as a bar chart
   useEffect(() => {
     fetch('../api/dashboard/cpu')
       .then((res) => res.json())

@@ -15,6 +15,7 @@ const k8sApi1 = kc.makeApiClient(k8s.AppsV1Api);
 const k8sApi3 = kc.makeApiClient(k8s.NetworkingV1Api);
 client.collectDefaultMetrics();
 
+// dashboard makes all these queries to populate data on load
 const dashboardController: DashboardController = {
   getNumberOf: async (req, res, next) => {
     const [

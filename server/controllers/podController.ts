@@ -1,6 +1,32 @@
 import { start, end, PodController, axios } from '../../types';
 
 const podController: PodController = {
+
+  // node list queries this to populate instant metrics next to names
+  getInstantMetrics: async (req, res, next) => {
+    const { namespace } = req.query;
+    try {
+      const responseMem = await axios.get(
+        `http://localhost:9090/api/v1/query?query=container_memory_usage_bytes{namespace='${namespace}'}`
+      );
+      const responseCpu = await axios.get(
+        `http://localhost:9090/api/v1/query?query=rate(container_cpu_usage_seconds_total{namespace='${namespace}'}[2h])`
+      );
+      res.locals.data = {
+        mem: responseMem.data.data.result,
+        cpu: responseCpu.data.data.result,
+      };
+      return next();
+    } catch (err) {
+      return next({
+        log: 'Error in podController.getInstantMetrics middleware',
+        status: 500,
+        message: { err: 'An error occurred' },
+      });
+    }
+  },
+
+  // pod display makes the following queries to display the preset metrics
   getCpuUsage: async (req, res, next) => {
     const { pod } = req.query;
     try {
@@ -39,28 +65,6 @@ const podController: PodController = {
     }
   },
 
-  getInstantMetrics: async (req, res, next) => {
-    const { namespace } = req.query;
-    try {
-      const responseMem = await axios.get(
-        `http://localhost:9090/api/v1/query?query=container_memory_usage_bytes{namespace='${namespace}'}`
-      );
-      const responseCpu = await axios.get(
-        `http://localhost:9090/api/v1/query?query=rate(container_cpu_usage_seconds_total{namespace='${namespace}'}[2h])`
-      );
-      res.locals.data = {
-        mem: responseMem.data.data.result,
-        cpu: responseCpu.data.data.result,
-      };
-      return next();
-    } catch (err) {
-      return next({
-        log: 'Error in podController.getInstantMetrics middleware',
-        status: 500,
-        message: { err: 'An error occurred' },
-      });
-    }
-  },
 };
 
 export default podController;
