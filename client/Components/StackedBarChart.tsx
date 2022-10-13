@@ -61,6 +61,10 @@ const StackedBarChart: FC<MetricProps> = (props) => {
       },
       y: {
         stacked: true,
+        title: {
+          display: true,
+          text: 'seconds',
+        },
       },
     },
   };
