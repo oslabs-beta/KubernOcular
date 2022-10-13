@@ -164,7 +164,7 @@ const LineGraph: FC<MetricProps> = (props) => {
         <WarningAmberIcon sx={{ fontSize: '60px' }} className="warning-icon" />
         <h5>Error loading graph</h5>
         <h5 className="error-bottom">
-          Check out our <a href="/error">troubleshooting page</a>
+          This could be because your server API or Prometheus API is not active. Check our <a href='https://www.kubernocular.com/docs'>documentation </a> for instructions on how to set up Prometheus.
         </h5>
       </div>
     );
