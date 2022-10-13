@@ -1,0 +1,138 @@
+body {
+  background-color: rgb(25, 25, 25);
+  color: white;
+}
+
+p {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+#logo-icon {
+  max-height: 30px;
+  margin-left: -10px;
+}
+
+#logo {
+  max-height: 40px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+
+#kubernocular-logo {
+  max-height: 50px;
+  object-fit: contain;
+}
+
+#metric-graphs {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.graph,
+.loading,
+.error {
+  padding: 1vw;
+  margin: 10px;
+  width: 40vw;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 10px;
+}
+
+.loading {
+  display: flex;
+  min-height: 300px;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.warning-icon {
+  margin: 30px;
+}
+
+.error h5 {
+  margin: 5px;
+}
+
+.error a:link {
+  color: rgb(97, 117, 149);
+}
+
+.error a:visited {
+  color: rgb(81, 78, 110);
+}
+
+.error-bottom {
+  padding-bottom: 35px;
+}
+
+.MuiTableBody-root {
+  cursor: pointer;
+}
+
+#instant-metrics-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
+  width: 81vw;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.09),
+    rgba(255, 255, 255, 0.09)
+  );
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+    0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  border-radius: 10px;
+}
+
+#db-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#nav-instant-metrics-table {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  font-size: 0.7vw;
+}
+
+.metric-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.09),
+    rgba(255, 255, 255, 0.09)
+  );
+  border-radius: 10px;
+  margin: 0.5vw;
+  width: 5vw;
+}
+
+.metric-label {
+  padding: 0.25vw;
+}
+
+.instant-metric-comp {
+  padding: 0.5vw;
+  width: 24%;
+}
+
+#stacked-bar-chart {
+  width: 20%;
+}
